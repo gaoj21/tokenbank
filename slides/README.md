@@ -1,9 +1,11 @@
 # CLIMB talk slides
 
-19-slide deck (16:9) for the paper. Live version: https://claude.ai/artifact/BwRAJyhjim4dhBwsikFAhJ
+`CLIMB_talk.pptx`: 18 slides, one idea per slide, speaker notes on every slide.
 
-`CLIMB_talk.pptx` is built from these files by `make_pptx.py` (run with `.venv/bin/python slides/make_pptx.py`).
+Rebuild:
 
-- `deck.json`: slide order and sections
-- `slides/*.html`: one file per slide, speaker notes in each `<aside>`
-- `img/`: paper figures used in the deck, rendered from `paper/figures/*.pdf`
+    .venv/bin/python slides/make_figs.py    # charts -> img/c_*.png, from paper/data and the recorded runs
+    .venv/bin/python slides/make_pptx.py    # -> CLIMB_talk.pptx
+
+`deck.json` and `slides/*.html` are the earlier, more technical 19-slide version
+(https://claude.ai/artifact/BwRAJyhjim4dhBwsikFAhJ).

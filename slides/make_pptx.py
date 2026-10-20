@@ -1,12 +1,11 @@
-"""Build slides/CLIMB_talk.pptx from the deck in slides/ (speaker notes come from each slide's <aside>).
+"""Build slides/CLIMB_talk.pptx: an 18-slide talk, one idea per slide, charts from make_figs.py.
 
-Run with the project venv: .venv/bin/python slides/make_pptx.py
+Run with the project venv: .venv/bin/python slides/make_figs.py && .venv/bin/python slides/make_pptx.py
 """
-import html
-import json
 import re
 from pathlib import Path
 
+from PIL import Image
 from pptx import Presentation
 from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_SHAPE
@@ -18,8 +17,10 @@ IMG = HERE / "img"
 
 NAVY, NAVY2, LIGHT, PAPER, BAND = "14213D", "1F2F52", "F7F6F2", "FDFCF9", "ECEAE3"
 BODY, MUTED, RULE, SOFT = "3A4150", "6B7280", "DDD8CC", "C9D1E0"
-ORANGE, ORANGE_D, BLUE, RED, GREEN, GREENBG = "B4541A", "F0A66B", "2E5C99", "B03A2E", "2F6B34", "E3ECE2"
+ORANGE, ORANGE_D, BLUE, RED, GREEN = "B4541A", "F0A66B", "2E5C99", "B03A2E", "2F6B34"
+REDBG, GREENBG, BLUEBG, ORANGEBG = "F6E3E0", "E3ECE2", "E2EAF5", "F8E8DC"
 SERIF, SANS = "Georgia", "Arial"
+TEAM_ACC = [[94.8, 76.1, 64.9, 28.0], [97.0, 79.8, 71.1, 45.1], [99.8, 67.9, 65.3, 36.4]]
 
 
 def px(v):
@@ -30,13 +31,8 @@ def rgb(h):
     return RGBColor.from_string(h)
 
 
-def notes_of(sid):
-    m = re.search(r"<aside>(.*?)</aside>", (HERE / "slides" / f"{sid}.html").read_text(), re.S)
-    return html.unescape(m.group(1)).strip() if m else ""
-
-
 def runs_of(text):
-    """'plain **bold** [[c=HEX|colored]]' -> [(text, bold, color)]."""
+    """'plain **bold** [[c=HEX|colored bold]]' -> [(text, bold, color)]."""
     out = []
     for tok in re.split(r"(\*\*.*?\*\*|\[\[c=[0-9A-F]{6}\|.*?\]\])", text):
         if not tok:
@@ -54,41 +50,37 @@ def fill_tf(tf, paras, margin=0):
     tf.word_wrap = True
     for side in ("margin_left", "margin_right", "margin_top", "margin_bottom"):
         setattr(tf, side, px(margin))
-    first = True
-    for p in paras:
-        para = tf.paragraphs[0] if first else tf.add_paragraph()
-        first = False
+    for i, p in enumerate(paras):
+        para = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
         para.alignment = {"l": PP_ALIGN.LEFT, "c": PP_ALIGN.CENTER, "r": PP_ALIGN.RIGHT}[p.get("align", "l")]
         para.line_spacing = p.get("ls", 1.15)
         para.space_after = Pt(p.get("after", 0))
-        for text, bold, color in runs_of(p["t"]):
+        for t, bold, color in runs_of(p["t"]):
             r = para.add_run()
-            r.text = text
+            r.text = t
             f = r.font
-            f.size = Pt(p.get("size", 15))
+            f.size = Pt(p.get("size", 18))
             f.name = p.get("font", SANS)
             f.bold = bold or p.get("bold", False)
-            f.italic = p.get("italic", False)
             f.color.rgb = rgb(color or p.get("color", BODY))
 
 
-def text(slide, x, y, w, h, paras, anchor="t"):
-    tb = slide.shapes.add_textbox(px(x), px(y), px(w), px(h))
+def text(s, x, y, w, h, paras, anchor="t"):
+    tb = s.shapes.add_textbox(px(x), px(y), px(w), px(h))
     fill_tf(tb.text_frame, paras)
     tb.text_frame.vertical_anchor = {"t": MSO_ANCHOR.TOP, "m": MSO_ANCHOR.MIDDLE, "b": MSO_ANCHOR.BOTTOM}[anchor]
     return tb
 
 
-def box(slide, x, y, w, h, fill, line=None, paras=None, margin=40, radius=True, anchor="t"):
-    shp = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE if radius else MSO_SHAPE.RECTANGLE,
-                                 px(x), px(y), px(w), px(h))
-    if radius:
-        shp.adjustments[0] = min(0.08, 16 / min(w, h))
+def box(s, x, y, w, h, fill, line=None, paras=None, margin=32, shape=MSO_SHAPE.ROUNDED_RECTANGLE, anchor="m", lw=1.0):
+    shp = s.shapes.add_shape(shape, px(x), px(y), px(w), px(h))
+    if shape == MSO_SHAPE.ROUNDED_RECTANGLE:
+        shp.adjustments[0] = min(0.1, 18 / min(w, h))
     shp.fill.solid()
     shp.fill.fore_color.rgb = rgb(fill)
     if line:
         shp.line.color.rgb = rgb(line)
-        shp.line.width = Pt(0.75)
+        shp.line.width = Pt(lw)
     else:
         shp.line.fill.background()
     shp.shadow.inherit = False
@@ -98,332 +90,279 @@ def box(slide, x, y, w, h, fill, line=None, paras=None, margin=40, radius=True, 
     return shp
 
 
-def image(slide, name, x, y, w, h):
-    return slide.shapes.add_picture(str(IMG / name), px(x), px(y), px(w), px(h))
+def arrow(s, x, y, w, h, color=MUTED, shape=MSO_SHAPE.RIGHT_ARROW):
+    return box(s, x, y, w, h, color, shape=shape)
 
 
-def new_slide(prs, sid, dark=False):
+def picture(s, name, x, y, w, h):
+    """Fit the image inside the box, centred, keeping its aspect ratio."""
+    iw, ih = Image.open(IMG / name).size
+    k = min(w / iw, h / ih)
+    pw, ph = iw * k, ih * k
+    return s.shapes.add_picture(str(IMG / name), px(x + (w - pw) / 2), px(y + (h - ph) / 2), px(pw), px(ph))
+
+
+def new_slide(prs, notes, dark=False):
     s = prs.slides.add_slide(prs.slide_layouts[6])
     s.background.fill.solid()
     s.background.fill.fore_color.rgb = rgb(NAVY if dark else LIGHT)
-    n = notes_of(sid)
-    if n:
-        s.notes_slide.notes_text_frame.text = n
+    s.notes_slide.notes_text_frame.text = notes
     return s
 
 
-def header(s, eyebrow, title, dark=False, size=28, h=80):
-    text(s, 128, 118, 1664, 40, [dict(t=eyebrow.upper(), size=12, bold=True, color=ORANGE_D if dark else ORANGE)])
-    text(s, 128, 160, 1664, h, [dict(t=title, size=size, bold=True, font=SERIF, color=LIGHT if dark else NAVY, ls=1.05)])
+def header(s, eyebrow, title, dark=False, size=30):
+    text(s, 128, 100, 1664, 40, [dict(t=eyebrow.upper(), size=13, bold=True, color=ORANGE_D if dark else ORANGE)])
+    text(s, 128, 140, 1664, 90, [dict(t=title, size=size, bold=True, font=SERIF, color=LIGHT if dark else NAVY, ls=1.05)])
 
 
 def footer(s, n, dark=False):
-    text(s, 128, 1000, 1664, 34, [dict(t=str(n), size=12, align="r", color="8B97AE" if dark else MUTED)])
+    text(s, 128, 1010, 1664, 34, [dict(t=str(n), size=12, align="r", color="8B97AE" if dark else MUTED)])
 
 
-def big(t, color=ORANGE, size=40):
-    return dict(t=t, size=size, bold=True, font=SERIF, color=color, after=8, ls=1.0)
+def big(t, color=ORANGE, size=54):
+    return dict(t=t, size=size, bold=True, font=SERIF, color=color, after=6, ls=1.0)
 
 
-def body(t, size=15, color=BODY, after=0, **kw):
+def say(t, size=20, color=BODY, after=0, **kw):
     return dict(t=t, size=size, color=color, after=after, **kw)
 
 
-def h3(t, color=NAVY, size=16):
-    return dict(t=t, size=size, bold=True, color=color, after=6)
-
-
-def table(s, x, y, w, rows, widths, size=14, row_h=56, right_from=1, highlight=()):
-    shp = s.shapes.add_table(len(rows), len(rows[0]), px(x), px(y), px(w), px(row_h * len(rows)))
-    tbl = shp.table
-    tbl.first_row = True
-    for j, frac in enumerate(widths):
-        tbl.columns[j].width = px(w * frac)
-    for i, row in enumerate(rows):
-        tbl.rows[i].height = px(row_h)
-        for j, val in enumerate(row):
-            cell = tbl.cell(i, j)
-            cell.fill.solid()
-            if i == 0:
-                cell.fill.fore_color.rgb = rgb(NAVY)
-            elif i in highlight:
-                cell.fill.fore_color.rgb = rgb(GREENBG)
-            else:
-                cell.fill.fore_color.rgb = rgb(PAPER if i % 2 else BAND)
-            cell.margin_left = cell.margin_right = px(14)
-            cell.margin_top = cell.margin_bottom = px(4)
-            cell.vertical_anchor = MSO_ANCHOR.MIDDLE
-            fill_tf(cell.text_frame, [dict(t=val, size=size, bold=(i == 0 or i in highlight),
-                                           color=LIGHT if i == 0 else BODY,
-                                           align="r" if j >= right_from else "l")])
-            for side in ("margin_left", "margin_right"):
-                setattr(cell.text_frame, side, px(14))
-    return shp
+def callout(s, x, y, w, h, number, label, color=ORANGE, fill=PAPER):
+    box(s, x, y, w, h, fill, RULE, [big(number, color, 36), say(label, 17)], margin=30)
 
 
 def build():
     prs = Presentation()
     prs.slide_width, prs.slide_height = px(1920), px(1080)
-    order = json.loads((HERE / "deck.json").read_text())["order"]
-    assert len(order) == 19
+    n = 0
+
+    def slide(notes, dark=False):
+        nonlocal n
+        n += 1
+        s = new_slide(prs, notes, dark)
+        if n > 1:
+            footer(s, n, dark)
+        return s
 
     # 1 cover
-    s = new_slide(prs, "cover", dark=True)
-    text(s, 128, 300, 1664, 40, [dict(t="CLIMB", size=14, bold=True, color=ORANGE_D)])
-    text(s, 128, 350, 1664, 130, [dict(t="When to Call the Team", size=52, bold=True, font=SERIF, color=LIGHT)])
-    text(s, 128, 490, 1664, 60, [dict(t="Risk-controlled escalation for multi-agent LLM pipelines", size=22, color=SOFT)])
-    box(s, 128, 590, 240, 4, ORANGE_D, radius=False)
-    text(s, 128, 630, 1664, 50, [dict(t="Jianjun Gao, Jinxin Liu, Dongyun Lin, Hongyun Cai, Zheng Ma", size=15, color=SOFT)])
+    s = slide("Teams of LLM agents can be more accurate than one model call, but they cost several times as much. "
+              "This talk is about when the team is worth calling, and how to skip it safely.", dark=True)
+    text(s, 128, 300, 1664, 40, [dict(t="CLIMB", size=16, bold=True, color=ORANGE_D)])
+    text(s, 128, 350, 1664, 130, [dict(t="When to Call the Team", size=56, bold=True, font=SERIF, color=LIGHT)])
+    text(s, 128, 495, 1664, 60, [say("Save tokens on multi-agent LLM pipelines, with a guarantee on accuracy", 24, SOFT)])
+    box(s, 128, 600, 240, 5, ORANGE_D, shape=MSO_SHAPE.RECTANGLE)
+    text(s, 128, 640, 1664, 50, [say("Jianjun Gao, Jinxin Liu, Dongyun Lin, Hongyun Cai, Zheng Ma", 18, SOFT)])
 
     # 2 cost
-    s = new_slide(prs, "cost")
-    header(s, "Motivation", "A plan–execute–review team is expensive")
-    cards = [("1.3–6.3×", "the tokens of a single agent that reasons once"),
-             ("5.4k–175k", "tokens per task, across three open models and four benchmarks"),
-             ("28–57%", "of that cost goes to the planner’s and the reviewer’s own calls")]
-    for i, (n, d) in enumerate(cards):
-        box(s, 128 + i * 565, 330, 533, 300, PAPER, RULE, [big(n), body(d)])
-    text(s, 128, 690, 1664, 120, [body("A planner writes a plan, an executor answers, a reviewer accepts or rejects, for up to five rounds. "
-                                       "Each role adds calls, and on open-book tasks every call re-reads the documents.", size=16, color=NAVY)])
-    footer(s, 2)
+    s = slide("Our team is a standard plan, execute, review pipeline. Each bar is one model on one benchmark. "
+              "The team uses 1.3 to 6.3 times the tokens of a single agent answering on its own.")
+    header(s, "The problem", "Agent teams cost several times more")
+    picture(s, "c_cost.png", 128, 260, 1150, 700)
+    callout(s, 1330, 360, 462, 300, "up to 6.3×", "the tokens of one agent answering alone")
+    text(s, 1330, 700, 462, 200, [say("Planner, executor and reviewer each add calls, for up to 5 rounds.", 18, MUTED)])
 
     # 3 flows
-    s = new_slide(prs, "flows")
-    header(s, "Motivation", "It rescues some answers and loses others")
-    image(s, "fig_flows.png", 128, 360, 1000, 388)
-    text(s, 128, 760, 1000, 40, [body("Team vs. single agent L₁ (% of tasks). M, F, Q, E: MATH, FRAMES, MuSiQue, BBEH.", size=12, color=MUTED)])
-    text(s, 1184, 340, 608, 560, [
-        body(f"[[c={GREEN}|Rescues]] 1.2–14.9% of tasks that L₁ gets wrong.", after=14),
-        body(f"[[c={RED}|Loses]] up to 9.3% that L₁ gets right.", after=14),
-        body("**84%** of those losses are wrong in the first draft, and the reviewer does not correct them.", after=14),
-        body("Rerun, the team again loses **66 of 142** tasks it had lost against L₀.")])
-    footer(s, 3)
+    s = slide("Green: tasks the single agent got wrong and the team fixed. Red: tasks the single agent got right "
+              "and the team got wrong. The team wins on balance, but it also breaks answers, up to 9 percent of tasks.")
+    header(s, "The problem", "…and they are not always better")
+    picture(s, "c_flows.png", 128, 260, 1150, 700)
+    callout(s, 1330, 330, 462, 260, "up to 15%", "of tasks: the team fixes a wrong answer", GREEN, GREENBG)
+    callout(s, 1330, 630, 462, 260, "up to 9%", "of tasks: the team breaks a right answer", RED, REDBG)
 
-    # 4 signals
-    s = new_slide(prs, "signals")
-    header(s, "Motivation", "Cheap rungs often suffice, but confidence is weak")
-    image(s, "fig1abc.png", 285, 290, 1350, 549)
-    text(s, 128, 860, 1664, 80, [body("(b) Many tasks the team solves are already solved by L₀ or L₁. "
-                                      "(c) L₀’s log-probability AUROC ranges 0.22–0.81 and is inverted on three Gemma settings.", size=14)])
-    footer(s, 4)
+    # 4 why the team breaks answers
+    s = slide("Where do the broken answers come from? In 84 percent of them the executor's first draft is already wrong, "
+              "and the reviewer accepts it. Reviewers accept 23 to 58 percent of wrong answers. "
+              "This is not just noise: rerunning the team reproduces about half of these losses.")
+    header(s, "The problem", "Why does the team break right answers?")
+    steps = [("Planner", "writes a plan", BLUEBG, BLUE), ("Executor", "first draft is WRONG", REDBG, RED),
+             ("Reviewer", "“Looks good” ACCEPTED", BLUEBG, BLUE), ("Final answer", "WRONG", REDBG, RED)]
+    for i, (t, d, f, c) in enumerate(steps):
+        x = 128 + i * 430
+        box(s, x, 330, 340, 220, f, c, [dict(t=t, size=22, bold=True, color=NAVY, align="c", after=8),
+                                        dict(t=d, size=17, bold=True, color=c, align="c")], margin=16, lw=2.5)
+        if i < 3:
+            arrow(s, x + 352, 415, 66, 50)
+    callout(s, 128, 640, 800, 250, "84%", "of broken answers start as a wrong first draft the reviewer did not catch", RED)
+    callout(s, 992, 640, 800, 250, "23–58%", "of wrong answers are accepted by the reviewer", RED)
 
-    # 5 uncert
-    s = new_slide(prs, "uncert")
-    header(s, "Motivation", "Uncertified thresholds can lose a lot")
-    image(s, "fig1d.png", 128, 310, 520, 618)
-    text(s, 728, 360, 1064, 560, [
-        big("up to 16 points", RED, 48),
-        body("lost by a fixed confidence threshold that spends as much as CLIMB on average. "
-             "It loses over 2 points on 7 of 12 settings.", size=16, after=14),
-        body("Always stopping at the single agent loses up to 9.4.", size=16, after=14),
-        body("**Without a bound on the accuracy given up, the savings are hard to trust.**", size=16, color=NAVY)])
-    footer(s, 5)
-
-    # 6 goal
-    s = new_slide(prs, "goal", dark=True)
-    header(s, "The problem", "Minimise cost, subject to a certified bound on the accuracy lost", dark=True, size=36, h=160)
-    box(s, 128, 400, 1664, 150, NAVY2, paras=[dict(t="min J(π)    s.t.    Pr( R(π̂) > ε ) ≤ δ", size=30, font=SERIF, color=LIGHT)],
-        margin=56, anchor="m")
-    defs = [(f"[[c={LIGHT}|J]]: expected tokens per task."),
-            (f"[[c={LIGHT}|R]]: accuracy lost relative to always running the team."),
-            (f"[[c={LIGHT}|ε]]: the user’s tolerance, e.g. 5 points. [[c={LIGHT}|δ]] = 10%.")]
-    for i, d in enumerate(defs):
-        text(s, 128 + i * 571, 610, 523, 120, [body(d, color=SOFT)])
-    footer(s, 6, dark=True)
-
-    # 7 ladder
-    s = new_slide(prs, "ladder")
-    header(s, "Method", "CLIMB: a ladder of cheaper configurations")
-    image(s, "figure_ladder.png", 128, 300, 800, 620)
-    text(s, 990, 340, 802, 580, [
-        body(f"[[c={BLUE}|L₀, direct answer]] at the cheapest reasoning setting, greedy.", after=14),
-        body(f"[[c={BLUE}|L₁, single agent]] at the team’s own setting, from scratch, without L₀’s answer.", after=14),
-        body(f"[[c={ORANGE}|Team]]: planner, executor, reviewer, up to 5 rounds. The reference.", after=14),
-        body("Scores: S₀ = L₀’s mean token log-probability. S₁ = 10·1[a₀ = a₁] + s̄₁, so agreeing tasks rank first.")])
-    footer(s, 7)
-
-    # 8 signed
-    s = new_slide(prs, "signed")
-    header(s, "Method", "A signed loss: skipping the team can keep answers")
-    text(s, 128, 300, 1664, 70, [dict(t="ℓ  =  Y(team)  −  Y(answer kept)  ∈  {−1, 0, +1}", size=24, font=SERIF, color=NAVY)])
-    cards = [("+1", RED, "**Stopping loses**: the cheap answer is wrong, the team’s is right."),
-             ("0", "5B6170", "**No change**: both right or both wrong. Most stopped tasks."),
-             ("−1", GREEN, "**Stopping saves**: the cheap answer is right, the team’s is wrong.")]
-    for i, (n, c, d) in enumerate(cards):
-        x = 128 + i * 565
-        box(s, x, 410, 533, 290, PAPER, RULE, [big(n, c), body(d)])
-        box(s, x, 410, 533, 10, c, radius=False)
-    text(s, 128, 750, 1664, 120, [body("Clipping the loss at zero ignores the answers stopping saves. Since most losses are zero, "
-                                       "a test that adapts to the variance can certify much more.", color=NAVY)])
-    footer(s, 8)
-
-    # 9 threshold
-    s = new_slide(prs, "threshold")
-    header(s, "Method · structure", "When is a confidence threshold optimal?")
-    box(s, 128, 320, 812, 400, NAVY, paras=[
-        h3("(M) Monotone gain", ORANGE_D, 18),
-        dict(t="g(s) = E[ Y(team) − Y(cheap) | s ]", size=18, font=SERIF, color=LIGHT, after=10),
-        body("g(s) and g(s)/c(s) are non-increasing in the score s. Escalation buys less, per token too, "
-             "the more confident the cheap answer is.", color=SOFT)], margin=48)
-    box(s, 980, 320, 812, 185, PAPER, RULE, [h3("Threshold optimality"),
-        body("Under (M), the constrained problem is a fractional knapsack solved by a threshold on the score.", size=14)], margin=32)
-    box(s, 980, 535, 812, 185, PAPER, RULE, [h3("Ordered testing is lossless"),
-        body("The safe thresholds form a prefix of the conservative-to-aggressive sequence, and cost falls along it.", size=14)], margin=32)
-    text(s, 128, 770, 1664, 80, [body("**(M) shapes the savings, not the guarantee.** The risk bound holds whether or not it does.", color=NAVY)])
-    footer(s, 9)
-
-    # 10 certify
-    s = new_slide(prs, "certify")
-    header(s, "Method · certification", "Test thresholds in order with a betting test")
-    steps = [("1", "Candidates", "Thresholds t₁ > t₂ > …, fixed before any label, from conservative to aggressive. "
-                                 "Each gives a null: its mean loss exceeds ε."),
-             ("2", "Betting test", "Bet that the mean loss is below ε. Wealth is a supermartingale under the null, so p = 1 / max W is valid."),
-             ("3", "Fixed sequence", "Stop at the first threshold not rejected. Deploy the cheapest rejected one. No multiplicity correction needed.")]
-    for i, (n, t, d) in enumerate(steps):
-        box(s, 128 + i * 565, 320, 533, 390, PAPER, RULE, [big(n, size=32), h3(t), body(d, size=14)])
-    box(s, 128, 750, 1664, 110, BAND, paras=[dict(t="Wⱼ = ∏ ( 1 + λᵢ (ε − ℓᵢ) ) over i ≤ j,   λᵢ set from the running variance of earlier losses",
-                                                   size=20, font=SERIF, color=NAVY)], margin=48, anchor="m")
-    footer(s, 10)
-
-    # 11 depth
-    s = new_slide(prs, "depth")
-    header(s, "Method · deployment", "Choose the depth, fall back to the team")
-    left = [("Depth 0, tested at δ/2", "Threshold on S₀: stop at L₀ when it is confident."),
-            ("Depth 1, tested at δ/2", "Threshold on S₁ after both rungs: agreement, then L₁’s confidence.")]
-    right = [("Deploy the cheaper certified policy", "A union bound keeps both certificates valid at once with probability ≥ 1 − δ."),
-             ("Nothing certified? Run the team", "Always running the team has zero risk, so it is always admissible.")]
-    for i, (t, d) in enumerate(left):
-        box(s, 128, 320 + i * 200, 812, 176, PAPER, RULE, [h3(t), body(d, size=14)], margin=32)
-        box(s, 128, 320 + i * 200, 10, 176, BLUE, radius=False)
-    for i, (t, d) in enumerate(right):
-        box(s, 980, 320 + i * 200, 812, 176, NAVY, paras=[h3(t, ORANGE_D), body(d, size=14, color=SOFT)], margin=32)
-    text(s, 128, 760, 1664, 120, [body("**If tasks and outputs are i.i.d., the deployed policy loses at most ε with probability ≥ 1 − δ.** "
-                                       "A weak or misleading signal tends to cost savings rather than accuracy.", color=NAVY)])
-    footer(s, 11)
-
-    # 12 setup
-    s = new_slide(prs, "setup")
-    header(s, "Experiments", "Three open models, four benchmarks, twelve settings")
-    cols = [("Models", ["gpt-oss-20b", "gpt-oss-120b", "Gemma-4-26B-A4B-it"],
-             "L₀ at the cheapest reasoning setting. L₁ and the team at the default."),
-            ("Benchmarks", ["MATH-500 (400)", "FRAMES (660, open-book)", "MuSiQue (1,934, open-book)", "BBEH (874)"],
-             "Cost counts all prompt, completion and reasoning tokens."),
-            ("Replay protocol", ["Record every rung and the team on every task. Draw 200 random 50/50 calibration and evaluation splits."],
-             "Violation rate: share of splits where the deployed policy loses more than ε on the full pool.")]
-    for i, (t, lines, foot) in enumerate(cols):
-        paras = [h3(t)] + [body(l, size=14, after=2) for l in lines]
-        paras[-1]["after"] = 14
-        paras.append(body(foot, size=13, color="5B6170"))
-        box(s, 128 + i * 565, 320, 533, 430, PAPER, RULE, paras)
-    footer(s, 12)
-
-    # 13 holds
-    s = new_slide(prs, "holds")
-    header(s, "Results", "The guarantee holds in practice")
-    cards = [("≤ 3.4%", "failure rate over 5,000 i.i.d. calibration draws per setting and tolerance, against δ = 10%"),
-             ("≤ 2%", "violation rate in the replay at ε = 2, 5 and 10%, and 3% anywhere in the tolerance sweep"),
-             ("12 / 12", "settings where the mean loss stays within ε: at most 2.8 points at ε = 5%, 7.2 at 10%")]
-    for i, (n, d) in enumerate(cards):
-        box(s, 128 + i * 565, 340, 533, 380, PAPER, RULE, [big(n, GREEN, 48), body(d)])
-    footer(s, 13)
-
-    # 14 savings
-    s = new_slide(prs, "savings")
-    header(s, "Results", "The tolerance sets the price of the savings")
-    image(s, "tradeoff_a.png", 128, 310, 990, 600)
-    blocks = [("ε = 2%", "97% of tokens", NAVY), ("ε = 5%, range 31–96%", "62% · saves 38%", ORANGE),
-              ("ε = 10%, range 18–62%", "35% · saves 65%", ORANGE)]
-    for i, (a, b, c) in enumerate(blocks):
-        text(s, 1180, 340 + i * 190, 612, 160, [body(a, size=14, color="5B6170", after=4), big(b, c, 28)])
+    # 5 the idea: a ladder
+    s = slide("The idea is a ladder. Try the cheapest configuration first: a direct answer. If it looks reliable, stop. "
+              "Otherwise try a single agent. Only if that also looks unreliable, call the full team. "
+              "All three use the same model. The question is how to decide 'looks reliable'.")
+    header(s, "The idea", "Climb a ladder: call the team only when needed")
+    rungs = [("Direct answer", "cheapest", 250, BLUEBG, BLUE), ("Single agent", "medium", 390, BLUEBG, BLUE),
+             ("Agent team", "most expensive", 530, ORANGEBG, ORANGE)]
+    base = 900
+    for i, (t, c, h, f, col) in enumerate(rungs):
+        x = 160 + i * 560
+        box(s, x, base - h, 400, h, f, col, [dict(t=t, size=24, bold=True, color=NAVY, align="c", after=6),
+                                            dict(t=c, size=18, color=col, align="c", bold=True)], margin=12, lw=2.5,
+            shape=MSO_SHAPE.RECTANGLE)
         if i < 2:
-            box(s, 1180, 500 + i * 190, 612, 2, RULE, radius=False)
-    footer(s, 14)
+            text(s, x + 400, base - h - 10, 160, 60, [dict(t="not sure?\ngo up", size=15, bold=True, color=MUTED, align="c")])
+            arrow(s, x + 415, base - h + 70, 130, 44, MUTED)
+    for i in range(2):
+        x = 160 + i * 560
+        text(s, x, base + 20, 400, 50, [dict(t="sure? stop and answer", size=17, bold=True, color=GREEN, align="c")])
+    text(s, 1280, base + 20, 400, 50, [dict(t="always answers", size=17, bold=True, color=ORANGE, align="c")])
 
-    # 15 table
-    s = new_slide(prs, "table")
-    header(s, "Results", "Per-setting results")
-    rows = [["Model", "Benchmark", "Team (acc / tokens)", "ε = 5%", "ε = 10%", "Viol."],
-            ["gpt-oss-20b", "MATH", "94.8 / 6.1k", "92.9 / 62%", "89.6 / 33%", "0.0%"],
-            ["", "FRAMES", "76.1 / 93.9k", "73.6 / 66%", "70.8 / 33%", "1.0%"],
-            ["", "MuSiQue", "64.9 / 15.0k", "63.0 / 44%", "58.1 / 31%", "1.0%"],
-            ["", "BBEH", "28.0 / 59.7k", "26.2 / 63%", "24.7 / 22%", "2.0%"],
-            ["gpt-oss-120b", "MATH", "97.0 / 5.4k", "95.3 / 41%", "92.7 / 18%", "0.0%"],
-            ["", "FRAMES", "79.8 / 84.8k", "78.4 / 63%", "75.1 / 32%", "1.0%"],
-            ["", "MuSiQue", "71.1 / 12.4k", "70.0 / 46%", "64.0 / 29%", "2.0%"],
-            ["", "BBEH", "45.1 / 53.3k", "42.8 / 75%", "39.5 / 40%", "0.5%"],
-            ["Gemma-4-26B-A4B-it", "MATH", "99.8 / 10.4k", "98.1 / 31%", "98.0 / 20%", "0.0%"],
-            ["", "FRAMES", "67.9 / 174.6k", "66.4 / 86%", "62.8 / 62%", "1.0%"],
-            ["", "MuSiQue", "65.3 / 50.2k", "62.7 / 69%", "61.3 / 33%", "0.0%"],
-            ["", "BBEH", "36.4 / 120.2k", "33.5 / 96%", "29.2 / 62%", "1.5%"]]
-    table(s, 128, 270, 1664, rows, [0.22, 0.14, 0.19, 0.17, 0.17, 0.11], size=13, row_h=50, right_from=2)
-    text(s, 128, 940, 1664, 40, [body("Accuracy / tokens as a share of the team’s, means over 200 splits. Viol.: largest violation rate over ε = 2, 5, 10%.",
-                                      size=12, color=MUTED)])
-    footer(s, 15)
+    # 6 signal 1: confidence
+    s = slide("How do we know a cheap answer is reliable? The first signal is free: the model's own confidence, "
+              "its average token probability. Above the dashed line, confident answers are more often right. "
+              "On three Gemma settings it points the wrong way: the model is confidently wrong. "
+              "So any rule built on this signal must be checked, not trusted.")
+    header(s, "Signals", "Signal 1: how confident is the direct answer?")
+    picture(s, "c_auroc.png", 128, 260, 1150, 700)
+    callout(s, 1330, 330, 462, 260, "usually helps", "confident answers tend to be right", BLUE, BLUEBG)
+    callout(s, 1330, 630, 462, 260, "3 of 12", "settings where it points the wrong way", RED, REDBG)
 
-    # 16 baselines
-    s = new_slide(prs, "baselines")
-    header(s, "Results", "Uncertified rules vs. CLIMB")
-    rows = [["Policy", "Tokens", "Mean loss", "Max loss"],
-            ["Always L₀", "15%", "8.7", "20.6"],
-            ["Always L₁", "43%", "3.3", "9.4"],
-            ["Threshold, same cost", "61%", "5.0", "15.9"],
-            ["CLIMB, ε = 5% (certified)", "62%", "1.9", "2.8"],
-            ["CLIMB, ε = 10% (certified)", "35%", "5.0", "7.2"],
-            ["Oracle (not deployable)", "65%", "−7.2", "0.0"]]
-    table(s, 128, 320, 1000, rows, [0.46, 0.18, 0.18, 0.18], size=15, row_h=66, highlight=(4, 5))
-    text(s, 128, 800, 1000, 40, [body("Means over the twelve settings. Loss in accuracy points against the team.", size=12, color=MUTED)])
-    box(s, 1176, 320, 616, 520, NAVY, paras=[
-        h3("Tuned per setting, without certification", ORANGE_D),
-        big("31%", LIGHT),
-        body("of splits exceed ε = 5% on average, above δ on 9 of 12 settings. CLIMB: at most 2%.", size=14, color=SOFT, after=12),
-        body("The extra tokens CLIMB spends are largely the price of the guarantee.", size=14, color=SOFT)], margin=44)
-    footer(s, 16)
+    # 7 signal 2: agreement
+    s = slide("The second signal is also nearly free. The direct answer and the single agent answer independently. "
+              "When they agree, the single agent is much more often right, for example 99 against 77 percent "
+              "on gpt-oss-20b MATH. So CLIMB stops on agreeing tasks first.")
+    header(s, "Signals", "Signal 2: do two cheap answers agree?")
+    picture(s, "c_agree.png", 128, 260, 1150, 700)
+    callout(s, 1330, 360, 462, 300, "agree", "→ the single agent is usually right", GREEN, GREENBG)
+    text(s, 1330, 700, 462, 200, [say("Neither answer sees the other, so agreement costs nothing extra.", 18, MUTED)])
 
-    # 17 tests
-    s = new_slide(prs, "tests")
-    header(s, "Results · ablation", "The choice of test matters as much as the signal")
-    rows = [["Test (ε = 5%)", "20b", "120b", "Gemma", "Best"],
-            ["Hoeffding–Bentkus", "100", "100", "100", "0/12"],
-            ["Betting, clipped", "82", "75", "80", "0/12"],
-            ["Binomial, clipped", "79", "73", "77", "3/12"],
-            ["Betting, Bonferroni", "92", "90", "97", "0/12"],
-            ["Betting, signed (ours)", "59", "56", "71", "9/12"]]
-    table(s, 128, 320, 1000, rows, [0.40, 0.14, 0.14, 0.16, 0.16], size=15, row_h=70, highlight=(5,))
-    text(s, 128, 760, 1000, 40, [body("Tokens certified, % of the team’s. Best: settings where the test is cheapest.", size=12, color=MUTED)])
-    box(s, 1176, 320, 616, 210, PAPER, RULE, [h3("Adapt to the variance"),
-        body("Most losses are zero. A worst-variance bound certifies nothing cheaper than the team.", size=14)], margin=32)
-    box(s, 1176, 560, 616, 210, PAPER, RULE, [h3("Keep the sign"),
-        body("Clipping certifies much less where the team often loses answers: 83 vs. 44% on 20b MuSiQue.", size=14)], margin=32)
-    footer(s, 17)
+    # 8 guessing fails
+    s = slide("A natural shortcut is to pick a threshold by hand or by intuition. These rules can look fine on average "
+              "but lose a lot on some settings. A fixed confidence threshold with the same average cost as CLIMB "
+              "loses up to 16 points. Always using the single agent loses up to 9. CLIMB at a 5 point tolerance loses at most 2.8. "
+              "In deployment, nothing tells you which setting is the bad one.")
+    header(s, "The problem", "Guessing a rule can go badly")
+    picture(s, "c_maxloss.png", 128, 260, 1150, 700)
+    callout(s, 1330, 360, 462, 300, "16 points", "lost by a hand-picked threshold on one setting", RED, REDBG)
+    text(s, 1330, 700, 462, 200, [say("Nothing at deployment says which setting will go wrong.", 18, MUTED)])
 
-    # 18 limits
-    s = new_slide(prs, "limits")
-    header(s, "Results · analysis", "What limits the savings, never the guarantee")
-    cols = [("The signal", ["Where L₀’s confidence ranks well, the gain falls from 21.6 points in the least confident tenth to 4–7. "
-                            "Where it is inverted, CLIMB relies on agreement or the team.", "Even a random score keeps the guarantee."]),
-            ("Calibration data", ["50 tasks certify almost nothing. Savings at ε = 5% need a few hundred.",
-                                  "Recording them is typically repaid within 340–2,000 queries at ε = 10%."]),
-            ("Headroom", ["An oracle stopping at the cheapest correct rung beats the team by 7.2 points on average.",
-                          "Much of the headroom lies in better signals, which plug in directly."])]
-    for i, (t, ps) in enumerate(cols):
+    # 9 the promise
+    s = slide("CLIMB turns this into a promise. You choose how much accuracy you can give up, say 5 points. "
+              "CLIMB looks at a few hundred labelled tasks and returns the cheapest rule that keeps that promise, "
+              "with 90 percent probability. If no cheaper rule qualifies, it simply calls the team every time, "
+              "so the worst case is no savings, not lost accuracy.")
+    header(s, "CLIMB", "What CLIMB promises")
+    items = [("You choose", "“I can lose at most 5 points of accuracy”", ORANGEBG, ORANGE),
+             ("CLIMB checks", "a few hundred labelled tasks", NAVY, None),
+             ("You get", "the cheapest rule that keeps the promise, 9 times out of 10", GREENBG, GREEN)]
+    for i, (t, d, f, c) in enumerate(items):
+        x = 128 + i * 590
+        dark = f == NAVY
+        box(s, x, 330, 490, 320, f, c, [dict(t=t, size=24, bold=True, color=ORANGE_D if dark else c, align="c", after=12),
+                                        dict(t=d, size=19, color=LIGHT if dark else NAVY, align="c")], margin=24, lw=2.5)
+        if i < 2:
+            arrow(s, x + 502, 450, 76, 60)
+    box(s, 128, 720, 1664, 150, PAPER, RULE, [dict(t="No cheaper rule passes?  →  call the team every time.  Worst case: no savings, not lost accuracy.",
+                                                    size=20, bold=True, color=NAVY, align="c")])
+
+    # 10 sweep
+    s = slide("Here is a real example: gpt-oss-120b on MuSiQue. Each dot is one possible threshold. On the left, "
+              "almost everything goes to the team: safe but expensive. Moving right, more tasks stop early: cheaper "
+              "but riskier. CLIMB tests them in this order and stops at the first one that fails. "
+              "It deploys the cheapest one that passed, the star, at 57 percent of the tokens. "
+              "Some grey dots are still under the line: the test is cautious, it needs evidence.")
+    header(s, "How it works", "Keep the cheapest rule that passes")
+    picture(s, "c_sweep.png", 128, 250, 1664, 700)
+    text(s, 128, 960, 1664, 40, [say("gpt-oss-120b on MuSiQue, thresholds on the direct answer’s confidence, one calibration half.", 15, MUTED)])
+
+    # 11 betting
+    s = slide("How does the test decide pass or fail? Think of a gambler who bets that skipping the team is harmless. "
+              "Start with one dollar. For each calibration task, if skipping did no harm, the gambler wins a little. "
+              "If it broke an answer, the gambler loses. If the wealth ever reaches 20 times the start, the rule passes. "
+              "A safe rule makes the gambler rich fast. A rule that loses 6 points makes the gambler broke. "
+              "The bet size adapts to how often skipping changes anything, which makes the test efficient.")
+    header(s, "How it works", "The test is a betting game")
+    picture(s, "c_wealth.png", 128, 250, 1100, 700)
+    steps = [("1", "Start with $1."), ("2", "Each task: bet that skipping the team does no harm."),
+             ("3", "No harm: win a little. Broken answer: lose."), ("4", "Reach $20: the rule passes.")]
+    for i, (k, d) in enumerate(steps):
+        y = 290 + i * 170
+        box(s, 1290, y, 70, 70, ORANGE, paras=[dict(t=k, size=28, bold=True, color=LIGHT, align="c")], margin=0,
+            shape=MSO_SHAPE.OVAL)
+        text(s, 1385, y + 4, 407, 160, [say(d, 19)], anchor="t")
+
+    # 12 signed
+    s = slide("One detail matters a lot. Skipping the team is not only a risk. Sometimes the cheap answer is right "
+              "and the team would have broken it. Standard tests count only the losses. CLIMB counts both sides, "
+              "so these saved answers offset the lost ones.")
+    header(s, "How it works", "Skipping the team can also save answers")
+    cases = [("Cheap answer wrong,\nteam right", "we lose a point", REDBG, RED),
+             ("Both right,\nor both wrong", "no change (most tasks)", BAND, MUTED),
+             ("Cheap answer right,\nteam wrong", "we save a point", GREENBG, GREEN)]
+    for i, (t, d, f, c) in enumerate(cases):
         x = 128 + i * 565
-        box(s, x, 320, 533, 420, PAPER, RULE, [h3(t, size=17)] + [body(p, size=14, after=12) for p in ps])
-        box(s, x, 320, 533, 10, ORANGE, radius=False)
-    footer(s, 18)
+        box(s, x, 330, 533, 360, f, c, [dict(t=t, size=26, bold=True, color=NAVY, align="c", after=20),
+                                        dict(t=d, size=24, bold=True, color=c, align="c")], lw=2.5)
+    box(s, 128, 760, 1664, 130, PAPER, RULE, [dict(t="Usual tests count only the left box. CLIMB counts both sides.",
+                                                    size=24, bold=True, color=NAVY, align="c")])
 
-    # 19 close
-    s = new_slide(prs, "close", dark=True)
-    header(s, "Takeaways", "Call the team only when a cheaper answer is not certified", dark=True, size=32, h=120)
-    cols = [("Teams are not uniformly better", "They cost several times a single agent and sometimes lose its correct answers."),
-            ("Signed loss, adaptive test", "A betting test in fixed sequence certifies the cheapest safe policy, with the team as fallback."),
-            ("Savings within the bound", "38% of tokens saved at 5 points, 65% at 10, with failure rates at most 3.4%.")]
+    # 13 tests
+    s = slide("Does the choice of test matter? Every test here is valid, they differ only in how much they can certify. "
+              "A worst-case bound certifies nothing cheaper than the team. Ignoring the saved answers keeps 79 percent "
+              "of tokens. CLIMB's test, which counts both sides and adapts to the variance, keeps 62 percent.")
+    header(s, "How it works", "Counting both sides certifies much more")
+    picture(s, "c_tests.png", 128, 280, 1150, 620)
+    callout(s, 1330, 360, 462, 300, "62%", "of the team’s tokens with CLIMB’s test. A worst-case bound: 100%.", GREEN, GREENBG)
+
+    # 14 setup
+    s = slide("We test on three open models and four benchmarks: math, two open-book question answering sets, "
+              "and hard reasoning. We record every rung for every task once, then replay 200 random splits: "
+              "half to calibrate CLIMB, half to evaluate it.")
+    header(s, "Experiments", "3 models × 4 benchmarks = 12 settings")
+    models = ["gpt-oss-20b", "gpt-oss-120b", "Gemma-4-26B"]
+    benches = [("MATH", "math"), ("FRAMES", "open-book QA"), ("MuSiQue", "open-book QA"), ("BBEH", "hard reasoning")]
+    for j, (b, d) in enumerate(benches):
+        text(s, 480 + j * 320, 290, 300, 80, [dict(t=b, size=22, bold=True, color=NAVY, align="c"),
+                                              dict(t=d, size=16, color=MUTED, align="c")])
+    for i, m in enumerate(models):
+        text(s, 128, 395 + i * 150, 320, 120, [dict(t=m, size=22, bold=True, color=NAVY)], anchor="m")
+        for j, (b, _) in enumerate(benches):
+            acc = TEAM_ACC[i][j]
+            box(s, 480 + j * 320, 395 + i * 150, 300, 120, BLUEBG if i < 2 else ORANGEBG, RULE,
+                [dict(t=f"{acc}%", size=24, bold=True, color=NAVY, align="c"), dict(t="team accuracy", size=13, color=MUTED, align="c")], margin=8)
+    box(s, 128, 870, 1664, 100, NAVY, paras=[dict(t="Record every task once, then replay [[c=F0A66B|200 random splits]]: half to calibrate CLIMB, half to test it.",
+                                             size=18, color=LIGHT, align="c")])
+
+    # 15 promise holds
+    s = slide("Does the promise hold? For each setting, the share of splits where CLIMB lost more than its tolerance. "
+              "The guarantee allows up to 10 percent. We see at most 2 percent. A separate check with 5,000 random "
+              "calibration draws per setting gives at most 3.4 percent.")
+    header(s, "Results", "The promise holds on every setting")
+    picture(s, "c_viol.png", 128, 260, 1150, 700)
+    callout(s, 1330, 360, 462, 300, "≤ 2%", "of splits broke the promise. Allowed: 10%.", GREEN, GREENBG)
+
+    # 16 savings
+    s = slide("How much does it save? Each bar is the share of the team's tokens CLIMB uses. At a 5 point tolerance "
+              "it saves 38 percent on average, at 10 points 65 percent. Savings are smallest where confidence points the "
+              "wrong way, on Gemma, and the guarantee still holds there: CLIMB just calls the team more often.")
+    header(s, "Results", "How much it saves")
+    picture(s, "c_savings.png", 128, 260, 1150, 700)
+    callout(s, 1330, 330, 462, 260, "38% saved", "allowing 5 points of loss", BLUE, BLUEBG)
+    callout(s, 1330, 630, 462, 260, "65% saved", "allowing 10 points of loss", BLUE, BLUEBG)
+
+    # 17 tuned without test
+    s = slide("Why not just tune the threshold on the same data, without the test? It is cheaper on paper, "
+              "but it breaks the promise: at 5 points it fails on 31 percent of splits on average, against at most "
+              "2 percent for CLIMB. A rule tuned to the edge on one sample tends to cross it on the next. "
+              "The extra tokens CLIMB spends are the price of the guarantee.")
+    header(s, "Results", "Without the test, the promise breaks")
+    picture(s, "c_tuned.png", 128, 260, 1150, 700)
+    callout(s, 1330, 360, 462, 300, "31%", "of splits broken at ε = 5 by the tuned rule. CLIMB: 0.6%.", RED, REDBG)
+
+    # 18 takeaways
+    s = slide("To sum up. Agent teams are expensive and sometimes hurt. CLIMB calls them only when cheaper answers "
+              "cannot be certified, keeps a user-chosen accuracy promise, and saves 38 to 65 percent of tokens. "
+              "The guarantee assumes calibration tasks look like deployment tasks. Thank you.", dark=True)
+    header(s, "Takeaways", "Call the team only when you must", dark=True, size=36)
+    cols = [("Teams are costly", "and sometimes break right answers."),
+            ("CLIMB keeps a promise", "you choose the accuracy loss, it finds the cheapest safe rule."),
+            ("38–65% saved", "at 5 and 10 points, with the promise kept.")]
     for i, (t, d) in enumerate(cols):
         x = 128 + i * 565
-        box(s, x, 380, 533, 4, ORANGE_D, radius=False)
-        text(s, x, 400, 533, 200, [h3(t, LIGHT), body(d, size=14, color=SOFT)])
-    text(s, 128, 640, 1664, 110, [body("Scope: the guarantee assumes calibration and deployment share one distribution, so thresholds are best "
-                                       "calibrated on the target tasks. Recalibration takes under a second once records exist.", size=14, color=SOFT)])
-    text(s, 128, 800, 1664, 80, [dict(t="Thank you. Questions?", size=28, bold=True, font=SERIF, color=ORANGE_D)])
+        box(s, x, 330, 533, 6, ORANGE_D, shape=MSO_SHAPE.RECTANGLE)
+        text(s, x, 360, 533, 260, [dict(t=t, size=28, bold=True, font=SERIF, color=LIGHT, after=10),
+                                   say(d, 20, SOFT)])
+    text(s, 128, 740, 1664, 80, [say("Assumes calibration tasks resemble deployment tasks. Recalibrating takes under a second.", 18, SOFT)])
+    text(s, 128, 850, 1664, 90, [dict(t="Thank you. Questions?", size=36, bold=True, font=SERIF, color=ORANGE_D)])
 
     out = HERE / "CLIMB_talk.pptx"
     prs.save(out)
