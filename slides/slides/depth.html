@@ -1,0 +1,31 @@
+<section id="depth" data-transition="fade" style="background:#F7F6F2;color:#3A4150;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#B4541A">Method · deployment</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;font-weight:600;line-height:1.1;color:#14213D">Calibration picks the depth, and the team is the fallback</h2>
+</div>
+<div style="display:flex;gap:32px;align-items:stretch">
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;padding:32px 40px;border:1px solid #DDD8CC;border-left:8px solid #2E5C99;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#14213D">Depth 0, tested at δ/2</h3>
+<p style="font-size:28px;line-height:1.4">Threshold on S₀: stop at L₀ when it is confident.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;padding:32px 40px;border:1px solid #DDD8CC;border-left:8px solid #2E5C99;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#14213D">Depth 1, tested at δ/2</h3>
+<p style="font-size:28px;line-height:1.4">Threshold on S₁ after both rungs: agreement, then L₁’s confidence.</p>
+</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:8px;background:#14213D;padding:32px 40px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#F0A66B">Deploy the cheaper certified policy</h3>
+<p style="font-size:28px;line-height:1.4;color:#C9D1E0">A union bound keeps both certificates valid at once with probability ≥ 1 − δ.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#14213D;padding:32px 40px;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#F0A66B">Nothing certified? Run the team</h3>
+<p style="font-size:28px;line-height:1.4;color:#C9D1E0">Always running the team has zero risk, so it is always admissible.</p>
+</div>
+</div>
+</div>
+<p style="font-size:30px;line-height:1.4;color:#14213D"><b>If tasks and outputs are i.i.d., the deployed policy loses at most ε with probability ≥ 1 − δ.</b> A weak or misleading signal tends to cost savings rather than accuracy.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280;text-align:right">11</p>
+<aside>Whether the second rung pays for itself depends on the model and the task, so CLIMB lets calibration choose. It certifies two one-decision families, each at level delta over two, and deploys the cheaper. If no cheaper policy passes, it runs the full team, so the worst case is no savings. The guarantee needs neither the monotone condition nor a calibrated score, only i.i.d. calibration and deployment tasks, including the model's outputs. It bounds the loss relative to the team, not to the best possible system.</aside>
+</section>

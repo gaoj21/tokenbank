@@ -1,0 +1,10 @@
+<section id="signals" data-transition="fade" style="background:#F7F6F2;color:#3A4150;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#B4541A">Motivation</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;font-weight:600;line-height:1.1;color:#14213D">Cheap answers often suffice, but confidence is a weak signal</h2>
+</div>
+<img src="/_blob/8109ce0a4130d0bcb5f5bf8f557bb972" alt="Three panels: (a) team cost as a multiple of one agent, (b) share of tasks already solved by the direct answer or a single agent, (c) AUROC of the direct answer's confidence per setting" style="width:1350px;height:549px;object-fit:contain;background:#FFFFFF;border-radius:12px;align-self:center">
+<p style="font-size:28px;line-height:1.4">(b) Many tasks the team solves are already solved by L₀ or L₁. (c) L₀’s log-probability AUROC ranges 0.22–0.81 and is inverted on three Gemma settings.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280;text-align:right">4</p>
+<aside>Panel b: a large share of the tasks the team solves are already solved by the direct answer, filled, or by the direct answer or a single agent, outlined. So escalating only when needed could save a lot. Panel c: the obvious signal, the mean token log-probability of the direct answer, separates right from wrong only partly. On Gemma without thinking, greedy decoding falls into confident repetitions, and the ranking is backwards.</aside>
+</section>

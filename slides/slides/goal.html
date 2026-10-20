@@ -1,0 +1,14 @@
+<section id="goal" data-transition="fade" style="background:#14213D;color:#F7F6F2;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#F0A66B">The problem</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:72px;font-weight:600;line-height:1.1;color:#F7F6F2">Minimise cost, subject to a certified bound on the accuracy lost</h2>
+</div>
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;line-height:1.3;color:#F7F6F2;background:#1F2F52;padding:40px 56px;border-radius:16px">min<i> J</i>(π)   s.t.   Pr( <i>R</i>(π̂) &gt; ε ) ≤ δ</p>
+<div style="display:flex;gap:48px">
+<p style="flex:1;font-size:30px;line-height:1.4;color:#C9D1E0"><b style="color:#F7F6F2">J</b>: expected tokens per task.</p>
+<p style="flex:1;font-size:30px;line-height:1.4;color:#C9D1E0"><b style="color:#F7F6F2">R</b>: accuracy lost relative to always running the team.</p>
+<p style="flex:1;font-size:30px;line-height:1.4;color:#C9D1E0"><b style="color:#F7F6F2">ε</b>: the user’s tolerance, e.g. 5 points. <b style="color:#F7F6F2">δ</b> = 10%.</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#8B97AE;text-align:right">6</p>
+<aside>We turn the question into a constrained problem. Minimise expected cost, subject to a bound epsilon on the accuracy lost relative to the team. Since the policy is fitted on a finite calibration sample, the bound holds with probability at least one minus delta over that sample. The constraint is always feasible: always running the team has zero risk.</aside>
+</section>

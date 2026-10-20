@@ -1,0 +1,24 @@
+<section id="signed" data-transition="fade" style="background:#F7F6F2;color:#3A4150;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#B4541A">Method</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;font-weight:600;line-height:1.1;color:#14213D">The loss is signed: skipping the team can also keep answers</h2>
+</div>
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:48px;line-height:1.3;color:#14213D">ℓ  =  Y(team)  −  Y(answer kept)  ∈  {−1, 0, +1}</p>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;padding:40px;border:1px solid #DDD8CC;border-top:8px solid #B03A2E;border-radius:16px">
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:80px;font-weight:600;line-height:1.1;color:#B03A2E">+1</p>
+<p style="font-size:30px;line-height:1.4"><b>Stopping loses</b>: the cheap answer is wrong, the team’s is right.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;padding:40px;border:1px solid #DDD8CC;border-top:8px solid #8A8F99;border-radius:16px">
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:80px;font-weight:600;line-height:1.1;color:#5B6170">0</p>
+<p style="font-size:30px;line-height:1.4"><b>No change</b>: both right or both wrong. Most stopped tasks.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;padding:40px;border:1px solid #DDD8CC;border-top:8px solid #2F6B34;border-radius:16px">
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:80px;font-weight:600;line-height:1.1;color:#2F6B34">−1</p>
+<p style="font-size:30px;line-height:1.4"><b>Stopping saves</b>: the cheap answer is right, the team’s is wrong.</p>
+</div>
+</div>
+<p style="font-size:30px;line-height:1.4;color:#14213D">Clipping the loss at zero ignores the answers stopping saves. Since most losses are zero, a test that adapts to the variance can certify much more.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280;text-align:right">8</p>
+<aside>Because the team sometimes loses answers that a cheaper rung gets right, the per-task loss of stopping is signed. Keeping the sign matters where the team often loses correct answers. And because the loss is zero on most tasks, its variance is small, which a variance-adaptive test can exploit. Both points come back in the results.</aside>
+</section>

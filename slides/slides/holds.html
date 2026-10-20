@@ -1,0 +1,22 @@
+<section id="holds" data-transition="fade" style="background:#F7F6F2;color:#3A4150;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#B4541A">Results</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;font-weight:600;line-height:1.1;color:#14213D">The guarantee holds in practice</h2>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;padding:40px;border:1px solid #DDD8CC;border-radius:16px">
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:96px;font-weight:600;line-height:1.1;color:#2F6B34">≤ 3.4%</p>
+<p style="font-size:30px;line-height:1.4">failure rate over 5,000 i.i.d. calibration draws per setting and tolerance, against δ = 10%</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;padding:40px;border:1px solid #DDD8CC;border-radius:16px">
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:96px;font-weight:600;line-height:1.1;color:#2F6B34">≤ 2%</p>
+<p style="font-size:30px;line-height:1.4">violation rate in the replay at ε = 2, 5 and 10%, and 3% anywhere in the tolerance sweep</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;padding:40px;border:1px solid #DDD8CC;border-radius:16px">
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:96px;font-weight:600;line-height:1.1;color:#2F6B34">12 / 12</p>
+<p style="font-size:30px;line-height:1.4">settings where the mean loss stays within ε: at most 2.8 points at ε = 5%, 7.2 at 10%</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280;text-align:right">13</p>
+<aside>We check the guarantee in two ways. First, we treat each recorded pool as the task distribution, draw calibration sets i.i.d. from it, and compute the deployed policy's exact risk. Over 5,000 draws per setting and tolerance, the failure rate is at most 3.4 percent, with an upper 95 percent limit of 3.9, against the allowed 10. Second, the finite-pool violation rate of the replay is at most 2 percent in the main table.</aside>
+</section>

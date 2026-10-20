@@ -1,0 +1,26 @@
+<section id="threshold" data-transition="fade" style="background:#F7F6F2;color:#3A4150;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#B4541A">Method · structure</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;font-weight:600;line-height:1.1;color:#14213D">When is a confidence threshold optimal?</h2>
+</div>
+<div style="display:flex;gap:40px">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#14213D;padding:48px;border-radius:16px">
+<h3 style="font-size:36px;font-weight:600;color:#F0A66B">(M) Monotone gain</h3>
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:36px;line-height:1.4;color:#F7F6F2">g(s) = E[ Y(team) − Y(cheap) | s ]</p>
+<p style="font-size:30px;line-height:1.4;color:#C9D1E0">g(s) and g(s)/c(s) are non-increasing in the score s. Escalation buys less, per token too, the more confident the cheap answer is.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;padding:32px 40px;border:1px solid #DDD8CC;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#14213D">Threshold optimality</h3>
+<p style="font-size:28px;line-height:1.4">Under (M), the constrained problem is a fractional knapsack solved by a threshold on the score.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;padding:32px 40px;border:1px solid #DDD8CC;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#14213D">Ordered testing is lossless</h3>
+<p style="font-size:28px;line-height:1.4">The safe thresholds form a prefix of the conservative-to-aggressive sequence, and cost falls along it.</p>
+</div>
+</div>
+</div>
+<p style="font-size:30px;line-height:1.4;color:#14213D"><b>(M) shapes the savings, not the guarantee.</b> The risk bound holds whether or not it does.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280;text-align:right">9</p>
+<aside>With one stopping decision, two functions govern the problem: the gain g of escalating at score s, which can be negative, and the tokens c that stopping saves. If both g and g over c fall as confidence rises, filling the knapsack greedily means stopping above a threshold. It also means the safe thresholds come first in the sequence, so testing them in order discards no safe threshold. CLIMB's cost then approaches that of the best threshold as calibration data grow. Importantly, the guarantee itself does not need this condition.</aside>
+</section>

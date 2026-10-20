@@ -1,0 +1,17 @@
+<section id="uncert" data-transition="fade" style="background:#F7F6F2;color:#3A4150;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#B4541A">Motivation</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;font-weight:600;line-height:1.1;color:#14213D">An uncertified threshold can lose a lot, and nothing says where</h2>
+</div>
+<div style="display:flex;gap:80px;align-items:center">
+<img src="/_blob/b80f515fa38b33fdadffe2838d4a43fa" alt="Accuracy loss per setting: a fixed confidence threshold (red) exceeds 5 points on four settings and reaches 16, while CLIMB at a 5-point tolerance (green) stays below 3" style="width:500px;height:594px;object-fit:contain;background:#FFFFFF;border-radius:12px">
+<div style="flex:1;display:flex;flex-direction:column;gap:32px">
+<p style="font-family:'Source Serif 4', Georgia, serif;font-size:96px;font-weight:600;line-height:1.05;color:#B03A2E">up to 16 points</p>
+<p style="font-size:32px;line-height:1.4">lost by a fixed confidence threshold that spends as much as CLIMB on average. It loses over 2 points on 7 of 12 settings.</p>
+<p style="font-size:32px;line-height:1.4">Always stopping at the single agent loses up to 9.4.</p>
+<p style="font-size:32px;line-height:1.4;color:#14213D"><b>Without a bound on the accuracy given up, the savings are hard to trust.</b></p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280;text-align:right">5</p>
+<aside>A confidence threshold can work on average, but it gives no guarantee per setting. With the same average cost as our method, it loses more than 2 points on seven of twelve settings and up to 16. At deployment there is nothing to tell you which settings are the bad ones, so a practitioner may reasonably keep paying for the full pipeline.</aside>
+</section>

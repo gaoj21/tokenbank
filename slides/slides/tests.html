@@ -1,0 +1,31 @@
+<section id="tests" data-transition="fade" style="background:#F7F6F2;color:#3A4150;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#B4541A">Results · ablation</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;font-weight:600;line-height:1.1;color:#14213D">The choice of test matters as much as the signal</h2>
+</div>
+<div style="display:flex;gap:48px;align-items:flex-start">
+<div style="flex:3;display:flex;flex-direction:column;gap:16px">
+<table style="font-size:28px;color:#3A4150">
+<tr style="background:#14213D"><th style="width:40%;color:#F7F6F2">Test (ε = 5%)</th><th style="width:14%;color:#F7F6F2;text-align:right">20b</th><th style="width:14%;color:#F7F6F2;text-align:right">120b</th><th style="width:16%;color:#F7F6F2;text-align:right">Gemma</th><th style="width:16%;color:#F7F6F2;text-align:right">Best</th></tr>
+<tr><td>Hoeffding–Bentkus</td><td style="text-align:right">100</td><td style="text-align:right">100</td><td style="text-align:right">100</td><td style="text-align:right">0/12</td></tr>
+<tr><td>Betting, clipped</td><td style="text-align:right">82</td><td style="text-align:right">75</td><td style="text-align:right">80</td><td style="text-align:right">0/12</td></tr>
+<tr><td>Binomial, clipped</td><td style="text-align:right">79</td><td style="text-align:right">73</td><td style="text-align:right">77</td><td style="text-align:right">3/12</td></tr>
+<tr><td>Betting, Bonferroni</td><td style="text-align:right">92</td><td style="text-align:right">90</td><td style="text-align:right">97</td><td style="text-align:right">0/12</td></tr>
+<tr style="background:#E3ECE2"><td><b>Betting, signed (ours)</b></td><td style="text-align:right"><b>59</b></td><td style="text-align:right"><b>56</b></td><td style="text-align:right"><b>71</b></td><td style="text-align:right"><b>9/12</b></td></tr>
+</table>
+<p style="font-size:24px;color:#6B7280">Tokens certified, % of the team’s. Best: settings where the test is cheapest.</p>
+</div>
+<div style="flex:2;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;padding:32px 40px;border:1px solid #DDD8CC;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#14213D">Adapt to the variance</h3>
+<p style="font-size:28px;line-height:1.4">Most losses are zero. A worst-variance bound certifies nothing cheaper than the team.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#FDFCF9;padding:32px 40px;border:1px solid #DDD8CC;border-radius:16px">
+<h3 style="font-size:32px;font-weight:600;color:#14213D">Keep the sign</h3>
+<p style="font-size:28px;line-height:1.4">Clipping certifies much less where the team often loses answers: 83 vs. 44% on 20b MuSiQue.</p>
+</div>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280;text-align:right">17</p>
+<aside>Every row here is a valid test of the same policy family, so the difference is only in efficiency. Mapped to zero to one, the signed losses sit at one half, and Hoeffding-Bentkus, which assumes the worst variance at that mean, certifies nothing. Clipping the loss to the harm indicator ignores the answers stopping saves. The exact binomial test of the clipped loss wins only on three settings, two of them on MATH, where the team rarely loses correct answers. Bonferroni in place of sequential testing loses most of the rest.</aside>
+</section>

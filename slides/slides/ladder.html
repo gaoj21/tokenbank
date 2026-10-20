@@ -1,0 +1,17 @@
+<section id="ladder" data-transition="fade" style="background:#F7F6F2;color:#3A4150;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:24px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#B4541A">Method</p>
+<h2 style="font-family:'Source Serif 4', Georgia, serif;font-size:60px;font-weight:600;line-height:1.1;color:#14213D">CLIMB: a ladder of cheaper configurations of the same model</h2>
+</div>
+<div style="display:flex;gap:64px;align-items:center">
+<img src="/_blob/1fc090a1688ce070a83cac7cd1b6ac80" alt="The ladder: direct answer L0, then single agent L1, then the multi-agent team of planner, executor and reviewer. Depth 0 stops at L0 when its score exceeds a threshold, depth 1 stops at L1, otherwise the team runs" style="width:760px;height:590px;object-fit:contain;background:#FFFFFF;border-radius:12px">
+<div style="flex:1;display:flex;flex-direction:column;gap:28px">
+<p style="font-size:30px;line-height:1.4"><b style="color:#2E5C99">L₀, direct answer</b> at the cheapest reasoning setting, greedy.</p>
+<p style="font-size:30px;line-height:1.4"><b style="color:#2E5C99">L₁, single agent</b> at the team’s own setting, from scratch, without L₀’s answer.</p>
+<p style="font-size:30px;line-height:1.4"><b style="color:#B4541A">Team</b>: planner, executor, reviewer, up to 5 rounds. The reference.</p>
+<p style="font-size:30px;line-height:1.4">Scores: S₀ = L₀’s mean token log-probability. S₁ = 10·1[a₀ = a₁] + s̄₁, so agreeing tasks rank first.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280;text-align:right">7</p>
+<aside>A task climbs a ladder. The direct answer is the cheapest rung. The single agent is the team's executor without a plan or a review. Calibration chooses one depth: stop at the direct answer when it is confident, or run both cheap rungs and stop at the single agent, agreeing tasks first. Every other task runs the full team from scratch. Both scores are free: log-probabilities come with the call, and agreement needs no extra call because L1 never sees L0's answer.</aside>
+</section>
