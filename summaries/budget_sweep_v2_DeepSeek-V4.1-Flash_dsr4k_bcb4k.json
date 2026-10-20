@@ -1,0 +1,47 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    4000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "BCB-Naive",
+      "success_rate": 0.056,
+      "cps": 7.1428571428571436e-06,
+      "mean_tokens": 923.382,
+      "cost": 0.0002
+    },
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "BCB-Ab7",
+      "success_rate": 0.144,
+      "cps": 0.000651388888888889,
+      "mean_tokens": 2440.05,
+      "cost": 0.046900000000000004
+    }
+  ],
+  "agg": [
+    {
+      "budget": 4000,
+      "name": "BCB-Naive",
+      "sr_mean": 0.056,
+      "sr_std": 0.0,
+      "cps_mean": 7.1428571428571436e-06,
+      "tokens_mean": 923.382
+    },
+    {
+      "budget": 4000,
+      "name": "BCB-Ab7",
+      "sr_mean": 0.144,
+      "sr_std": 0.0,
+      "cps_mean": 0.000651388888888889,
+      "tokens_mean": 2440.05
+    }
+  ]
+}

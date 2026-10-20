@@ -1,0 +1,32 @@
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llcccccc@{}}
+\toprule
+& & & \multicolumn{3}{c}{\climb{}} & \\
+\cmidrule(lr){4-6}
+Model & Benchmark & Pipeline & $\eps = 2\%$ & $\eps = 5\%$ & $\eps = 10\%$ & Viol. \\
+\midrule
+\multirow{4}{*}{gpt-oss-20b} & MATH & 94.8 / 6.1k & 94.7 / 100\% & 92.9 / 62\% & 89.6 / \textbf{33\%} & 0.0\% \\
+ & FRAMES & 76.1 / 93.9k & 75.9 / 99\% & 73.6 / 66\% & 70.8 / \textbf{33\%} & 1.0\% \\
+ & MuSiQue & 64.9 / 15.0k & 64.5 / 84\% & 63.0 / \textbf{44\%} & 58.1 / \textbf{31\%} & 1.0\% \\
+ & BBEH & 28.0 / 59.7k & 27.4 / 98\% & 26.2 / 63\% & 24.7 / \textbf{22\%} & 2.0\% \\
+\midrule
+\multirow{4}{*}{gpt-oss-120b} & MATH & 97.0 / 5.4k & 96.9 / 100\% & 95.3 / \textbf{41\%} & 92.7 / \textbf{18\%} & 0.0\% \\
+ & FRAMES & 79.8 / 84.8k & 79.6 / 97\% & 78.4 / 63\% & 75.1 / \textbf{32\%} & 1.0\% \\
+ & MuSiQue & 71.1 / 12.4k & 70.4 / 91\% & 70.0 / \textbf{46\%} & 64.0 / \textbf{29\%} & 2.0\% \\
+ & BBEH & 45.1 / 53.3k & 44.6 / 99\% & 42.8 / 75\% & 39.5 / \textbf{40\%} & 0.5\% \\
+\midrule
+\multirow{4}{*}{Gemma-4-26B-A4B-it} & MATH & 99.8 / 10.4k & \textbf{99.8} / 100\% & 98.1 / \textbf{31\%} & 98.0 / \textbf{20\%} & 0.0\% \\
+ & FRAMES & 67.9 / 174.6k & \textbf{68.0} / 96\% & 66.4 / 86\% & 62.8 / 62\% & 1.0\% \\
+ & MuSiQue & 65.3 / 50.2k & \textbf{65.3} / 95\% & 62.7 / 69\% & 61.3 / \textbf{33\%} & 0.0\% \\
+ & BBEH & 36.4 / 120.2k & 36.1 / 100\% & 33.5 / 96\% & 29.2 / 62\% & 1.5\% \\
+\bottomrule
+\end{tabular*}
+\caption{Replay results: accuracy / tokens as a share of the pipeline's (pipeline: accuracy / mean tokens), averaged over
+200 calibration/evaluation splits. \climb{} stops at $L_0$ on its log-probability or, depending on the depth chosen on the calibration half, at $L_1$ on agreement with $L_0$ and
+its log-probability. Viol.\ is the largest share of splits, over the three
+tolerances, in which the chosen policy's loss on the full recorded pool exceeds $\eps$. Bold: under 50\% of the pipeline's
+tokens, or at least as accurate as the pipeline.}
+\label{tab:main}
+\end{table*}

@@ -1,0 +1,30 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    16000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "Unconstrained",
+      "success_rate": 0.798,
+      "cps": 0.0011536340852130325,
+      "mean_tokens": 3803.388,
+      "cost": 0.4603
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "Unconstrained",
+      "sr_mean": 0.798,
+      "sr_std": 0.0,
+      "cps_mean": 0.0011536340852130325,
+      "tokens_mean": 3803.388
+    }
+  ]
+}

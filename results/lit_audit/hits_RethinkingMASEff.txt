@@ -1,0 +1,2 @@
+1295: max length 512
+1362:set part of the protocol rather than part of the call uses max_tokens = 2048 as the per-call gen-

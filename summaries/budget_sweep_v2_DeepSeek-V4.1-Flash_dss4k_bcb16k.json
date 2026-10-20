@@ -1,0 +1,30 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    16000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "BCB-Single-4k",
+      "success_rate": 0.508,
+      "cps": 9.488188976377953e-05,
+      "mean_tokens": 1930.968,
+      "cost": 0.0241
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "BCB-Single-4k",
+      "sr_mean": 0.508,
+      "sr_std": 0.0,
+      "cps_mean": 9.488188976377953e-05,
+      "tokens_mean": 1930.968
+    }
+  ]
+}

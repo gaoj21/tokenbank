@@ -1,0 +1,47 @@
+{
+  "model": "qwen3.8-27b-fp8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Single-Fmt-1k",
+      "success_rate": 0.11363636363636363,
+      "cps": 0.0,
+      "mean_tokens": 710.2045454545455,
+      "cost": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Single-Fmt-2k",
+      "success_rate": 0.11969696969696969,
+      "cps": 0.0003126582278481013,
+      "mean_tokens": 1098.8818181818183,
+      "cost": 0.0247
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5-Single-Fmt-1k",
+      "sr_mean": 0.11363636363636363,
+      "sr_std": 0.0,
+      "cps_mean": 0.0,
+      "tokens_mean": 710.2045454545455
+    },
+    {
+      "budget": 24000,
+      "name": "V5-Single-Fmt-2k",
+      "sr_mean": 0.11969696969696969,
+      "sr_std": 0.0,
+      "cps_mean": 0.0003126582278481013,
+      "tokens_mean": 1098.8818181818183
+    }
+  ]
+}

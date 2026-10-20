@@ -1,0 +1,30 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    16000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "V5.1-Ab7-NoVerbal",
+      "success_rate": 0.6725,
+      "cps": 0.00015464684014869888,
+      "mean_tokens": 3609.985,
+      "cost": 0.0416
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "V5.1-Ab7-NoVerbal",
+      "sr_mean": 0.6725,
+      "sr_std": 0.0,
+      "cps_mean": 0.00015464684014869888,
+      "tokens_mean": 3609.985
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+MATH {'0.05': [86, 1.0], '0.1': [84, 1.0], '0.2': [65, 7.0]} {'50': [95, 2.0], '100': [92, 1.0], '200': [78, 5.0]}
+GAIA {'0.05': [99, 0.0], '0.1': [92, 0.0], '0.2': [70, 0.0]} {'50': [90, 0.0], '61': [92, 0.0]}
+FRAMES {'0.05': [53, 0.0], '0.1': [48, 0.0], '0.2': [29, 0.0]} {'50': [95, 0.0], '100': [82, 0.0], '200': [63, 0.0], '330': [42, 0.0]}
+MuSiQue {'0.05': [5, 0.0], '0.1': [5, 0.0], '0.2': [5, 0.0]} {'50': [90, 0.0], '100': [48, 0.0], '200': [16, 0.0], '967': [5, 0.0]}
+calibrated on MATH -> {'GAIA': {'threshold': 'direct', 'tok': 100, 'risk': 0}, 'FRAMES': {'threshold': 'direct', 'tok': 100, 'risk': 0}, 'MuSiQue': {'threshold': 'direct', 'tok': 100, 'risk': 0}}
+calibrated on GAIA -> {'MATH': {'threshold': 'direct', 'tok': 100, 'risk': 0}, 'FRAMES': {'threshold': 'direct', 'tok': 100, 'risk': 0}, 'MuSiQue': {'threshold': 'direct', 'tok': 100, 'risk': 0}}
+calibrated on FRAMES -> {'MATH': {'threshold': -0.165, 'tok': 20, 'risk': 4.5}, 'GAIA': {'threshold': -0.165, 'tok': 29, 'risk': -0.8}, 'MuSiQue': {'threshold': -0.165, 'tok': 22, 'risk': -1.2}}
+calibrated on MuSiQue -> {'MATH': {'threshold': -0.45, 'tok': 11, 'risk': 6.2}, 'GAIA': {'threshold': -0.45, 'tok': 6, 'risk': 1.6}, 'FRAMES': {'threshold': -0.45, 'tok': 7, 'risk': 3.2}}

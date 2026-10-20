@@ -1,0 +1,47 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "SS-Static",
+      "success_rate": 0.28688524590163933,
+      "cps": 0.0015571428571428572,
+      "mean_tokens": 14941.418032786885,
+      "cost": 0.0545
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "SS-Static-Keep",
+      "success_rate": 0.27049180327868855,
+      "cps": 0.0012212121212121212,
+      "mean_tokens": 10888.803278688525,
+      "cost": 0.0403
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "SS-Static",
+      "sr_mean": 0.28688524590163933,
+      "sr_std": 0.0,
+      "cps_mean": 0.0015571428571428572,
+      "tokens_mean": 14941.418032786885
+    },
+    {
+      "budget": 24000,
+      "name": "SS-Static-Keep",
+      "sr_mean": 0.27049180327868855,
+      "sr_std": 0.0,
+      "cps_mean": 0.0012212121212121212,
+      "tokens_mean": 10888.803278688525
+    }
+  ]
+}

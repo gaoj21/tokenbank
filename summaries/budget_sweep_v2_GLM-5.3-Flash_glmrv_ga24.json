@@ -1,0 +1,64 @@
+{
+  "model": "GLM-5.3-Flash-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-CritOnly",
+      "success_rate": 0.13114754098360656,
+      "cps": 0.00444375,
+      "mean_tokens": 19407.319672131147,
+      "cost": 0.0711
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-CritOnly-R1k",
+      "success_rate": 0.22950819672131148,
+      "cps": 0.0019857142857142855,
+      "mean_tokens": 15188.459016393443,
+      "cost": 0.0556
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-Slots-R1k",
+      "success_rate": 0.22950819672131148,
+      "cps": 0.0019357142857142856,
+      "mean_tokens": 14865.204918032787,
+      "cost": 0.0542
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "ST-CritOnly",
+      "sr_mean": 0.13114754098360656,
+      "sr_std": 0.0,
+      "cps_mean": 0.00444375,
+      "tokens_mean": 19407.319672131147
+    },
+    {
+      "budget": 24000,
+      "name": "ST-CritOnly-R1k",
+      "sr_mean": 0.22950819672131148,
+      "sr_std": 0.0,
+      "cps_mean": 0.0019857142857142855,
+      "tokens_mean": 15188.459016393443
+    },
+    {
+      "budget": 24000,
+      "name": "ST-Slots-R1k",
+      "sr_mean": 0.22950819672131148,
+      "sr_std": 0.0,
+      "cps_mean": 0.0019357142857142856,
+      "tokens_mean": 14865.204918032787
+    }
+  ]
+}

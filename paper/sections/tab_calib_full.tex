@@ -1,0 +1,27 @@
+\begin{table*}[p]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrrrrrrrrr@{}}
+\toprule
+Test ($\eps{=}5\%$) & \multicolumn{4}{c}{20b} & \multicolumn{4}{c}{120b} & \multicolumn{4}{c}{Gemma} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}\cmidrule(lr){10-13}
+ & M & F & Q & E & M & F & Q & E & M & F & Q & E \\
+\midrule
+Hoeffding--Bentkus, signed loss in $[0,1]$ & 100 & 100 & 100 & 100 & 100 & 100 & 100 & 100 & 100 & 100 & 100 & 100 \\
+Hoeffding, signed loss in $[0,1]$ & 100 & 100 & 100 & 100 & 100 & 100 & 100 & 100 & 100 & 100 & 100 & 100 \\
+Betting, clipped loss & 71 & 85 & 83 & 89 & 43 & 90 & 75 & 89 & 34 & 95 & 96 & 95 \\
+Hoeffding--Bentkus, clipped loss & 73 & 84 & 84 & 90 & 44 & 92 & 76 & 91 & 36 & 95 & 95 & 97 \\
+Binomial, clipped loss & 65 & 80 & 82 & 87 & \textbf{40} & 88 & 74 & 88 & \textbf{25} & 94 & 94 & \textbf{93} \\
+Betting, signed loss, Bonferroni & 100 & 98 & 73 & 96 & 100 & 97 & 67 & 97 & 100 & 98 & 91 & 100 \\
+\midrule
+Betting, signed loss (ours) & \textbf{63} & \textbf{65} & \textbf{44} & \textbf{66} & 41 & \textbf{61} & \textbf{47} & \textbf{76} & 34 & \textbf{86} & \textbf{71} & 94 \\
+\bottomrule
+\end{tabular}
+\caption{Tokens (\% of the pipeline's) certified at $\eps = 5\%$ by different tests of the same deployed family, over
+100 splits. The signed loss $\ell \in \{-1,0,1\}$ is mapped to $(\ell+1)/2$ with the tolerance mapped to $(\eps+1)/2$ for the
+bounded-range tests, as in \citet{wynn2026corrupted}. The clipped loss $\max(\ell, 0)$ is the harm indicator. All tests
+are fixed-sequence except Bonferroni, which divides $\delta$ by the number of candidates. Bold: cheapest. M/F/Q/E:
+MATH/FRAMES/MuSiQue/BBEH.}
+\label{tab:calibfull}
+\end{table*}

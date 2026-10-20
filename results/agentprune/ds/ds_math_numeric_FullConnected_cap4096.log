@@ -1,0 +1,49 @@
+/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/class_registry/entry_points.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import iter_entry_points
+Batch 0 --------------------------------------------------------------------------------
+Error during execution of node BcWz: 
+Batch time 694.214
+Accuracy: 0.90625
+utilities: [True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, True, True]
+Batch 1 --------------------------------------------------------------------------------
+Batch time 1862.007
+Accuracy: 0.875
+utilities: [False, True, True, True, True, True, False, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True]
+Batch 2 --------------------------------------------------------------------------------
+Batch time 188.450
+Accuracy: 0.875
+utilities: [True, True, True, True, True, True, False, True, True, True, True, False, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True]
+Batch 3 --------------------------------------------------------------------------------
+Error during execution of node BcWz: 
+Batch time 729.675
+Accuracy: 0.8984375
+utilities: [True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+Batch 4 --------------------------------------------------------------------------------
+Error during execution of node BcWz: 
+Batch time 711.774
+Accuracy: 0.90625
+utilities: [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, False, True, True, True, True, True, True, True, True]
+Batch 5 --------------------------------------------------------------------------------
+Batch time 116.813
+Accuracy: 0.921875
+utilities: [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+Batch 6 --------------------------------------------------------------------------------
+Error during execution of node wXN6: 
+Batch time 1901.222
+Accuracy: 0.9151785714285714
+utilities: [True, True, True, True, True, True, True, True, True, True, False, True, False, True, True, True, True, True, True, True, True, False, True, True, True, False, True, True, True, True, True, True]
+Batch 7 --------------------------------------------------------------------------------
+Error during execution of node BcWz: 
+Batch time 805.476
+Accuracy: 0.91796875
+utilities: [True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True]
+Batch 8 --------------------------------------------------------------------------------
+Error during execution of node Q8LK: 
+Batch time 1843.603
+Accuracy: 0.9201388888888888
+utilities: [True, True, True, True, True, True, True, False, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+Batch 9 --------------------------------------------------------------------------------
+Batch time 170.105
+Accuracy: 0.91875
+utilities: [True, False, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False]
+DONE

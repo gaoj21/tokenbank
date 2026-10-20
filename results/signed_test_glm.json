@@ -1,0 +1,70 @@
+{
+ "MATH": {
+  "binom": {
+   "tok": 76,
+   "acc": 68.0,
+   "viol": 0.5
+  },
+  "betting": {
+   "tok": 67,
+   "acc": 67.5,
+   "viol": 8.0
+  },
+  "pipeline_acc": 69.2,
+  "always_L1": [
+   64.2,
+   12
+  ]
+ },
+ "GAIA": {
+  "binom": {
+   "tok": 78,
+   "acc": 27.2,
+   "viol": 2.5
+  },
+  "betting": {
+   "tok": 100,
+   "acc": 27.3,
+   "viol": 0.0
+  },
+  "pipeline_acc": 27.3,
+  "always_L1": [
+   26.4,
+   7
+  ]
+ },
+ "FRAMES": {
+  "binom": {
+   "tok": 58,
+   "acc": 29.4,
+   "viol": 0.0
+  },
+  "betting": {
+   "tok": 16,
+   "acc": 28.6,
+   "viol": 0.0
+  },
+  "pipeline_acc": 28.8,
+  "always_L1": [
+   28.3,
+   9
+  ]
+ },
+ "MuSiQue": {
+  "binom": {
+   "tok": 24,
+   "acc": 19.1,
+   "viol": 0.0
+  },
+  "betting": {
+   "tok": 4,
+   "acc": 18.4,
+   "viol": 0.0
+  },
+  "pipeline_acc": 18.7,
+  "always_L1": [
+   19.3,
+   8
+  ]
+ }
+}

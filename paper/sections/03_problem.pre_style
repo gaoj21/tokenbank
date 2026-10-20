@@ -1,0 +1,32 @@
+\subsection{Escalation as a constrained decision}
+\label{sec:problem}
+
+A task $x$ climbs a ladder of cheap rungs $k = 0, \dots, K-1$ of increasing cost, cheaper configurations of
+the same model that stop short of the full pipeline. Rung $k$ returns an answer with correctness $Y_k \in \{0,1\}$ and a score
+$S_k$, a fixed function of the outputs so far; stopping there costs the cumulative $C_k$. After the last cheap rung
+the system \emph{escalates} to the full pipeline, the \emph{reference}, with correctness
+$Y_{\mathrm{ref}}$ at additional cost $C_{\mathrm{ref}}$. A policy $\pi$ either runs the reference directly
+($\varnothing$) or climbs and stops according to the scores. Its risk is the accuracy it gives up relative
+to the reference, $R(\pi) = \E[Y_{\mathrm{ref}} - Y_\pi]$, and its cost is $J(\pi) = \E[C_\pi]$, with
+$R(\varnothing) = 0$. A policy $\hat\pi$ fitted on $n$ labelled calibration tasks is
+$(\eps,\delta)$-\emph{risk-controlled} if
+\begin{equation}
+  \Pr\!\left(R(\hat\pi)>\eps\right) \le \delta,
+  \label{eq:risk-control}
+\end{equation}
+over the calibration sample: except with probability $\delta$, it gives up at most $\eps$ accuracy
+relative to the pipeline. The \emph{constrained problem} is
+\begin{equation}
+  \min_\pi \ J(\pi) \quad \text{s.t.} \quad R(\pi) \le \eps ,
+  \label{eq:constrained}
+\end{equation}
+which is strictly feasible for every $\eps > 0$ because $\varnothing$ has zero risk.
+
+\paragraph{One decision.} With a single stopping point on a score $S$, a policy stops with probability
+$\pi(s)$, its risk is $R(\pi) = \E[(Y_{\mathrm{ref}} - Y_c)\,\pi(S)]$ for the cheap answer's correctness
+$Y_c$, and two quantities govern the problem, the accuracy escalation buys and the tokens stopping saves ($c > 0$), given $S = s$:
+\begin{equation}
+  g(s) = \E[Y_{\mathrm{ref}} - Y_c \mid s], \quad c(s) = \E[C_{\mathrm{ref}} \mid s] .
+  \label{eq:gain}
+\end{equation}
+The gain $g$ can be negative where the pipeline misses more answers the cheap rung gets right than it fixes.

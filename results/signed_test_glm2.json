@@ -1,0 +1,86 @@
+{
+ "MATH": {
+  "binom": {
+   "tok": 76,
+   "acc": 67.9,
+   "viol_eval": 0.0,
+   "viol_pool": 0.0
+  },
+  "betting": {
+   "tok": 69,
+   "acc": 67.7,
+   "viol_eval": 3.5,
+   "viol_pool": 0.5
+  },
+  "combined": {
+   "tok": 76,
+   "acc": 67.9,
+   "viol_eval": 1.0,
+   "viol_pool": 0.0
+  },
+  "pipeline_acc": 69.2
+ },
+ "GAIA": {
+  "binom": {
+   "tok": 78,
+   "acc": 27.0,
+   "viol_eval": 2.0,
+   "viol_pool": 0.0
+  },
+  "betting": {
+   "tok": 100,
+   "acc": 27.3,
+   "viol_eval": 0.0,
+   "viol_pool": 0.0
+  },
+  "combined": {
+   "tok": 78,
+   "acc": 27.0,
+   "viol_eval": 2.0,
+   "viol_pool": 0.0
+  },
+  "pipeline_acc": 27.3
+ },
+ "FRAMES": {
+  "binom": {
+   "tok": 57,
+   "acc": 29.4,
+   "viol_eval": 0.0,
+   "viol_pool": 0.0
+  },
+  "betting": {
+   "tok": 14,
+   "acc": 28.5,
+   "viol_eval": 0.0,
+   "viol_pool": 0.0
+  },
+  "combined": {
+   "tok": 22,
+   "acc": 28.6,
+   "viol_eval": 0.0,
+   "viol_pool": 0.0
+  },
+  "pipeline_acc": 28.8
+ },
+ "MuSiQue": {
+  "binom": {
+   "tok": 26,
+   "acc": 19.2,
+   "viol_eval": 0.0,
+   "viol_pool": 0.0
+  },
+  "betting": {
+   "tok": 4,
+   "acc": 18.5,
+   "viol_eval": 0.0,
+   "viol_pool": 0.0
+  },
+  "combined": {
+   "tok": 4,
+   "acc": 18.5,
+   "viol_eval": 0.0,
+   "viol_pool": 0.0
+  },
+  "pipeline_acc": 18.7
+ }
+}

@@ -1,0 +1,28 @@
+#!/bin/bash
+# The ONLY correct way to build this paper. There is no system LaTeX on this host
+# (glibc too old for the official tectonic binary); the working tectonic is a
+# conda-forge build living in the scratchpad. Calling `pdflatex` here fails with
+# "command not found", and if you redirect its stderr you will read the page count
+# off the STALE main.pdf and believe the build succeeded. It did not.
+set -e
+cd "$(dirname "$0")"
+T=/tmp/claude-1001/-home-j0018-Desktop-tokenbank/f14fef7e-adf9-443b-9307-5c07475168b4/scratchpad/texenv/bin/tectonic
+[ -x "$T" ] || { echo "tectonic missing; conda create -y -p ./texenv -c conda-forge tectonic"; exit 1; }
+N=${1:-main}   # ./build.sh main_named builds the non-anonymous copy
+mkdir -p build
+"$T" -X compile $N.tex --outdir build
+cp build/$N.pdf $N.pdf
+echo "built $(pdfinfo $N.pdf | awk '/Pages/{print $2}') pages -> $N.pdf"
+# Check the PDF, not the log. tectonic writes warnings to stdout and never puts
+# "undefined reference" in main.log, so grepping the log always reported success
+# while the rendered page said "??". Check the artifact instead of the process's
+# own account of itself.
+if pdftotext $N.pdf - 2>/dev/null | grep -qE '\?\?'; then
+  echo "UNDEFINED REFS: the PDF renders '??' -- these labels do not resolve:"
+  grep -oE '\\(ref|cref|eqref)\{[^}]+\}' $N.tex | sort -u | while read -r r; do
+    lbl=$(echo "$r" | sed -E 's/.*\{(.*)\}/\1/')
+    grep -q "\\label{$lbl}" $N.tex || echo "  missing: $lbl"
+  done
+else
+  echo "no undefined refs"
+fi

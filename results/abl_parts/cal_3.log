@@ -1,0 +1,4 @@
+calib MATH {'combined': [82, 5.0], 'binom': [100, 0.0], 'betting': [69, 7.5], 'bonf': [100, 0.0], 'hoef_h': [100, 0.0], 'hoef_l': [100, 0.0]}
+calib GAIA {'combined': [96, 0.0], 'binom': [100, 0.0], 'betting': [84, 0.0], 'bonf': [100, 0.0], 'hoef_h': [100, 0.0], 'hoef_l': [100, 0.0]}
+calib FRAMES {'combined': [66, 0.0], 'binom': [100, 0.0], 'betting': [55, 0.0], 'bonf': [100, 0.0], 'hoef_h': [100, 0.0], 'hoef_l': [100, 0.0]}
+calib MuSiQue {'combined': [5, 0.0], 'binom': [24, 0.0], 'betting': [5, 0.0], 'bonf': [62, 0.0], 'hoef_h': [99, 0.0], 'hoef_l': [47, 0.0]}

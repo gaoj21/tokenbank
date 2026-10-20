@@ -1,0 +1,64 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    16000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "V5-Unconstrained",
+      "success_rate": 0.43,
+      "cps": 0.00028488372093023255,
+      "mean_tokens": 3652.115,
+      "cost": 0.049
+    },
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "V5-Unc-Fmt",
+      "success_rate": 0.5575,
+      "cps": 0.00022690582959641255,
+      "mean_tokens": 3729.1375,
+      "cost": 0.0506
+    },
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "V5.2-ReasonLadder",
+      "success_rate": 0.61,
+      "cps": 6.229508196721311e-05,
+      "mean_tokens": 1701.87,
+      "cost": 0.0152
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "V5-Unconstrained",
+      "sr_mean": 0.43,
+      "sr_std": 0.0,
+      "cps_mean": 0.00028488372093023255,
+      "tokens_mean": 3652.115
+    },
+    {
+      "budget": 16000,
+      "name": "V5-Unc-Fmt",
+      "sr_mean": 0.5575,
+      "sr_std": 0.0,
+      "cps_mean": 0.00022690582959641255,
+      "tokens_mean": 3729.1375
+    },
+    {
+      "budget": 16000,
+      "name": "V5.2-ReasonLadder",
+      "sr_mean": 0.61,
+      "sr_std": 0.0,
+      "cps_mean": 6.229508196721311e-05,
+      "tokens_mean": 1701.87
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    10000000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 10000000,
+      "name": "BCB-Naive",
+      "success_rate": 0.783068783068783,
+      "cps": 0.00015135135135135134,
+      "mean_tokens": 3877.936507936508,
+      "cost": 0.0224
+    }
+  ],
+  "agg": [
+    {
+      "budget": 10000000,
+      "name": "BCB-Naive",
+      "sr_mean": 0.783068783068783,
+      "sr_std": 0.0,
+      "cps_mean": 0.00015135135135135134,
+      "tokens_mean": 3877.936507936508
+    }
+  ]
+}

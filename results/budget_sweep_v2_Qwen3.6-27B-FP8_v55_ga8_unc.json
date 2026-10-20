@@ -1,0 +1,30 @@
+{
+  "model": "Qwen/Qwen3.6-27B-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    8000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "V5-Unconstrained",
+      "success_rate": 0.13114754098360656,
+      "cps": 0.00135625,
+      "mean_tokens": 6055.893442622951,
+      "cost": 0.0217
+    }
+  ],
+  "agg": [
+    {
+      "budget": 8000,
+      "name": "V5-Unconstrained",
+      "sr_mean": 0.13114754098360656,
+      "sr_std": 0.0,
+      "cps_mean": 0.00135625,
+      "tokens_mean": 6055.893442622951
+    }
+  ]
+}

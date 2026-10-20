@@ -1,0 +1,19 @@
+\begin{table}[h]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Calibrated on $\downarrow$ / deployed on $\rightarrow$ & MATH & GAIA & FRAMES & MuSiQue \\
+\midrule
+MATH & -- & 59\% / $-3.3$ & 49\% / $+5.2$ & 51\% / $+1.8$ \\
+GAIA & 100\% / $+0.0$ & -- & 100\% / $+0.0$ & 100\% / $+0.0$ \\
+FRAMES & 63\% / $+1.5$ & 75\% / $-0.8$ & -- & 68\% / $+0.5$ \\
+MuSiQue & 20\% / $+6.0$ & 29\% / $-0.8$ & 19\% / $+7.6$ & -- \\
+\bottomrule
+\end{tabular}}
+\caption{Distribution shift (GLM, $\eps = 5\%$): tokens / risk (points) when the threshold calibrated on one benchmark is
+deployed on another. Risk above 5 violates the tolerance.}
+\label{tab:shift}
+\end{table}

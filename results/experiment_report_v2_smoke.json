@@ -1,0 +1,76 @@
+{
+  "timestamp": "2026-07-27T09:09:07.660812",
+  "benchmark": "GAIA",
+  "mock_mode": false,
+  "primary_model": "deepseek-v4-pro",
+  "configurations": [
+    {
+      "name": "Unconstrained",
+      "success_rate": 0.0,
+      "mean_tokens": 7439.3,
+      "std_tokens": 3881.3,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0.0182,
+      "cost_per_success": 0.0182,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "Static Quota",
+      "success_rate": 0.0,
+      "mean_tokens": 2100.7,
+      "std_tokens": 890.6,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0.0053,
+      "cost_per_success": 0.0053,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "TB-v1 (Hard)",
+      "success_rate": 0.0,
+      "mean_tokens": 0.0,
+      "std_tokens": 0.0,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0,
+      "cost_per_success": 0.0,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "TB-v2-Full",
+      "success_rate": 0.0,
+      "mean_tokens": 2577.3,
+      "std_tokens": 351.2,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0.0063,
+      "cost_per_success": 0.0063,
+      "mean_borrows": 1.0
+    },
+    {
+      "name": "TB-v2-Grace",
+      "success_rate": 0.0,
+      "mean_tokens": 2382.0,
+      "std_tokens": 434.0,
+      "overrun_rate": 0.3333,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0.0059,
+      "cost_per_success": 0.0059,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "TB-v2-Throttle",
+      "success_rate": 0.0,
+      "mean_tokens": 2663.3,
+      "std_tokens": 347.4,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0.0063,
+      "cost_per_success": 0.0063,
+      "mean_borrows": 1.33
+    }
+  ],
+  "ablation": [],
+  "sensitivity_theta": []
+}

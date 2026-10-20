@@ -1,0 +1,32 @@
+\begin{table*}[h]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.6pt}
+\begin{tabular}{@{}lrrrrrrrrrrrrrr@{}}
+\toprule
+ & \multicolumn{4}{c}{20b} & \multicolumn{4}{c}{120b} & \multicolumn{4}{c}{Gemma} & & \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}\cmidrule(lr){10-13}
+Variant & M & F & Q & E & M & F & Q & E & M & F & Q & E & Mean & Viol. \\
+\midrule
+\multicolumn{15}{@{}l}{\emph{$\eps = 5\%$}} \\
+Reference: the team's first draft & 61 & 85 & 64 & 91 & 33 & 65 & 70 & 72 & 38 & 100 & 97 & 97 & 73 & 2.0\% \\
+Reference: the single agent $L_1$ & 79 & 99 & 99 & 93 & 80 & 99 & 100 & 100 & 26 & 100 & 100 & 96 & 89 & 3.0\% \\
+\addlinespace[2pt]
+Random score & 81 & 79 & 51 & 72 & 49 & 72 & 47 & 86 & 42 & \textbf{78} & \textbf{54} & \textbf{90} & 67 & 2.1\% \\
+Agreement only & 80 & 89 & 57 & 89 & 44 & 71 & 47 & 87 & 99 & 99 & 83 & 100 & 79 & 3.0\% \\
+Log-prob.\ only & 72 & 67 & \textbf{44} & \textbf{54} & \textbf{41} & 64 & \textbf{46} & 91 & \textbf{31} & 100 & 99 & 97 & 67 & 2.0\% \\
+Log-prob.\ and agreement (\climb{}) & \textbf{62} & \textbf{66} & \textbf{44} & 63 & \textbf{41} & \textbf{63} & \textbf{46} & \textbf{75} & \textbf{31} & 86 & 69 & 96 & \textbf{62} & 2.0\% \\
+\midrule
+\multicolumn{15}{@{}l}{\emph{$\eps = 10\%$}} \\
+Reference: the team's first draft & 27 & 50 & 35 & 65 & 21 & 46 & 38 & 66 & 28 & 69 & 36 & 65 & 45 & 2.0\% \\
+Reference: the single agent $L_1$ & 51 & 94 & 83 & 56 & 61 & 89 & 92 & 88 & 26 & 80 & 35 & 53 & 67 & 3.0\% \\
+\addlinespace[2pt]
+Random score & 36 & 35 & 33 & 23 & \textbf{18} & 36 & 37 & 47 & \textbf{19} & \textbf{34} & \textbf{12} & \textbf{61} & \textbf{33} & 2.1\% \\
+Agreement only & 40 & 51 & 41 & 26 & 38 & 58 & 46 & 69 & 99 & 70 & 41 & 95 & 56 & 3.0\% \\
+Log-prob.\ only & \textbf{33} & \textbf{33} & \textbf{31} & \textbf{22} & \textbf{18} & \textbf{32} & \textbf{29} & 48 & 20 & 91 & 33 & 65 & 38 & 2.0\% \\
+Log-prob.\ and agreement (\climb{}) & \textbf{33} & \textbf{33} & \textbf{31} & \textbf{22} & \textbf{18} & \textbf{32} & \textbf{29} & \textbf{40} & 20 & 62 & 33 & 62 & 35 & 2.0\% \\
+\bottomrule
+\end{tabular}
+\caption{Ablations of the score and of the reference, replayed on the same 200 splits as Table~\ref{tab:main}: tokens as a share of the reference's, at $\eps = 5\%$ and $10\%$. The first two rows change the reference that the loss is measured against, with the deployed score. The other four change only the score of the deployed ladder (the random score is drawn independently of everything, mean of five draws), ending with \climb{}'s. The first draft's cost is approximate (planner tokens plus the executor's divided by the number of rounds). Viol.: largest violation rate over the twelve settings and the three tolerances 2, 5 and 10\%. Bold: cheapest score. M/F/Q/E: MATH/FRAMES/MuSiQue/BBEH.}
+\label{tab:ablations}
+\end{table*}

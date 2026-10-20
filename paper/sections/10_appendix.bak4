@@ -1,0 +1,419 @@
+% placeins puts a \FloatBarrier before every \section; in the appendix it strands the
+% two-column floats and leaves half-empty pages, so let floats cross section breaks here.
+\let\FloatBarrier\relax
+\raggedbottom
+
+\section{Proofs}
+\label{app:proofs}
+
+Answers are binary and costs finite (every call has a generation cap and the pipeline at most five rounds), so all expectations exist. Propositions~\ref{prop:threshold}
+and~\ref{prop:efficiency} concern the one-decision setting of \S\ref{sec:problem}, with cheap answer
+correctness $Y_c$, cost $C_c$ and score $S$. For a policy $\pi : s \mapsto \pi(s) \in [0,1]$ other than $\varnothing$,
+$J(\pi) = \E[C_c] + \E[C_{\mathrm{ref}}] - \E[\pi(S)\,c(S)]$ and $R(\pi) = \E[\pi(S)\,g(S)]$ by the
+tower property, with $g$ and $c$ as in~(\ref{eq:gain}).
+
+\paragraph{Proposition~\ref{prop:threshold}.} Among policies other than $\varnothing$, minimising
+$J$ subject to $R \le \eps$ is maximising $\E[\pi(S)\,c(S)]$ subject to $\E[\pi(S)\,g(S)] \le \eps$
+over measurable $\pi$ with values in $[0,1]$: a linear program with one constraint, strictly
+feasible because $\pi \equiv 0$ has $R = 0 < \eps$. By Slater's condition there is a multiplier
+$\mu^* \ge 0$ such that every solution maximises $\E[\pi(S)\,(c(S) - \mu^* g(S))]$ and satisfies
+complementary slackness. If $\mu^* = 0$ the constraint is slack and $\pi \equiv 1$, the threshold
+$t = -\infty$, is optimal. Otherwise the maximiser sets $\pi(s) = 1$ where
+$g(s)/c(s) < 1/\mu^*$ and $\pi(s) = 0$ where $g(s)/c(s) > 1/\mu^*$, using $c > 0$. By (M) the
+first set is an upper interval of scores and the second a lower one, and the set where
+$g/c = 1/\mu^*$ is an interval between them. On it any $\pi$ is optimal for the Lagrangian, and
+complementary slackness fixes only the total risk $\E[\pi(S)\,g(S)] = \eps$. Stopping on the upper
+part $\{S > t'\}$ of that interval, with $t'$ chosen so that the total risk equals $\eps$, is
+possible exactly when $u \mapsto \E[g(S)\,\mathbf{1}[S > u]]$ attains $\eps$, which holds when $S$
+has no atom at $t'$, in particular when its distribution is continuous; otherwise the policy stops
+on the atom with the probability that makes the risk equal $\eps$. The result is a threshold
+policy, randomised at most on one atom. Comparing its cost with $J(\varnothing)$ gives the optimum
+over all policies.
+
+\climb{} searches a finite grid of deterministic thresholds. With a continuous score, the only gap
+to this optimum is the grid's resolution; Appendix~\ref{app:review} gives an example with an atom,
+where randomising helps.
+
+\paragraph{Proposition~\ref{prop:risk}.} \emph{Validity.} Fix $m$ and suppose $\mathcal{H}_m$ holds,
+so the losses $\ell_1, \ell_2, \dots$ of threshold $t_m$ on i.i.d.\ calibration tasks have mean
+$\mu > \eps$. Each $\lambda_i$ is a function of $\ell_1, \dots, \ell_{i-1}$ with
+$0 \le \lambda_i < 1/(1-\eps)$, so $1 + \lambda_i(\eps - \ell_i) > 0$ since $\ell_i \le 1$, and
+$\E[1 + \lambda_i(\eps - \ell_i) \mid \ell_{1:i-1}] = 1 + \lambda_i(\eps - \mu) \le 1$. Hence
+$W_j$ is a nonnegative supermartingale with $W_0 = 1$, and by Ville's inequality
+$\Pr[\max_j W_j \ge 1/\delta] \le \delta$, i.e.\ $\Pr[p_m \le \delta] \le \delta$.
+\emph{Family-wise error.} Let $m^*$ be the first index at which $\mathcal{H}_m$ is true, which
+depends only on the distribution. The procedure rejects $\mathcal{H}_m$ only after rejecting every
+earlier hypothesis, so any false rejection requires rejecting $\mathcal{H}_{m^*}$, which has
+probability at most $\delta$. \emph{Risk.} On the complementary event every threshold in
+$\mathcal{C}$ has $\E[\ell] \le \eps$, and $\varnothing$ has $\ell \equiv 0$, so $R \le \eps$ for
+every member of $\mathcal{C}$, however the deployed one is selected. \emph{Cost.} The deployed
+policy minimises mean calibration cost over $\mathcal{C} \ni \varnothing$.
+
+The i.i.d.\ assumption is used in the conditional expectation above: each calibration loss must be
+a fresh draw from the deployment distribution. If the losses share a component that varies from
+one run of the model to the next, the bound holds for the recorded run but not necessarily for a
+new one.
+
+\paragraph{Proposition~\ref{prop:efficiency}.} \emph{(i)} Let $q(t) = \Pr[S > t]$ be the share of
+tasks threshold $t$ stops, and write the risk as a function of it,
+$r = \int_0^{q} \tilde g(v)\,dv$, where $\tilde g(v) = g(F^{-1}(1 - v))$ is the gain of the task at
+upper quantile $v$ of the score distribution $F$ (with atoms, $r$ is the piecewise-linear
+interpolation of the same sums). Moving to a lower threshold raises $q$ and adds tasks of lower
+score, whose gain is at least as large by (M), so $\tilde g$ is non-decreasing and $r$ is convex in
+$q$, with $r(0) = 0 \le \eps$. The set $\{q : r(q) \le \eps\}$ is therefore an interval
+$[0, q_\eps]$, and since $q$ increases along the candidate sequence, the thresholds with
+$r \le \eps$ are exactly its first $m_\eps$ members. \emph{(ii)}
+$J(t) = \E[C_c] + \E[C_{\mathrm{ref}}\,\mathbf{1}[S \le t]]$ does not increase as $t$ decreases, since
+$C_{\mathrm{ref}} \ge 0$. \emph{(iii)} Fix $\eta > 0$ and let $m' = m_{\eps - \eta}$. For $m \le m'$
+the losses of $t_m$ have mean at most $\eps - \eta$. The running variance estimate converges, so
+the bets $\lambda_i$ are eventually of order $n^{-1/2}$ and bounded so that
+$\lambda_i(\eps - \ell_i) \ge -\tfrac12$; with $\log(1 + x) \ge x - x^2$ for $x \ge -\tfrac12$,
+$\log W_n \ge \sum_i \lambda_i(\eps - \ell_i) - \sum_i \lambda_i^2(\eps - \ell_i)^2$, whose first sum
+grows as $\eta\sqrt{n}$ up to a constant and whose second stays bounded. Hence $p_m \to 0$ in
+probability for each of the finitely many $m \le m'$, and with probability tending to one all of
+$t_1, \dots, t_{m'}$ are certified. On that event the deployed threshold has mean calibration cost at
+most that of $t_{m'}$, and since mean calibration costs converge to $J$ uniformly over the finite
+grid, its expected cost is at most $J(t_{m'}) + o_P(1)$. Letting $\eta \to 0$ on a refining grid,
+$J(t_{m_{\eps - \eta}})$ tends to the cost of the best threshold at tolerance $\eps$ when $r$ is
+continuous, which by Proposition~\ref{prop:threshold} is the optimal cost.
+
+\section{Experimental details}
+\label{app:details}
+
+\paragraph{Benchmarks and splits.} Table~\ref{tab:datasets} lists the benchmarks. MATH, FRAMES and MuSiQue were split once at random (seed 42) into a
+development split (20\%), used while building the pipeline and its prompts, and a test split (80\%), used
+for every reported number. For BBEH \citep{kazemi2025bbeh} we draw 38 problems from each of its 23 tasks
+with a seed fixed per task and use all 874; nothing was tuned on them.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llrr@{}}
+\toprule
+Benchmark & Split & Pool & Used \\
+\midrule
+MATH-500 & test & 500 & 400 \\
+FRAMES & test & 824 & 660 \\
+MuSiQue & validation, answerable & 2{,}417 & 1{,}934 \\
+BBEH & 23 tasks, 38 each & 4{,}520 & 874 \\
+\bottomrule
+\end{tabular}
+\caption{Benchmarks. FRAMES and MuSiQue are open-book (documents in every prompt).}
+\label{tab:datasets}
+\end{table}
+
+\paragraph{Documents.} MuSiQue's twenty paragraphs, supporting and distracting (median 2.4k tokens), are given in the dataset's
+order, each under its title. For FRAMES we take the two to nineteen articles (median 17k tokens) in each question's \texttt{wiki\_links} (a few entries join several URLs
+with commas or are percent-encoded twice; we split and decode them), fetch their current wikitext from the
+Wikipedia API in October 2026, and render it to text: infoboxes become ``field: value'' lines, tables one
+row per line with cells separated by vertical bars, and common date, unit and list templates are expanded;
+references, citations, files and the reference sections are dropped. Public plain-text dumps of these
+articles omit tables, which some FRAMES questions need. When a question's articles exceed 80k tokens, each
+article keeps its head up to an equal share of that limit, short articles staying whole (6 of 660
+questions); 3 of the linked articles no longer exist. The prompt
+states that the documents may help answer the question that follows them.
+
+\paragraph{Scoring.} \emph{MATH} answers are compared with the reference by symbolic equivalence
+(math-verify), with both sides parsed inside math delimiters and common plain-text notations (fractions
+written $a/b$, degrees, Unicode roots and subscripts, single assignments such as $x = 2$) normalised
+first; Unicode narrow and no-break spaces and minus signs are mapped to ASCII before parsing. The answer is taken from the last
+\texttt{ANSWER:} line or boxed expression of the stored reply.
+\emph{BBEH} is scored during the run by the fuzzy match of its official evaluation: prediction
+and target are lower-cased, the space after commas and markdown bold are dropped, the first line is kept
+and a trailing period removed; the answer is correct if it equals the target, gives the target's option
+letter with or without parentheses, equals it numerically, equals it without quotes, or is its bracketed
+form. \emph{FRAMES and MuSiQue} are scored by an LLM
+judge, since exact match marks correct but verbose answers wrong: gpt-oss-120b at medium reasoning effort
+and temperature 0 receives the question, the reference (with MuSiQue aliases) and the extracted answer,
+and replies CORRECT only if the answer gives the same entity, number, date or range; partial, hedged or
+different values are INCORRECT. Answers already correct under exact match are accepted without a call. We
+validated the judge on 60 answers correct under exact match (all 60 judged correct) and by judging a sample
+twice (99.5\% agreement). We use medium effort because at low effort the judge was unreliable on degenerate answers.
+
+\paragraph{Models.} gpt-oss-20b and gpt-oss-120b use their released MXFP4 weights, with the reasoning
+effort set per request (low at $L_0$, medium at $L_1$ and in the pipeline); Python is declared as a tool on
+executor calls. Gemma-4-26B-A4B-it is the released standard checkpoint; at $L_1$ and in the pipeline it is sampled at
+temperature 1.0, top-$p$ 0.95 and top-$k$ 64 as its model card recommends, and $L_0$ decodes greedily. Token log-probabilities are returned for the
+calls that score $L_0$ and $L_1$. Calls that failed were retried; one of Gemma's FRAMES pipeline runs
+exceeded the context window and counts as a pipeline error (1 of 660).
+
+\paragraph{Budget and cost.} There is no per-task budget; a ledger charges every call its prompt and
+completion tokens, including hidden reasoning, and the cost of a task, and of each rung in the records, is
+read from it, so tool and follow-up calls are included. Each call has a generation cap of 8{,}192 tokens at $L_0$ and of 4{,}096 (gpt-oss on MATH, FRAMES and MuSiQue) or 16{,}384 (all other runs) elsewhere. A reply
+that has no answer after its code has run (empty, or code without an answer) receives one closing call
+with reasoning off. Pipeline runs that end without an answer (at most 0.5\% of tasks) count as the
+pipeline's errors.
+
+\paragraph{Reviewer verdict.} The reviewer is asked to end with \texttt{VERDICT: YES} or \texttt{VERDICT:
+NO}. Its verdict is the last such line; failing that, a leading yes or no; failing that, its wording, where
+a negative phrase rejects and otherwise a positive one accepts. A review that comes back empty, because its
+reasoning filled the generation cap, receives one closing call with reasoning at its lowest setting that
+asks for the verdict alone. On the reference runs, reviews
+without a verdict line are at most 1.7\% of reviews per setting for gpt-oss (highest on gpt-oss-20b BBEH)
+and 0.1\% for Gemma on MATH, but 18\% for Gemma on FRAMES, 10\% on MuSiQue and 35\% on BBEH. On Gemma these
+are mostly reviews that fall into repetition, such as a line of dashes, or that end with the reviewer's own
+answer to the task instead of a verdict. The wording rule then decides, and it treats a review without an
+accepting phrase as a request to revise; reviews whose own final answer equals the proposed answer yet
+count as rejections are 0.1\%, 0.3\% and 1.9\% of Gemma's reviews on FRAMES, MuSiQue and BBEH.
+
+\paragraph{Tool.} Python blocks run in a separate process with a 10-second limit; imports of
+\texttt{os}, \texttt{sys} and \texttt{subprocess}, file access and \texttt{eval}/\texttt{exec} are
+rejected; output is truncated to 1{,}000 characters. A call may execute code up to three times before the
+closing call.
+
+\section{Implementation of \climb{} and the replay protocol}
+\label{app:impl}
+
+\input{sections/_alg_climb}
+
+\paragraph{Betting test.} For a candidate threshold the signed losses $\ell_1, \dots, \ell_n$ on the
+calibration tasks are processed in a random order. With $s_1 = \sum_{i<j}\ell_i$ and
+$s_2 = \sum_{i<j}\ell_i^2$ over the earlier tasks, the bet on task $j$ is
+$\lambda_j = \min\!\big(\tfrac{1}{2(1-\eps)},\ \sqrt{2\log(1/\delta) / (n\,\hat\sigma^2_j)}\big)$ with
+$\hat\sigma^2_j = \max\big((s_2 + 0.25)/j - (s_1/j)^2,\ 10^{-3}\big)$, a variance estimate from earlier
+tasks shrunk towards $0.25$. The p-value is $1/\max_j W_j$.
+
+\paragraph{Grid and selection.} \climb{} certifies two one-decision families, each at level $\delta/2$.
+The first stops at $L_0$ when $S_0 > t$; the second runs both rungs and stops at $L_1$ when
+$S_1 = 10\cdot\mathbf{1}[a_0 = a_1] + \bar s_1 > t$. Candidates are $\varnothing$ (always run the pipeline),
+then thresholds from conservative to aggressive: for $S_0$, $-0.005, -0.010, \dots, -0.600$, then
+$-0.65, -0.70, \dots, -3.0$, then $-\infty$; for $S_1$, the same grid shifted by 10, which stops agreeing
+tasks first, followed by the unshifted grid. Each family is tested in order with the betting test, and among
+the certified candidates of both families the one with the lowest mean calibration cost is deployed. A rung
+without log-probabilities does not stop. For agreement, the text after the last answer line (matched case-insensitively, with or without
+markdown: \texttt{ANSWER:}, \texttt{Answer:}, \texttt{**Answer:**}) is normalised as in SQuAD (lower case, no punctuation or articles, collapsed
+whitespace) with Unicode spaces mapped to ASCII. Calibration
+takes under a second on 1{,}000 tasks.
+
+\paragraph{Evaluation.} Records and replay are as in \S\ref{sec:setup}. Each reported number averages 200
+random calibration/evaluation splits (seed fixed per analysis), except the tolerance sweep and the policy
+comparisons (100 splits).
+
+\paragraph{Richer policies.} The policies compared in \S\ref{sec:variants} use a training split (20\%), are
+certified with the same betting test on a calibration split (40\%) and evaluated on the rest. (A) is the
+first family alone and (B) a shared threshold on the two rungs' mean log-probabilities, stopping at $L_0$
+when $S_0 > t$ and otherwise at $L_1$ when its mean log-probability exceeds $t$; (C) is the second family
+alone and (D) the deployed choice between (A) and (C) at $\delta/2$ each. (E) ranks tasks by a learned
+estimate of the signed gain of escalating instead of stopping at $L_1$, $P(\text{rescue}) -
+P(\text{harm})$, from a gradient-boosted classifier fitted on the training split to the two scores, their
+agreement and the two rungs' costs; its thresholds are quantiles of the training scores, fixed before
+calibration.
+
+
+\section{Checking the guarantee under i.i.d.\ calibration}
+\label{app:checks}
+
+The violation rates of the main experiments evaluate the selected policy on the recorded pool from which
+its calibration half was drawn without replacement, a finite-pool diagnostic rather than the event bounded
+by Proposition~\ref{prop:risk}. To check the proposition itself we take the task distribution
+$\mathcal{D}$ to be the recorded pool of each setting, uniform over its tasks. We draw a
+calibration set of $n = \lfloor N/2 \rfloor$ tasks i.i.d.\ from $\mathcal{D}$ (with replacement),
+calibrate \climb{} as deployed, and compute the risk $R(\hat\pi)$ of the selected policy under
+$\mathcal{D}$ exactly, as its mean loss over the pool; this involves no evaluation sample. Repeating
+5{,}000 times estimates $\Pr(R(\hat\pi) > \eps)$, which the proposition bounds by
+$\delta = 10\%$. Table~\ref{tab:iid} reports it with Clopper--Pearson intervals. The largest
+estimate is 3.40\% (gpt-oss-20b MuSiQue, $\eps = 2\%$), and every upper 95\% limit is at most 3.9\%.
+The failure probability is highest where the cheapest certified threshold sits close to the boundary
+$R = \eps$, and zero where the certified family stops well inside it, as at $\eps = 10\%$ on every setting
+but BBEH (at most 2.4\%).
+
+\input{sections/tab_iid}
+
+\section{Additional diagnostics}
+\label{app:results}
+
+\input{sections/tab_calib_full}
+
+\subsection{Monotone-gain test}
+\label{app:monotone}
+
+\input{sections/fig_monotone}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/figure_criterion.pdf}
+\caption{Share of tasks the pipeline rescues (up) and harms (down) by decile of $L_0$'s confidence, pooled
+over the nine settings where that confidence ranks answers correctly; the net gain falls with confidence,
+so stopping pays above one threshold $t^\star$.}
+\label{fig:criterion}
+\end{figure}
+
+Figure~\ref{fig:monotone} shows, per setting, the gain of escalating instead of stopping at $L_0$ by
+quintile of $L_0$'s confidence, the quantity of condition (M). It falls with confidence on eight of the
+twelve settings (Spearman $\rho$ from $-0.3$ to $-1.0$), is flat on gpt-oss-20b BBEH ($\rho = 0.0$) and rises
+on Gemma FRAMES, MuSiQue and BBEH ($\rho = 0.87$, $0.7$ and $0.7$). There $L_0$'s confidence is inverted
+(AUROC 0.30, 0.34 and 0.22): greedy decoding without thinking loops into repetitions that receive a high
+log-probability. Pooled over all twelve settings, rather than the nine of Figure~\ref{fig:criterion}, the gain is therefore U-shaped, from 14.2 points for the least
+confident tenth of tasks down to 4.8 and up to 16.9 for the most confident, the last driven by Gemma. The guarantee does
+not depend on the condition; where it fails, the threshold on $S_0$ certifies little and the agreement
+family carries the savings.
+
+\subsection{Sensitivity and distribution shift}
+\label{app:sens}
+
+\input{sections/tab_diagnostics}
+
+Table~\ref{tab:diagnostics} varies the error level and the calibration size, and tests transfer across
+benchmarks. A larger $\delta$ buys modest savings, and savings at $\eps = 5\%$ require a few hundred
+calibration tasks: with 50 or 100, \climb{} falls back to the pipeline almost everywhere. A policy certified
+on one benchmark and deployed on another of the same model loses up to 16.0 points (Gemma, MATH to
+BBEH) and more than 5 in ten of 36 cases: the guarantee need not transfer across distributions. At a
+tolerance of $\eps = 1\%$, \climb{} certifies nothing on nine settings and spends 98 to 99.8\% of the
+pipeline's tokens on the three MuSiQue settings (100 splits), with no violation.
+
+\section{Further analyses}
+\label{app:review}
+
+All analyses in this section replay the per-task records released with the paper; intervals over random
+splits reflect split randomness only, not independent re-runs of the benchmarks.
+
+\subsection{Ablations of the score and the reference}
+\label{app:ablations}
+
+\input{sections/tab_ablations}
+
+Table~\ref{tab:ablations} changes one part of the deployed procedure at a time and replays it on the splits of
+Table~\ref{tab:main}.
+
+\paragraph{The score.} The guarantee holds for every score, including a random one: the largest violation rate is
+3\% against $\delta = 10\%$. The score decides how much is saved. At $\eps = 5\%$ log-probability and agreement
+together save more than either alone and more than a random score: 62\% of the pipeline's tokens on average,
+against 67\% for log-probability only, 79\% for agreement only and 67\% for a random score. Adding agreement matters
+most where the direct answer's confidence is inverted: on Gemma's FRAMES and MuSiQue, log-probability alone
+certifies almost nothing (100 and 99\%), while the deployed score saves 14 and 31\%. At 10 points, where the
+team's net gain is small next to the tolerance, a random score saves about as much on average (33 against 35\%):
+slightly less than the deployed score on gpt-oss, by 0 to 8 points, and more on Gemma's FRAMES and MuSiQue, where
+the certified policy falls back to the team. A misleading score can thus be worse than none, but what it costs is
+savings rather than accuracy.
+
+\paragraph{The reference.} The loss can be measured against any reference. The team's first draft, written by the
+executor from the plan before any review, is within 2 points of $L_1$ on ten of twelve settings; measured
+against it, \climb{} stays within the tolerance and spends 73\% of its tokens on average at $\eps = 5\%$ and
+45\% at 10\%. Against $L_1$ itself, with the ladder $L_0 \to L_1$, it spends 89 and 67\%: the cheaper the
+reference and the closer it is to the cheap rungs, the less there is to save.
+
+\subsection{Escalation designs under one guarantee}
+\label{sec:variants}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_variants.pdf}
+\caption{Tokens at $\eps = 5\%$ for five escalation designs certified at the same $\delta$ (20/40/40 splits):
+(A) a threshold on $L_0$'s confidence, (B) one log-probability threshold shared by $L_0$ and $L_1$, (C)
+stopping at $L_1$ on its agreement with $L_0$, (D) \climb{}, which chooses between A and C on calibration, and
+(E) a learned estimate of the signed gain.}
+\label{fig:variants}
+\end{figure}
+
+Because \climb{} certifies any ordered family, richer escalation designs can be compared with the
+deployed one on equal terms: each is held to the same tolerance, and only its cost differs. Read as an ablation,
+A drops the second rung, B drops agreement, and C drops the stop at $L_0$.
+
+\paragraph{Agreement and depth.} The agreement of the two cheap rungs is a strong signal where both answer
+in a short form: on tasks where $L_0$ and $L_1$ give the same answer, $L_1$ is right 79 to 100\% of the time
+on MATH, FRAMES and MuSiQue, against 34 to 86\% when they disagree; on BBEH, whose answers are long and
+varied, the two agree on only 24 to 41\% of tasks, and agreement says little for gpt-oss-20b (26 against 25\%)
+but much for Gemma (58 against 17\%). Stopping on it (C) is often the cheapest design where the direct
+answer is weak, for instance 43\% of the pipeline's tokens on gpt-oss-20b MuSiQue against 65\% for a
+threshold on $L_0$ alone (A), and it still saves where $L_0$'s confidence is inverted (Gemma on FRAMES
+and MuSiQue, where A certifies nothing). Where the direct answer is already strong, as for Gemma on
+MATH, C pays for $L_1$ on every task and A is far cheaper (36\% against 101\%). Choosing between them on
+calibration data (D, \climb{}) avoids both failures and is cheapest on average, 68\% of the pipeline's
+tokens against 69 to 82\% for A, B and C (Figure~\ref{fig:variants}). A learned estimate of the signed gain
+(E) matches it on average; it saves more where it can learn that the confidence is inverted (Gemma FRAMES,
+63\% against 87\%) and less elsewhere (gpt-oss-20b FRAMES, 86\% against 70\%), and it needs a training
+split.
+
+
+\subsection{What the team adds, by setting}
+\label{app:team}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_review.pdf}
+\caption{Share of the executor's correct and incorrect answers that the team's reviewer accepts, on
+twelve settings (M, F, Q, E: MATH, FRAMES, MuSiQue, BBEH).}
+\label{fig:team}
+\end{figure}
+
+Figure~\ref{fig:team} shows why the team's first-draft errors survive review: on every setting the reviewer
+accepts most of the executor's correct answers, but also 23 to 58\% of its incorrect ones, so a wrong
+plan-guided draft is often passed through rather than revised.
+
+\subsection{Seeding the team with the cheap answer}
+An escalated task runs the reference from scratch. Handing the team $L_1$'s answer and asking it to verify
+it first did not help in our check: on gpt-oss-20b MATH the seeded pipeline answers 94.0\% of the tasks against 94.8\%
+for the reference, and on the 49 tasks $L_1$ gets wrong, the ones escalation is for, 71.4\% against 73.5\%.
+Running the reference from scratch also makes
+the escalated outcome equal to the reference's, so the loss comes only from stopped tasks.
+
+\subsection{Randomised policies}
+Proposition~\ref{prop:threshold} allows the constrained optimum to randomise when the score has an atom. In
+the two-level example with a single score, a cheap rung that is always wrong at cost 1 and a top rung that is
+always right at cumulative cost 2, any deterministic policy with risk at most $\eps = 5\%$ must always
+escalate (cost 2), whereas escalating with probability 0.95 costs 1.95. With continuous scores, as here, the
+gap is at most the grid's resolution, and \climb{} deploys deterministic thresholds.
+
+\subsection{Calibration cost}
+\label{app:calibcost}
+Calibration requires running every calibration task through both cheap rungs and the reference.
+Table~\ref{tab:r5} sets that cost against the per-query saving: recording a calibration set costs 1.5M to
+79.2M tokens and is repaid after 335 to 2{,}035 deployed queries at $\eps = 10\%$ and 464 to 13{,}297 at 5\%,
+the last where \climb{} saves little at that tolerance.
+
+\input{sections/tab_r5}
+
+\subsection{Label quality}
+Replies are stored up to 20{,}000 characters, keeping the head and the tail of longer ones, so that the
+offline judges always see the final answer; no reply in the final records was cut before its answer.
+The remaining source of label error is the
+LLM judge on FRAMES and MuSiQue, validated as described in Appendix~\ref{app:details}.
+
+\section{Case studies}
+\label{app:cases}
+
+\input{sections/fig_cases}
+
+Figure~\ref{fig:cases} follows five MATH tasks through \climb{}: a confident early exit, a stop on the
+agreement of the two cheap rungs, a rescue by the team, a stop that keeps a correct answer the team would
+have turned wrong, and an escalation the team also gets wrong.
+
+\section{Prompts}
+\label{app:prompts}
+
+\small
+\noindent\textbf{Executor system ($L_0$, $L_1$, pipeline).} \texttt{You are an Executor. Answer concisely.
+End your reply with a single line: "ANSWER: <final answer>". For ANY computation, put Python code
+that prints the result in a \textasciigrave\textasciigrave\textasciigrave python block; you will receive the
+output, then give the final answer.}
+
+\noindent\textbf{$L_0$ and $L_1$ user.} \texttt{Question: \{q\} / Final answer.} ($L_1$ differs from $L_0$
+only in its reasoning setting and sampling; it does not see $L_0$'s answer.)
+
+\noindent\textbf{Tool follow-up.} \texttt{[Computation result] / \{out\} / Now give the final answer.}
+
+\noindent\textbf{Closing call (reasoning off).} \texttt{Do not write any more code. Give the final answer now,
+ending with the line ANSWER: <answer>.}
+
+\noindent\textbf{Planner.} System: \texttt{You are a Planner. Break down the question into
+sub-tasks.} User: \texttt{Question: \{q\} / Provide a step-by-step plan.}
+
+\noindent\textbf{Pipeline executor user.} \texttt{Question: \{q\} / Plan: \{plan\} / Final answer.}
+
+\noindent\textbf{Reviewer.} System: \texttt{You are a Reviewer. Validate the answer.} User:
+\texttt{Question: \{q\} / Proposed: \{a\} / Is the proposed answer correct? End your reply with a single
+line: VERDICT: YES or VERDICT: NO.} Closing call for an empty review (reasoning at its lowest setting):
+\texttt{Question: \{q\} / Proposed: \{a\} / Is the proposed answer correct? Reply with a single line:
+VERDICT: YES or VERDICT: NO.}
+
+\noindent\textbf{Revision turn.} \texttt{Reviewer feedback: \{r\} / Revise and give the final answer.}
+
+\noindent\textbf{Judge (FRAMES, MuSiQue).} System: \texttt{You are an impartial grader of short factual
+answers.} User: \texttt{Question: \{q\} / Ground-truth answer: \{gold\} / Predicted answer: \{pred\} /
+Grade the predicted answer. It is CORRECT only if it gives the same answer as the ground truth: the
+same entity, or the same number, date or range (wording, units written differently, and extra
+explanation are fine). It is INCORRECT if any specific value differs (a different number, a narrower
+or wider range, a year instead of a full date, a different currency or quantity), if it answers only
+part of the question, hedges between several answers, or gives no answer. Reply with exactly one
+word: CORRECT or INCORRECT.}

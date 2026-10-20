@@ -1,0 +1,30 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    2000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 2000,
+      "name": "Static Quota",
+      "success_rate": 0.0,
+      "cps": 0.0,
+      "mean_tokens": 0.0,
+      "cost": 0
+    }
+  ],
+  "agg": [
+    {
+      "budget": 2000,
+      "name": "Static Quota",
+      "sr_mean": 0.0,
+      "sr_std": 0.0,
+      "cps_mean": 0.0,
+      "tokens_mean": 0.0
+    }
+  ]
+}

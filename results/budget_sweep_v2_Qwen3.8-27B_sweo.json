@@ -1,0 +1,47 @@
+{
+  "model": "Qwen/Qwen3.8-27B",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "SWEO-Naive",
+      "success_rate": 0.678,
+      "cps": 0.000551622418879056,
+      "mean_tokens": 12403.69,
+      "cost": 0.187
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "SWEO-Ours",
+      "success_rate": 0.866,
+      "cps": 0.0004304849884526559,
+      "mean_tokens": 12342.65,
+      "cost": 0.1864
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "SWEO-Naive",
+      "sr_mean": 0.678,
+      "sr_std": 0.0,
+      "cps_mean": 0.000551622418879056,
+      "tokens_mean": 12403.69
+    },
+    {
+      "budget": 24000,
+      "name": "SWEO-Ours",
+      "sr_mean": 0.866,
+      "sr_std": 0.0,
+      "cps_mean": 0.0004304849884526559,
+      "tokens_mean": 12342.65
+    }
+  ]
+}

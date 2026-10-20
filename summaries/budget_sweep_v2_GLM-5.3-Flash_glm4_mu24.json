@@ -1,0 +1,64 @@
+{
+  "model": "GLM-5.3-Flash-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Unconstrained",
+      "success_rate": 0.08790072388831438,
+      "cps": 0.001958823529411765,
+      "mean_tokens": 5437.555842812823,
+      "cost": 0.333
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Unc-Fmt",
+      "success_rate": 0.1768355739400207,
+      "cps": 0.0009324561403508772,
+      "mean_tokens": 5238.4632885211995,
+      "cost": 0.3189
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.2-ReasonLadder",
+      "success_rate": 0.19596690796277147,
+      "cps": 0.00028601583113456463,
+      "mean_tokens": 2316.984488107549,
+      "cost": 0.1084
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5-Unconstrained",
+      "sr_mean": 0.08790072388831438,
+      "sr_std": 0.0,
+      "cps_mean": 0.001958823529411765,
+      "tokens_mean": 5437.555842812823
+    },
+    {
+      "budget": 24000,
+      "name": "V5-Unc-Fmt",
+      "sr_mean": 0.1768355739400207,
+      "sr_std": 0.0,
+      "cps_mean": 0.0009324561403508772,
+      "tokens_mean": 5238.4632885211995
+    },
+    {
+      "budget": 24000,
+      "name": "V5.2-ReasonLadder",
+      "sr_mean": 0.19596690796277147,
+      "sr_std": 0.0,
+      "cps_mean": 0.00028601583113456463,
+      "tokens_mean": 2316.984488107549
+    }
+  ]
+}

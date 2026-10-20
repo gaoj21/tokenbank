@@ -1,0 +1,31 @@
+\begin{table}[h]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lllrrrrrr@{}}
+\toprule
+Model & Bench. & Rung & Q1 & Q2 & Q3 & Q4 & Q5 & $\rho$ \\
+\midrule
+GLM & MATH & $L_0$ & $+15.0$ & $+11.2$ & $+8.8$ & $+2.5$ & $+0.0$ & $-1.00$ \\
+GLM & MATH & $L_1$ & $+25.0$ & $+2.5$ & $+5.0$ & $+2.5$ & $+1.2$ & $-0.82$ \\
+GLM & GAIA & $L_0$ & $+4.2$ & $+8.3$ & $+4.0$ & $-4.2$ & $-4.0$ & $-0.80$ \\
+GLM & GAIA & $L_1$ & $+12.5$ & $-4.2$ & $-4.0$ & $+8.3$ & $-8.0$ & $-0.60$ \\
+GLM & FRAMES & $L_0$ & $+12.9$ & $+7.6$ & $+7.6$ & $+9.8$ & $+6.8$ & $-0.67$ \\
+GLM & FRAMES & $L_1$ & $+12.9$ & $+5.3$ & $+3.8$ & $+9.1$ & $+5.3$ & $-0.36$ \\
+GLM & MuSiQue & $L_0$ & $+7.8$ & $+8.5$ & $+5.2$ & $+2.8$ & $+0.3$ & $-0.90$ \\
+GLM & MuSiQue & $L_1$ & $+5.4$ & $+4.7$ & $+3.9$ & $+4.1$ & $+1.3$ & $-0.90$ \\
+DS & MATH & $L_0$ & $+10.0$ & $+6.2$ & $+5.0$ & $+3.8$ & $+6.2$ & $-0.56$ \\
+DS & MATH & $L_1$ & $+2.5$ & $+6.2$ & $+3.8$ & $+1.2$ & $+1.2$ & $-0.67$ \\
+DS & GAIA & $L_0$ & $+4.2$ & $+0.0$ & $+16.0$ & $-8.3$ & $+4.0$ & $-0.30$ \\
+DS & GAIA & $L_1$ & $+8.3$ & $-4.2$ & $+0.0$ & $+4.2$ & $+4.0$ & $-0.10$ \\
+DS & FRAMES & $L_0$ & $+18.9$ & $+12.1$ & $+12.1$ & $+9.1$ & $+0.8$ & $-0.97$ \\
+DS & FRAMES & $L_1$ & $+8.3$ & $+7.6$ & $+5.3$ & $+6.8$ & $+7.6$ & $-0.46$ \\
+DS & MuSiQue & $L_0$ & $+14.5$ & $+12.1$ & $+12.4$ & $+10.1$ & $+5.2$ & $-0.90$ \\
+DS & MuSiQue & $L_1$ & $+12.7$ & $+10.3$ & $+8.5$ & $+9.6$ & $+6.7$ & $-0.90$ \\
+\bottomrule
+\end{tabular}}
+\caption{Accuracy gain from escalating to the pipeline (points) by confidence quintile (Q1 least confident), and Spearman
+$\rho$ between quintile and gain. $\rho \le 0$ in 16 of 16 rows.}
+\label{tab:monotone}
+\end{table}

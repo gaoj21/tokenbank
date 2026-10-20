@@ -1,0 +1,30 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    100000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 100000,
+      "name": "V5-Unc-Fmt",
+      "success_rate": 0.7966666666666666,
+      "cps": 0.00024602510460251044,
+      "mean_tokens": 6232.87,
+      "cost": 0.0588
+    }
+  ],
+  "agg": [
+    {
+      "budget": 100000,
+      "name": "V5-Unc-Fmt",
+      "sr_mean": 0.7966666666666666,
+      "sr_std": 0.0,
+      "cps_mean": 0.00024602510460251044,
+      "tokens_mean": 6232.87
+    }
+  ]
+}

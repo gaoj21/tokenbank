@@ -1,0 +1,30 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "CLIMB-Live",
+      "success_rate": 0.20465116279069767,
+      "cps": 0.001024242424242424,
+      "mean_tokens": 6659.852713178295,
+      "cost": 0.1352
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "CLIMB-Live",
+      "sr_mean": 0.20465116279069767,
+      "sr_std": 0.0,
+      "cps_mean": 0.001024242424242424,
+      "tokens_mean": 6659.852713178295
+    }
+  ]
+}

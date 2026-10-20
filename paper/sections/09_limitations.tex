@@ -1,0 +1,12 @@
+\section*{Limitations}
+
+\paragraph{Scope of the guarantee.} As with other distribution-free risk-control methods, the
+guarantee assumes that calibration and deployment tasks, and the model's outputs on them, share one
+distribution, so thresholds are best calibrated on the target tasks and serving stack
+(Appendix~\ref{app:sens}). Once records exist, recalibration takes under a second (Appendix~\ref{app:impl}), and weighted
+or online calibration could extend the guarantee to shifting distributions.
+
+\paragraph{Calibration data.} \climb{} needs every rung's outcome on a few hundred calibration tasks, a
+one-off cost that is typically repaid within a few thousand queries (\S\ref{sec:tradeoff}). With less data or
+tighter tolerances it falls back to the full pipeline, trading savings for the guarantee. Stronger
+confidence signals could plug in directly and raise the savings.

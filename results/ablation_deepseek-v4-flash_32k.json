@@ -1,0 +1,103 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Unconstrained",
+      "success_rate": 0.2283464566929134,
+      "cps": 0.011710344827586207,
+      "mean_tokens": 10535.141732283464,
+      "cost": 0.3396
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Full-noKV",
+      "success_rate": 0.2204724409448819,
+      "cps": 0.012953571428571429,
+      "mean_tokens": 11411.03937007874,
+      "cost": 0.3627,
+      "mean_borrows": 0.07086614173228346,
+      "recovery_rate": 0.015748031496062992
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Full",
+      "success_rate": 0.1968503937007874,
+      "cps": 0.013600000000000001,
+      "mean_tokens": 11507.874015748032,
+      "cost": 0.34,
+      "mean_borrows": 0.07086614173228346,
+      "recovery_rate": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Full+Stall",
+      "success_rate": 0.2677165354330709,
+      "cps": 0.005620588235294118,
+      "mean_tokens": 6435.346456692913,
+      "cost": 0.1911,
+      "mean_borrows": 0.09448818897637795,
+      "recovery_rate": 0.031496062992125984
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Full+Stall+Gate",
+      "success_rate": 0.1968503937007874,
+      "cps": 0.007168,
+      "mean_tokens": 5808.1968503937005,
+      "cost": 0.1792,
+      "mean_borrows": 0.03937007874015748,
+      "recovery_rate": 0.0
+    }
+  ],
+  "agg": [
+    {
+      "budget": 32000,
+      "name": "Unconstrained",
+      "sr_mean": 0.2283464566929134,
+      "sr_std": 0.0,
+      "cps_mean": 0.011710344827586207,
+      "tokens_mean": 10535.141732283464
+    },
+    {
+      "budget": 32000,
+      "name": "Full-noKV",
+      "sr_mean": 0.2204724409448819,
+      "sr_std": 0.0,
+      "cps_mean": 0.012953571428571429,
+      "tokens_mean": 11411.03937007874
+    },
+    {
+      "budget": 32000,
+      "name": "Full",
+      "sr_mean": 0.1968503937007874,
+      "sr_std": 0.0,
+      "cps_mean": 0.013600000000000001,
+      "tokens_mean": 11507.874015748032
+    },
+    {
+      "budget": 32000,
+      "name": "Full+Stall",
+      "sr_mean": 0.2677165354330709,
+      "sr_std": 0.0,
+      "cps_mean": 0.005620588235294118,
+      "tokens_mean": 6435.346456692913
+    },
+    {
+      "budget": 32000,
+      "name": "Full+Stall+Gate",
+      "sr_mean": 0.1968503937007874,
+      "sr_std": 0.0,
+      "cps_mean": 0.007168,
+      "tokens_mean": 5808.1968503937005
+    }
+  ]
+}

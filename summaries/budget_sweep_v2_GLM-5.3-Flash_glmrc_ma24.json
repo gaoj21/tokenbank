@@ -1,0 +1,47 @@
+{
+  "model": "GLM-5.3-Flash-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "RC-Adaptive",
+      "success_rate": 0.7175,
+      "cps": 0.0002010452961672474,
+      "mean_tokens": 4525.8375,
+      "cost": 0.0577
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "RC-CapOnly",
+      "success_rate": 0.6925,
+      "cps": 0.00022996389891696752,
+      "mean_tokens": 5056.6525,
+      "cost": 0.0637
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "RC-Adaptive",
+      "sr_mean": 0.7175,
+      "sr_std": 0.0,
+      "cps_mean": 0.0002010452961672474,
+      "tokens_mean": 4525.8375
+    },
+    {
+      "budget": 24000,
+      "name": "RC-CapOnly",
+      "sr_mean": 0.6925,
+      "sr_std": 0.0,
+      "cps_mean": 0.00022996389891696752,
+      "tokens_mean": 5056.6525
+    }
+  ]
+}

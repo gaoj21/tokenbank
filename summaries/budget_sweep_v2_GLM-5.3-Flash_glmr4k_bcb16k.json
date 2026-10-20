@@ -1,0 +1,30 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    16000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "BCB-Ab7",
+      "success_rate": 0.468,
+      "cps": 0.0002376068376068376,
+      "mean_tokens": 3498.86,
+      "cost": 0.055600000000000004
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "BCB-Ab7",
+      "sr_mean": 0.468,
+      "sr_std": 0.0,
+      "cps_mean": 0.0002376068376068376,
+      "tokens_mean": 3498.86
+    }
+  ]
+}

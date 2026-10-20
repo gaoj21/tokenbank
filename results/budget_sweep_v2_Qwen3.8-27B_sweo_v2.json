@@ -1,0 +1,64 @@
+{
+  "model": "qwen3.8-27b-fp8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "SWEO-Naive",
+      "success_rate": 0.646,
+      "cps": 0.0006179566563467492,
+      "mean_tokens": 13112.318,
+      "cost": 0.1996
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "SWEO-Ours",
+      "success_rate": 0.928,
+      "cps": 0.00034094827586206896,
+      "mean_tokens": 10506.434,
+      "cost": 0.1582
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "SWEO-Ab7",
+      "success_rate": 0.984,
+      "cps": 7.215447154471545e-05,
+      "mean_tokens": 2519.364,
+      "cost": 0.035500000000000004
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "SWEO-Naive",
+      "sr_mean": 0.646,
+      "sr_std": 0.0,
+      "cps_mean": 0.0006179566563467492,
+      "tokens_mean": 13112.318
+    },
+    {
+      "budget": 24000,
+      "name": "SWEO-Ours",
+      "sr_mean": 0.928,
+      "sr_std": 0.0,
+      "cps_mean": 0.00034094827586206896,
+      "tokens_mean": 10506.434
+    },
+    {
+      "budget": 24000,
+      "name": "SWEO-Ab7",
+      "sr_mean": 0.984,
+      "sr_std": 0.0,
+      "cps_mean": 7.215447154471545e-05,
+      "tokens_mean": 2519.364
+    }
+  ]
+}

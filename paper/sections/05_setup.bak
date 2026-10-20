@@ -1,0 +1,53 @@
+\section{Experiments}
+\label{sec:results}
+
+\subsection{Setup}
+\label{sec:setup}
+
+\paragraph{Models.} gpt-oss-20b and gpt-oss-120b \citep{openai2025gptoss}, with their released MXFP4
+weights served by vLLM \citep{kwon2023vllm}, and Gemma-4-26B-A4B-it \citep{google2026gemma4}, a
+mixture-of-experts model, standard checkpoint, queried through OpenRouter and pinned to a single provider on
+MATH and served with vLLM at bf16 on the other three benchmarks. The cheap rung $L_0$
+uses each model's cheapest reasoning setting (low effort for gpt-oss, thinking off for Gemma) and greedy
+decoding; $L_1$ and every call of the pipeline use the default setting (medium effort, thinking on) and
+sample at temperature 1.0, with top-$p$ 0.95 and top-$k$ 64 for Gemma as its model card recommends.
+Token log-probabilities are returned for the calls that score $L_0$ and $L_1$. Each call has a
+generation cap of 8{,}192 tokens at $L_0$ and of 4{,}096 (gpt-oss on MATH, FRAMES and MuSiQue) or
+16{,}384 (all other runs) elsewhere; a reply that spends its cap without an answer receives one closing
+call with reasoning off.
+
+\paragraph{Benchmarks.} MATH-500 \citep{hendrycks2021math,lightman2024verify}, FRAMES
+\citep{krishna2025frames}, answerable MuSiQue validation \citep{trivedi2022musique}, and BIG-Bench Extra Hard
+(BBEH; \citealp{kazemi2025bbeh}). MATH, FRAMES and MuSiQue were split once into a development split (20\%),
+used to build the pipeline, and a test split (80\%) used for all results: 400, 660 and 1{,}934 tasks. For
+BBEH, which played no part in building the pipeline, we draw 38 problems from each of its 23 tasks with a
+fixed seed, 874 in all, and use them all. FRAMES and
+MuSiQue are open-book. Each MuSiQue question comes with its twenty paragraphs, supporting and distracting
+(median 2.4k tokens). Each FRAMES question gets the Wikipedia articles it links to (two to nineteen,
+median 17k tokens), converted from their source with infoboxes and tables kept as text; when a question's
+articles exceed 80k tokens, each is cut to a share of that limit from its end (6 of 660 questions), and 3 of
+the linked articles no longer exist. The documents precede the question in every call, so every rung and
+every agent pays for them. MATH is scored by symbolic equivalence and BBEH by the fuzzy match of its official
+evaluation; FRAMES and MuSiQue, where
+exact match rejects correct but verbose answers, are scored by an LLM judge (gpt-oss-120b, validated
+against exact match and by hand; Appendix~\ref{app:details}). Cost is prompt plus completion tokens,
+including hidden reasoning, over all calls a task makes, tool calls included.
+
+\paragraph{Records and replay.} For every task we record two runs: the reference pipeline, run from
+scratch, and \climb{}'s ladder forced through every cheap rung, which yields the outcome, cost and
+confidence of $L_0$ and $L_1$. Replaying these records evaluates any policy on any subset of tasks with
+the costs and outcomes of the recorded outputs; an escalating task receives the reference's outcome
+and pays its cost on top of the rungs already run. For 300 tasks per setting we also record a second,
+independent run of the reference, to tell recurring harms from sampling variation.
+
+\paragraph{Evaluation protocol.} The loss of every policy is measured against the reference.
+Tolerances are absolute: $\eps = 10\%$ allows a loss of 10 accuracy points whatever the reference
+accuracy. We draw 200 random calibration/evaluation splits (50/50), or 20/40/40 for policies that need
+training data, and report means. The \emph{violation rate} is the share of splits in which the selected
+policy's loss on the full recorded pool exceeds $\eps$, a diagnostic of the finite-pool replay;
+\S\ref{sec:main} checks the event of Proposition~\ref{prop:risk} directly.
+
+\paragraph{Baselines.} The reference pipeline; uncertified rules (always stopping at $L_0$ or at $L_1$,
+and a fixed confidence threshold that spends as much as \climb{}); an oracle that stops at the cheapest
+rung that answers correctly; and richer escalation policies certified exactly as \climb{} is
+(\S\ref{sec:variants}).

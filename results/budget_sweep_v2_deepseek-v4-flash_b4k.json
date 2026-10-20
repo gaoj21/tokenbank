@@ -1,0 +1,64 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    4000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "Static Quota",
+      "success_rate": 0.05263157894736842,
+      "cps": 0.0129,
+      "mean_tokens": 2544.6447368421054,
+      "cost": 0.1032
+    },
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "TB-v2-Full",
+      "success_rate": 0.11842105263157894,
+      "cps": 0.006361111111111111,
+      "mean_tokens": 2880.6973684210525,
+      "cost": 0.11449999999999999
+    },
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "Full+Stall",
+      "success_rate": 0.08552631578947369,
+      "cps": 0.0089,
+      "mean_tokens": 2924.8552631578946,
+      "cost": 0.1157
+    }
+  ],
+  "agg": [
+    {
+      "budget": 4000,
+      "name": "Static Quota",
+      "sr_mean": 0.05263157894736842,
+      "sr_std": 0.0,
+      "cps_mean": 0.0129,
+      "tokens_mean": 2544.6447368421054
+    },
+    {
+      "budget": 4000,
+      "name": "TB-v2-Full",
+      "sr_mean": 0.11842105263157894,
+      "sr_std": 0.0,
+      "cps_mean": 0.006361111111111111,
+      "tokens_mean": 2880.6973684210525
+    },
+    {
+      "budget": 4000,
+      "name": "Full+Stall",
+      "sr_mean": 0.08552631578947369,
+      "sr_std": 0.0,
+      "cps_mean": 0.0089,
+      "tokens_mean": 2924.8552631578946
+    }
+  ]
+}

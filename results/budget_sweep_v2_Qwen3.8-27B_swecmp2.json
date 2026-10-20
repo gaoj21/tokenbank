@@ -1,0 +1,47 @@
+{
+  "model": "Qwen/Qwen3.8-27B",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Compact-Real",
+      "success_rate": 0.016722408026755852,
+      "cps": 0.02042,
+      "mean_tokens": 14793.096989966556,
+      "cost": 0.1021
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Compact-Forced",
+      "success_rate": 0.0033444816053511705,
+      "cps": 0.0145,
+      "mean_tokens": 2085.7157190635453,
+      "cost": 0.0145
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5-Compact-Real",
+      "sr_mean": 0.016722408026755852,
+      "sr_std": 0.0,
+      "cps_mean": 0.02042,
+      "tokens_mean": 14793.096989966556
+    },
+    {
+      "budget": 24000,
+      "name": "V5-Compact-Forced",
+      "sr_mean": 0.0033444816053511705,
+      "sr_std": 0.0,
+      "cps_mean": 0.0145,
+      "tokens_mean": 2085.7157190635453
+    }
+  ]
+}

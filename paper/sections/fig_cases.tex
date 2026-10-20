@@ -1,0 +1,33 @@
+\begin{figure*}[!t]
+\centering
+\scriptsize
+\newcommand{\casecard}[6]{%
+\fcolorbox{gray!45}{gray!4}{\parbox{0.455\textwidth}{%
+\textbf{#1}\hfill\textcolor{#2}{\textbf{#3}}\\[-1pt]
+\textbf{Task.} #4\\[-1pt]
+\textbf{Cheap rungs.} #5\quad\textbf{Decision $\rightarrow$ result.} #6}}}
+\casecard{Routine arithmetic (gpt-oss-120b)}{green!45!black}{STOP AT $L_0$}
+{Compute $\binom{31}{28}$. Gold: 4495.}
+{$L_0$: 4495, $S_0>-0.001$.}
+{Return 4495 at once. Correct.}\hfill
+\casecard{Agreement settles a doubtful answer (gpt-oss-20b)}{blue!65!black}{STOP AT $L_1$}
+{Simplify $\tan 100^\circ + 4 \sin 100^\circ$. Gold: $-\sqrt{3}$.}
+{$L_0$: $-\sqrt{3}$, $S_0=-0.256$, $L_1$: $-\sqrt{3}$.}
+{Too unsure to stop at $L_0$, but the rungs agree. Return $-\sqrt{3}$. Correct.}\\[3pt]
+\casecard{Team rescues a double miss (gpt-oss-20b)}{blue!65!black}{ESCALATE TO TEAM}
+{\$24{,}000 earns 1\% every two months for five years. Total to the nearest dollar. Gold: 32{,}348.}
+{$L_0$: 32{,}340, $S_0=-0.195$, $L_1$: 32{,}337.}
+{Too unsure to stop at $L_0$ and the rungs disagree. The team returns 32{,}348. Rescued.}\hfill
+\casecard{Stopping protects a correct answer (gpt-oss-20b)}{green!45!black}{STOP AT $L_1$}
+{Maximise $|(a{+}b)(a{+}c)(a{+}d)(b{+}c)(b{+}d)(c{+}d)|$ for distinct unit $a,b,c,d$ summing to 0. Gold: 0.}
+{$L_0$: 0, $S_0=-0.366$, $L_1$: 0.}
+{The rungs agree. Return 0. The team would answer 8.}\\[3pt]
+\casecard{Escalation that does not help (gpt-oss-120b)}{red!60!black}{ESCALATE TO TEAM}
+{Radius of a semicircle tangent inside a quarter circle of radius 14. Gold: $14/3$.}
+{$L_0$: $14(\sqrt{2}-1)$, $S_0=-0.185$, $L_1$: no answer.}
+{The team returns $14/(1+\sqrt{2})$, wrong at the full cost.}
+\caption{Five decision paths from the final MATH records. $S_0$ is the mean token log-probability of the
+direct answer. Escalation repairs some uncertain answers and fails on others, while stopping when the cheap
+rungs agree can keep a correct answer the team would miss.}
+\label{fig:cases}
+\end{figure*}

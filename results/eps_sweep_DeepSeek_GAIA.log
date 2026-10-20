@@ -1,0 +1,6 @@
+DeepSeek GAIA 0.01 {'tok': 100.0, 'acc': 33.6, 'viol': 0.0}
+DeepSeek GAIA 0.02 {'tok': 99.1, 'acc': 33.4, 'viol': 1.0}
+DeepSeek GAIA 0.03 {'tok': 100.0, 'acc': 32.9, 'viol': 0.0}
+DeepSeek GAIA 0.05 {'tok': 97.0, 'acc': 32.7, 'viol': 0.0}
+DeepSeek GAIA 0.075 {'tok': 87.2, 'acc': 31.4, 'viol': 0.0}
+DeepSeek GAIA 0.1 {'tok': 64.9, 'acc': 30.8, 'viol': 0.0}

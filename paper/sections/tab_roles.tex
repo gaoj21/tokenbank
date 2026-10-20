@@ -1,0 +1,24 @@
+\begin{table}[h]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+Model & Bench. & Planner & Executor & Reviewer & Coord. \\
+\midrule
+GLM & MATH & 30.4 & 46.5 & 23.2 & 53.6 \\
+GLM & GAIA & 15.1 & 56.4 & 28.6 & 43.7 \\
+GLM & FRAMES & 20.4 & 48.0 & 31.6 & 52.0 \\
+GLM & MuSiQue & 20.6 & 46.5 & 32.9 & 53.5 \\
+GLM & pooled & 21.0 & 47.6 & 31.4 & 52.4 \\
+DeepSeek & MATH & 37.5 & 45.3 & 17.1 & 54.6 \\
+DeepSeek & GAIA & 17.9 & 51.2 & 30.9 & 48.8 \\
+DeepSeek & FRAMES & 28.8 & 42.5 & 28.7 & 57.5 \\
+DeepSeek & MuSiQue & 31.6 & 40.7 & 27.7 & 59.3 \\
+DeepSeek & pooled & 30.3 & 42.2 & 27.5 & 57.8 \\
+\bottomrule
+\end{tabular}}
+\caption{Share (\%) of the plain pipeline's tokens by role (24k budget, 4{,}096 cap). Coord.: planner + reviewer.}
+\label{tab:roles}
+\end{table}

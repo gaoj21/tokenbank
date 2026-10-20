@@ -1,0 +1,42 @@
+# Environments. 14G of torch/vllm/cuda plus two snapshots of it.
+.venv/
+.venv_linux_backup/
+.venv_darwin_backup/
+texenv/
+__pycache__/
+*.pyc
+
+# 2.2G, 28k files, almost all of it SWE-bench harness output for work that was dropped.
+logs/
+
+# Vendored third-party checkouts.
+tools/
+
+# Pre-edit snapshots. These are the reason a removed API key would otherwise stay in the
+# tree: ten of them still carry the literal that was deleted from the live file.
+_archive/
+
+# Build output.
+paper/build/
+paper/texenv/
+
+# Local fixtures and credentials, never committed.
+*.key
+.env
+
+# Per-item traces, 927MB across four model families. Excluded to keep the repo cloneable;
+# they are the experiment's raw output, not its source. _gen_materials.py reads them from
+# traces/ and regenerates every number in the paper, so a reader needs them to reproduce the
+# tables but not to read the code.
+traces/
+_aborted/
+
+# Large intermediate artifacts.
+artifacts_deepseek/
+bcb_work/
+figures/
+
+# Datasets (14G) and third-party checkouts, not code.
+data/
+external/
+results/lit_audit/pdf/

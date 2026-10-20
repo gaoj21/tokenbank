@@ -1,0 +1,11 @@
+\section{Conclusion}
+
+A plan--execute--review team costs several times a single reasoning agent, some tasks it solves do not
+need it, and it sometimes misses answers a single agent gets right. Deciding per task whether to pay for it is a
+constrained decision with a signed loss, solved by a confidence threshold when escalation helps less the
+more confident the cheap answer is. \climb{} certifies that family with a variance-adaptive betting test,
+and its bound holds whether or not the condition does, given i.i.d.\ data. Its main value
+is reliability: uncertified rules of similar cost can lose up to 16 points with no warning at
+deployment, while \climb{}'s loss stayed within the tolerance on every setting, spending 62\% of the pipeline's tokens on average
+at 5 points and 35\% at 10. Where confidence misleads, it saves little rather than
+losing accuracy; stronger signals remain the most direct route to larger savings.

@@ -1,0 +1,16 @@
+GLM      MATH     eps=2%   opt: tokens   100%  risk +0.00  viol  0.0%   | gate: tokens   100%  risk +0.00  viol  0.0%
+GLM      GAIA     eps=2%   opt: tokens   100%  risk +0.00  viol  0.0%   | gate: tokens   100%  risk +0.00  viol  0.0%
+GLM      FRAMES   eps=2%   opt: tokens   100%  risk -0.03  viol  0.0%   | gate: tokens    99%  risk +0.06  viol  0.0%
+GLM      MuSiQue  eps=2%   opt: tokens    98%  risk -0.09  viol  0.0%   | gate: tokens    87%  risk -0.21  viol  0.0%
+GLM      MATH     eps=5%   opt: tokens    81%  risk +0.89  viol  2.0%   | gate: tokens    81%  risk +1.31  viol  2.0%
+GLM      GAIA     eps=5%   opt: tokens   100%  risk +0.00  viol  0.0%   | gate: tokens   100%  risk +0.00  viol  0.0%
+GLM      FRAMES   eps=5%   opt: tokens    86%  risk -0.30  viol  0.0%   | gate: tokens    69%  risk -0.40  viol  0.0%
+GLM      MuSiQue  eps=5%   opt: tokens    42%  risk -0.70  viol  0.0%   | gate: tokens    35%  risk -0.86  viol  0.0%
+DeepSeek MATH     eps=2%   opt: tokens   100%  risk +0.00  viol  0.0%   | gate: tokens   100%  risk +0.00  viol  0.0%
+DeepSeek GAIA     eps=2%   opt: tokens   100%  risk +0.00  viol  0.0%   | gate: tokens   100%  risk +0.00  viol  0.0%
+DeepSeek FRAMES   eps=2%   opt: tokens    99%  risk -0.06  viol  0.0%   | gate: tokens    98%  risk -0.10  viol  0.0%
+DeepSeek MuSiQue  eps=2%   opt: tokens   100%  risk -0.01  viol  0.0%   | gate: tokens   100%  risk -0.03  viol  0.0%
+DeepSeek MATH     eps=5%   opt: tokens    85%  risk -0.49  viol  0.0%   | gate: tokens    80%  risk -0.90  viol  0.0%
+DeepSeek GAIA     eps=5%   opt: tokens   100%  risk +0.00  viol  0.0%   | gate: tokens   100%  risk +0.00  viol  0.0%
+DeepSeek FRAMES   eps=5%   opt: tokens    87%  risk -0.58  viol  0.0%   | gate: tokens    72%  risk -0.33  viol  0.0%
+DeepSeek MuSiQue  eps=5%   opt: tokens    87%  risk -0.24  viol  0.0%   | gate: tokens    63%  risk -0.81  viol  0.0%

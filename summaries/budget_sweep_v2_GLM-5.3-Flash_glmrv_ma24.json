@@ -1,0 +1,47 @@
+{
+  "model": "GLM-5.3-Flash-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-CritOnly",
+      "success_rate": 0.63,
+      "cps": 0.0005170634920634921,
+      "mean_tokens": 10563.3375,
+      "cost": 0.1303
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-CritOnly-R1k",
+      "success_rate": 0.685,
+      "cps": 0.00024416058394160584,
+      "mean_tokens": 5273.9375,
+      "cost": 0.0669
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "ST-CritOnly",
+      "sr_mean": 0.63,
+      "sr_std": 0.0,
+      "cps_mean": 0.0005170634920634921,
+      "tokens_mean": 10563.3375
+    },
+    {
+      "budget": 24000,
+      "name": "ST-CritOnly-R1k",
+      "sr_mean": 0.685,
+      "sr_std": 0.0,
+      "cps_mean": 0.00024416058394160584,
+      "tokens_mean": 5273.9375
+    }
+  ]
+}

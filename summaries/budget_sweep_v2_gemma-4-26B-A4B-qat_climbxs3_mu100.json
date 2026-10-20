@@ -1,0 +1,30 @@
+{
+  "model": "google/gemma-4-26b-a4b-it-qat",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    100000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 100000,
+      "name": "CLIMB-Live",
+      "success_rate": 0.06418219461697723,
+      "cps": 0.015016129032258064,
+      "mean_tokens": 32012.654244306417,
+      "cost": 0.46549999999999997
+    }
+  ],
+  "agg": [
+    {
+      "budget": 100000,
+      "name": "CLIMB-Live",
+      "sr_mean": 0.06418219461697723,
+      "sr_std": 0.0,
+      "cps_mean": 0.015016129032258064,
+      "tokens_mean": 32012.654244306417
+    }
+  ]
+}

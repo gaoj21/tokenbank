@@ -1,0 +1,30 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    16000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "V5-Unc-Fmt",
+      "success_rate": 0.2696969696969697,
+      "cps": 0.0006662921348314606,
+      "mean_tokens": 5745.474242424242,
+      "cost": 0.1186
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "V5-Unc-Fmt",
+      "sr_mean": 0.2696969696969697,
+      "sr_std": 0.0,
+      "cps_mean": 0.0006662921348314606,
+      "tokens_mean": 5745.474242424242
+    }
+  ]
+}

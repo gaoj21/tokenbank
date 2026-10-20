@@ -1,0 +1,314 @@
+{
+ "GLM|MATH": {
+  "n": 400,
+  "pipe_acc": 96.5,
+  "pipe_tok": 5055,
+  "L0": [
+   89.0,
+   10
+  ],
+  "L1": [
+   89.2,
+   24
+  ],
+  "fixed": [
+   93.5,
+   41
+  ],
+  "oracle": [
+   97.2,
+   29
+  ],
+  "eps2": {
+   "acc": 96.4,
+   "tok": 99,
+   "viol_eval": 3.0,
+   "viol_pool": 0.5
+  },
+  "eps5": {
+   "acc": 94.3,
+   "tok": 63,
+   "viol_eval": 7.0,
+   "viol_pool": 1.5
+  },
+  "eps10": {
+   "acc": 90.7,
+   "tok": 22,
+   "viol_eval": 3.5,
+   "viol_pool": 0.0
+  }
+ },
+ "GLM|GAIA": {
+  "n": 122,
+  "pipe_acc": 27.0,
+  "pipe_tok": 15560,
+  "L0": [
+   25.4,
+   6
+  ],
+  "L1": [
+   26.2,
+   13
+  ],
+  "fixed": [
+   29.5,
+   40
+  ],
+  "oracle": [
+   32.0,
+   78
+  ],
+  "eps2": {
+   "acc": 27.0,
+   "tok": 99,
+   "viol_eval": 1.0,
+   "viol_pool": 0.0
+  },
+  "eps5": {
+   "acc": 26.7,
+   "tok": 90,
+   "viol_eval": 3.0,
+   "viol_pool": 0.0
+  },
+  "eps10": {
+   "acc": 26.1,
+   "tok": 45,
+   "viol_eval": 0.0,
+   "viol_pool": 0.0
+  }
+ },
+ "GLM|FRAMES": {
+  "n": 660,
+  "pipe_acc": 62.6,
+  "pipe_tok": 6822,
+  "L0": [
+   53.6,
+   6
+  ],
+  "L1": [
+   55.3,
+   14
+  ],
+  "fixed": [
+   56.4,
+   33
+  ],
+  "oracle": [
+   64.5,
+   74
+  ],
+  "eps2": {
+   "acc": 62.4,
+   "tok": 99,
+   "viol_eval": 4.5,
+   "viol_pool": 2.5
+  },
+  "eps5": {
+   "acc": 60.9,
+   "tok": 91,
+   "viol_eval": 9.5,
+   "viol_pool": 1.5
+  },
+  "eps10": {
+   "acc": 56.6,
+   "tok": 40,
+   "viol_eval": 10.0,
+   "viol_pool": 0.0
+  }
+ },
+ "GLM|MuSiQue": {
+  "n": 1934,
+  "pipe_acc": 38.3,
+  "pipe_tok": 7116,
+  "L0": [
+   33.4,
+   5
+  ],
+  "L1": [
+   34.4,
+   11
+  ],
+  "fixed": [
+   35.6,
+   37
+  ],
+  "oracle": [
+   40.7,
+   78
+  ],
+  "eps2": {
+   "acc": 37.7,
+   "tok": 86,
+   "viol_eval": 7.5,
+   "viol_pool": 2.5
+  },
+  "eps5": {
+   "acc": 35.4,
+   "tok": 35,
+   "viol_eval": 9.5,
+   "viol_pool": 0.0
+  },
+  "eps10": {
+   "acc": 33.3,
+   "tok": 5,
+   "viol_eval": 0.0,
+   "viol_pool": 0.0
+  }
+ },
+ "DeepSeek|MATH": {
+  "n": 400,
+  "pipe_acc": 97.8,
+  "pipe_tok": 3511,
+  "L0": [
+   91.5,
+   27
+  ],
+  "L1": [
+   94.8,
+   60
+  ],
+  "fixed": [
+   93.2,
+   48
+  ],
+  "oracle": [
+   99.0,
+   40
+  ],
+  "eps2": {
+   "acc": 97.7,
+   "tok": 100,
+   "viol_eval": 1.5,
+   "viol_pool": 1.5
+  },
+  "eps5": {
+   "acc": 96.0,
+   "tok": 90,
+   "viol_eval": 7.0,
+   "viol_pool": 1.5
+  },
+  "eps10": {
+   "acc": 92.3,
+   "tok": 38,
+   "viol_eval": 1.0,
+   "viol_pool": 0.0
+  }
+ },
+ "DeepSeek|GAIA": {
+  "n": 122,
+  "pipe_acc": 32.8,
+  "pipe_tok": 13615,
+  "L0": [
+   29.5,
+   10
+  ],
+  "L1": [
+   30.3,
+   25
+  ],
+  "fixed": [
+   32.0,
+   43
+  ],
+  "oracle": [
+   34.4,
+   88
+  ],
+  "eps2": {
+   "acc": 32.8,
+   "tok": 100,
+   "viol_eval": 0.0,
+   "viol_pool": 0.0
+  },
+  "eps5": {
+   "acc": 32.4,
+   "tok": 98,
+   "viol_eval": 3.5,
+   "viol_pool": 0.0
+  },
+  "eps10": {
+   "acc": 30.5,
+   "tok": 64,
+   "viol_eval": 0.0,
+   "viol_pool": 0.0
+  }
+ },
+ "DeepSeek|FRAMES": {
+  "n": 660,
+  "pipe_acc": 65.3,
+  "pipe_tok": 6409,
+  "L0": [
+   54.7,
+   10
+  ],
+  "L1": [
+   58.2,
+   29
+  ],
+  "fixed": [
+   56.4,
+   24
+  ],
+  "oracle": [
+   70.3,
+   85
+  ],
+  "eps2": {
+   "acc": 65.3,
+   "tok": 100,
+   "viol_eval": 0.5,
+   "viol_pool": 0.5
+  },
+  "eps5": {
+   "acc": 63.8,
+   "tok": 97,
+   "viol_eval": 9.0,
+   "viol_pool": 1.5
+  },
+  "eps10": {
+   "acc": 59.2,
+   "tok": 52,
+   "viol_eval": 12.0,
+   "viol_pool": 1.5
+  }
+ },
+ "DeepSeek|MuSiQue": {
+  "n": 1934,
+  "pipe_acc": 41.5,
+  "pipe_tok": 6913,
+  "L0": [
+   30.7,
+   7
+  ],
+  "L1": [
+   32.0,
+   23
+  ],
+  "fixed": [
+   32.9,
+   27
+  ],
+  "oracle": [
+   43.5,
+   98
+  ],
+  "eps2": {
+   "acc": 41.5,
+   "tok": 100,
+   "viol_eval": 1.0,
+   "viol_pool": 1.0
+  },
+  "eps5": {
+   "acc": 38.8,
+   "tok": 92,
+   "viol_eval": 10.0,
+   "viol_pool": 1.0
+  },
+  "eps10": {
+   "acc": 33.7,
+   "tok": 39,
+   "viol_eval": 9.5,
+   "viol_pool": 2.0
+  }
+ }
+}

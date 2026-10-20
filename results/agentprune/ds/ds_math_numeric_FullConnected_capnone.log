@@ -1,0 +1,52 @@
+/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/class_registry/entry_points.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import iter_entry_points
+Batch 0 --------------------------------------------------------------------------------
+Error during execution of node JtZD: 
+Batch time 641.588
+Accuracy: 0.90625
+utilities: [True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, True, True]
+Batch 1 --------------------------------------------------------------------------------
+Error during execution of node 9dUt: 
+Batch time 735.136
+Accuracy: 0.875
+utilities: [False, True, True, True, True, True, False, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True]
+Batch 2 --------------------------------------------------------------------------------
+Error during execution of node JtZD: 
+Error during execution of node hKY2: 
+Batch time 705.454
+Accuracy: 0.875
+utilities: [True, True, True, True, True, True, False, True, True, True, True, False, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True]
+Batch 3 --------------------------------------------------------------------------------
+Batch time 202.298
+Accuracy: 0.8984375
+utilities: [True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+Batch 4 --------------------------------------------------------------------------------
+Batch time 224.982
+Accuracy: 0.9125
+utilities: [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True]
+Batch 5 --------------------------------------------------------------------------------
+Batch time 111.658
+Accuracy: 0.9270833333333334
+utilities: [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+Batch 6 --------------------------------------------------------------------------------
+Error during execution of node hKY2: 
+Error during execution of node hKY2: 
+Batch time 720.317
+Accuracy: 0.9196428571428571
+utilities: [True, True, True, True, True, True, True, True, True, True, False, True, False, True, True, True, True, True, True, True, True, False, True, True, True, False, True, True, True, True, True, True]
+Batch 7 --------------------------------------------------------------------------------
+Error during execution of node 9dUt: 
+Batch time 640.148
+Accuracy: 0.921875
+utilities: [True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True]
+Batch 8 --------------------------------------------------------------------------------
+Error during execution of node hKY2: 
+Batch time 705.756
+Accuracy: 0.9236111111111112
+utilities: [True, True, True, True, True, True, True, False, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+Batch 9 --------------------------------------------------------------------------------
+Error during execution of node JtZD: 
+Batch time 767.812
+Accuracy: 0.921875
+utilities: [True, False, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False]
+DONE

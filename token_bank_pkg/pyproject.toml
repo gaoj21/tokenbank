@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "token-bank"
+version = "2.0.0"
+description = "Adaptive runtime token-budget governance middleware for multi-agent LLM systems"
+readme = { text = "Token Bank V2: predictive rebalancing, inter-agent credit market, online priority learning, KV-cache tracking.", content-type = "text/plain" }
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "scipy",
+]
+
+[project.optional-dependencies]
+forecast = ["statsmodels"]
+tokenizer = ["tiktoken"]
+service = ["fastapi", "uvicorn", "httpx"]
+all = ["statsmodels", "tiktoken", "fastapi", "uvicorn", "httpx"]
+
+[tool.setuptools.packages.find]
+include = ["token_bank*"]

@@ -1,0 +1,97 @@
+{
+  "model": "deepseek-v4-pro",
+  "seeds": [
+    42,
+    43
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Unconstrained",
+      "success_rate": 0.29,
+      "cps": 0.023672413793103447,
+      "mean_tokens": 9250.25,
+      "cost": 0.6865
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Full+Stall",
+      "success_rate": 0.24,
+      "cps": 0.018699999999999998,
+      "mean_tokens": 6646.05,
+      "cost": 0.4488,
+      "mean_borrows": 0.05,
+      "recovery_rate": 0.06
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Full-noKV+Stall",
+      "success_rate": 0.22,
+      "cps": 0.021131818181818182,
+      "mean_tokens": 6340.6,
+      "cost": 0.4649,
+      "mean_borrows": 0.01,
+      "recovery_rate": 0.01
+    },
+    {
+      "seed": 43,
+      "budget": 32000,
+      "name": "Unconstrained",
+      "success_rate": 0.3,
+      "cps": 0.02410333333333333,
+      "mean_tokens": 9809.52,
+      "cost": 0.7231
+    },
+    {
+      "seed": 43,
+      "budget": 32000,
+      "name": "Full+Stall",
+      "success_rate": 0.23,
+      "cps": 0.019226086956521737,
+      "mean_tokens": 6576.71,
+      "cost": 0.4422,
+      "mean_borrows": 0.05,
+      "recovery_rate": 0.01
+    },
+    {
+      "seed": 43,
+      "budget": 32000,
+      "name": "Full-noKV+Stall",
+      "success_rate": 0.27,
+      "cps": 0.016296296296296295,
+      "mean_tokens": 6053.19,
+      "cost": 0.44,
+      "mean_borrows": 0.05,
+      "recovery_rate": 0.03
+    }
+  ],
+  "agg": [
+    {
+      "budget": 32000,
+      "name": "Unconstrained",
+      "sr_mean": 0.295,
+      "sr_std": 0.0050000000000000044,
+      "cps_mean": 0.02388787356321839,
+      "tokens_mean": 9529.885
+    },
+    {
+      "budget": 32000,
+      "name": "Full+Stall",
+      "sr_mean": 0.235,
+      "sr_std": 0.0049999999999999906,
+      "cps_mean": 0.018963043478260867,
+      "tokens_mean": 6611.38
+    },
+    {
+      "budget": 32000,
+      "name": "Full-noKV+Stall",
+      "sr_mean": 0.245,
+      "sr_std": 0.02500000000000001,
+      "cps_mean": 0.01871405723905724,
+      "tokens_mean": 6196.895
+    }
+  ]
+}

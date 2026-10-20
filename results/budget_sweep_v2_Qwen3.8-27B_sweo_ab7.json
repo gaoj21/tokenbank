@@ -1,0 +1,30 @@
+{
+  "model": "qwen3.8-27b-fp8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.1-Ab7-NoVerbal",
+      "success_rate": 0.122,
+      "cps": 0.0011245901639344261,
+      "mean_tokens": 4571.066,
+      "cost": 0.0686
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5.1-Ab7-NoVerbal",
+      "sr_mean": 0.122,
+      "sr_std": 0.0,
+      "cps_mean": 0.0011245901639344261,
+      "tokens_mean": 4571.066
+    }
+  ]
+}

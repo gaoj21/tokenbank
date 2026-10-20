@@ -1,0 +1,30 @@
+{
+  "model": "GLM-5.3-Flash-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "CLIMB-Live",
+      "success_rate": 0.20268872802481902,
+      "cps": 0.0005102040816326531,
+      "mean_tokens": 3663.166494312306,
+      "cost": 0.1
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "CLIMB-Live",
+      "sr_mean": 0.20268872802481902,
+      "sr_std": 0.0,
+      "cps_mean": 0.0005102040816326531,
+      "tokens_mean": 3663.166494312306
+    }
+  ]
+}

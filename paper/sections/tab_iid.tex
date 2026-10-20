@@ -1,0 +1,26 @@
+\begin{table}[!t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lllc@{}}
+\toprule
+Model & $\eps$ & Worst setting & $\Pr(R>\eps)$ [95\% CI] \\
+\midrule
+gpt-oss-20b & 2\% & MuSiQue & 3.40 [2.9, 3.9] \\
+ & 5\% & FRAMES & 2.02 [1.6, 2.4] \\
+ & 10\% & BBEH & 2.40 [2.0, 2.9] \\
+\midrule
+gpt-oss-120b & 2\% & BBEH & 2.18 [1.8, 2.6] \\
+ & 5\% & FRAMES & 2.34 [1.9, 2.8] \\
+ & 10\% & BBEH & 0.22 [0.1, 0.4] \\
+\midrule
+Gemma & 2\% & MuSiQue & 3.08 [2.6, 3.6] \\
+ & 5\% & BBEH & 3.32 [2.8, 3.9] \\
+ & 10\% & BBEH & 1.88 [1.5, 2.3] \\
+\bottomrule
+\end{tabular}
+\caption{Direct check of Proposition~\ref{prop:risk}: the worst empirical failure probability
+across the four benchmarks for each model and tolerance. Each estimate uses 5{,}000 i.i.d. calibration
+draws from the recorded pool. All upper 95\% limits remain below $\delta=10\%$.}
+\label{tab:iid}
+\end{table}

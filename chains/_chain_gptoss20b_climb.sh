@@ -1,0 +1,9 @@
+#!/bin/bash
+# Relaunch of the gpt-oss-20b forced-climb runs without top-5 log-probs (TOP_LOGPROBS=0).
+cd /home/j0018/Desktop/tokenbank
+R=chains/_gptoss_run.sh; export MAX_WORKERS=128 MODEL=gpt-oss-20b
+PORT=18111 bash $R _climbx_ma24 BENCHMARK=MATH MATH_N=500 BUDGETS=24000 SPLIT=test CONFIG_ONLY=CLIMB-Live THETA_LIVE=99 &
+PORT=18112 bash $R _climbx_ga24 BENCHMARK=GAIA GAIA_N=1000 BUDGETS=24000 SPLIT=test CONFIG_ONLY=CLIMB-Live THETA_LIVE=99 &
+PORT=18113 bash $R _climbx_fr24 BENCHMARK=FRAMES BUDGETS=24000 SPLIT=test CONFIG_ONLY=CLIMB-Live THETA_LIVE=99 &
+PORT=18114 bash $R _climbx_mu24 BENCHMARK=MUSIQUE MUSIQUE_N=99999 BUDGETS=24000 SPLIT=test CONFIG_ONLY=CLIMB-Live THETA_LIVE=99 &
+wait; echo "[$(date '+%F %T')] GPTOSS20B CLIMB DONE"

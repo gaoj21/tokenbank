@@ -1,0 +1,21 @@
+\begin{table}[h]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+GLM, $\eps = 5\%$ & MATH & GAIA & FRAMES & MuSiQue \\
+\midrule
+$\delta = 0.05$ & 74\% / 1\% & 99\% / 0\% & 94\% / 0\% & 40\% / 0\% \\
+$\delta = 0.1$ & 66\% / 2\% & 92\% / 0\% & 89\% / 3\% & 31\% / 0\% \\
+$\delta = 0.2$ & 56\% / 7\% & 70\% / 0\% & 81\% / 9\% & 26\% / 0\% \\
+\midrule
+$n = 50$ & 99\% / 1\% & 90\% / 0\% & 98\% / 1\% & 98\% / 0\% \\
+$n = 100$ & 92\% / 3\% & -- & 93\% / 3\% & 81\% / 0\% \\
+$n = 200$ & 67\% / 2\% & -- & 93\% / 3\% & 66\% / 0\% \\
+\bottomrule
+\end{tabular}
+\caption{Sensitivity: tokens (\% of pipeline) / violation rate, as the error level $\delta$ and the calibration size $n$ vary
+(default $\delta = 0.1$, $n$ = half of the test split).}
+\label{tab:sens}
+\end{table}

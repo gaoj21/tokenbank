@@ -1,0 +1,64 @@
+{
+  "model": "qwen3.8-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Unc-Fmt",
+      "success_rate": 0.26229508196721313,
+      "cps": 0.0015,
+      "mean_tokens": 13198.860655737704,
+      "cost": 0.048
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.1-Ab7-NoVerbal",
+      "success_rate": 0.28688524590163933,
+      "cps": 0.00098,
+      "mean_tokens": 9287.11475409836,
+      "cost": 0.0343
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.2-ReasonLadder",
+      "success_rate": 0.27049180327868855,
+      "cps": 0.0006242424242424243,
+      "mean_tokens": 5973.38524590164,
+      "cost": 0.0206
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5-Unc-Fmt",
+      "sr_mean": 0.26229508196721313,
+      "sr_std": 0.0,
+      "cps_mean": 0.0015,
+      "tokens_mean": 13198.860655737704
+    },
+    {
+      "budget": 24000,
+      "name": "V5.1-Ab7-NoVerbal",
+      "sr_mean": 0.28688524590163933,
+      "sr_std": 0.0,
+      "cps_mean": 0.00098,
+      "tokens_mean": 9287.11475409836
+    },
+    {
+      "budget": 24000,
+      "name": "V5.2-ReasonLadder",
+      "sr_mean": 0.27049180327868855,
+      "sr_std": 0.0,
+      "cps_mean": 0.0006242424242424243,
+      "tokens_mean": 5973.38524590164
+    }
+  ]
+}

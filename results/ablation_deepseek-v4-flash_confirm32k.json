@@ -1,0 +1,88 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Unconstrained",
+      "success_rate": 0.2283464566929134,
+      "cps": 0.01207241379310345,
+      "mean_tokens": 10917.417322834646,
+      "cost": 0.3501
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Full+Stall",
+      "success_rate": 0.2204724409448819,
+      "cps": 0.006453571428571428,
+      "mean_tokens": 6041.496062992126,
+      "cost": 0.1807,
+      "mean_borrows": 0.07086614173228346,
+      "recovery_rate": 0.0
+    },
+    {
+      "seed": 43,
+      "budget": 32000,
+      "name": "Unconstrained",
+      "success_rate": 0.23622047244094488,
+      "cps": 0.011713333333333333,
+      "mean_tokens": 10998.566929133858,
+      "cost": 0.3514
+    },
+    {
+      "seed": 43,
+      "budget": 32000,
+      "name": "Full+Stall",
+      "success_rate": 0.1889763779527559,
+      "cps": 0.007875,
+      "mean_tokens": 6327.2677165354335,
+      "cost": 0.189,
+      "mean_borrows": 0.07086614173228346,
+      "recovery_rate": 0.0
+    },
+    {
+      "seed": 44,
+      "budget": 32000,
+      "name": "Unconstrained",
+      "success_rate": 0.23622047244094488,
+      "cps": 0.011946666666666666,
+      "mean_tokens": 11238.015748031496,
+      "cost": 0.3584
+    },
+    {
+      "seed": 44,
+      "budget": 32000,
+      "name": "Full+Stall",
+      "success_rate": 0.2047244094488189,
+      "cps": 0.007,
+      "mean_tokens": 6039.614173228347,
+      "cost": 0.182,
+      "mean_borrows": 0.07086614173228346,
+      "recovery_rate": 0.007874015748031496
+    }
+  ],
+  "agg": [
+    {
+      "budget": 32000,
+      "name": "Unconstrained",
+      "sr_mean": 0.23359580052493437,
+      "sr_std": 0.0037118466204018176,
+      "cps_mean": 0.01191080459770115,
+      "tokens_mean": 11051.333333333334
+    },
+    {
+      "budget": 32000,
+      "name": "Full+Stall",
+      "sr_mean": 0.2047244094488189,
+      "sr_std": 0.012858213872877574,
+      "cps_mean": 0.0071095238095238095,
+      "tokens_mean": 6136.1259842519685
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+\section{Introduction}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/figure1.pdf}
+\caption{Why escalation needs a guarantee. (a) The team costs up to 6.3 times a single reasoning agent.
+(b) Some tasks the team solves are already solved by the direct answer $L_0$ (fill) or by $L_0$ or a
+single agent $L_1$ (outline). (c) Confidence only partly separates right from wrong, and on three settings ranks them backwards. (d) A fixed threshold
+that spends as much on average as \climb{} exceeds the tolerance on some settings, while \climb{} stays within a tolerance of $\eps = 5\%$ (replay).}
+\label{fig:motivation}
+\end{figure*}
+
+Multi-agent systems built from large language models divide a task among roles: a planner decomposes it,
+an executor solves it and a reviewer critiques the result over several rounds
+\citep{du2024debate,wu2024autogen,hong2024metagpt}. Such pipelines are costly and not uniformly better. On
+the three open models we study, a plan--execute--review pipeline spends 5.4k to 175k tokens per task, 1.3
+to 6.3 times the cost of a single agent that reasons about the task once
+(Figure~\ref{fig:motivation}a), yet some of the tasks it solves are already solved by a direct answer or a
+single agent (Figure~\ref{fig:motivation}b). The team can also reduce accuracy: on some tasks a direct answer
+or a single agent is correct and the team is not, mostly because its reviewer fails to correct a wrong first
+draft, and almost half of these losses against the direct answer recur when the team is rerun
+(\S\ref{sec:analysis}). The relevant question is thus less whether collaboration helps on average than
+\emph{when it is worth its cost} for a given input.
+
+Invoking the team only when a cheaper configuration is likely to fail can reduce cost, but the difficulty lies in
+the rule that decides when. At inference time the system observes only weak proxies for the quality of a cheap
+answer: the mean token log-probability of a direct answer separates correct from incorrect answers with an
+AUROC of 0.22 to 0.81, falling below chance where greedy decoding produces confident repetitions
+(Figure~\ref{fig:motivation}c). Such proxies can work on average but offer no guarantee. A fixed confidence
+threshold with the same average cost as our method loses more than 2 points of accuracy on seven of our twelve
+settings and up to 16 (Figure~\ref{fig:motivation}d), and always stopping at the single agent loses up to 9.
+Without a bound on the accuracy given up, such savings are difficult to trust, and practitioners may
+reasonably continue to pay for the full pipeline.
+
+We instead minimise expected cost subject to a user-set bound $\eps$ on the accuracy lost relative to always running
+the pipeline. A task climbs a ladder whose rungs are cheaper configurations of the same model, a direct answer
+$L_0$ and then a single agent $L_1$ at the pipeline's own reasoning setting. It stops at a rung once the
+evidence suffices and escalates to the full pipeline otherwise. Because skipping the team can also retain
+correct answers the team would miss, this loss is \emph{signed}. When the gain from escalation decreases with
+the confidence of the cheap answer, the optimal rule is a confidence threshold, and the safe thresholds are the
+most conservative ones. \climb{} exploits this ordering without assuming the condition: following
+Learn-then-Test \citep{angelopoulos2021ltt}, it tests the thresholds from conservative to aggressive with a
+betting test on the signed loss \citep{waudbysmith2024betting}. This yields a distribution-free guarantee: with
+probability at least $1-\delta$ for a chosen error level $\delta$, the deployed policy loses at most $\eps$ accuracy relative to the team.
+\climb{} answers cheaply where the guarantee permits and runs the pipeline elsewhere, including on every task
+when no cheaper policy can be certified, so a weak or misleading signal tends to reduce savings rather than
+accuracy.
+
+Across three open models and four benchmarks, \climb{} stayed within its tolerance in over 96\% of i.i.d.\
+calibration draws, where the guarantee requires 90\%, while saving 38\% of the pipeline's tokens on average at
+a 5-point tolerance and 65\% at 10 points. Where its signal was misleading, it saved little rather than losing
+accuracy. The choice of test can matter as much as the signal: on the same records, the Hoeffding--Bentkus
+bound of \citet{wynn2026corrupted} certifies nothing cheaper than the pipeline, and clipping the loss at zero
+certifies less on most settings. Our contributions are as follows:
+\begin{itemize}
+    \setlength{\itemsep}{1pt}
+    \setlength{\parskip}{0pt}
+    \setlength{\parsep}{0pt}
+    \item We measure what a plan--execute--review team adds over a single agent, including the correct
+    answers it loses and where those losses arise, and cast the decision of when to call it as a
+    constrained problem with a signed loss, under which one monotone-gain condition makes a threshold optimal and testing in order lossless (\S\ref{sec:motivation}, \S\ref{sec:structure}).
+    \item We introduce \climb{}, a training-free procedure that escalates on confidence and on the
+    agreement of two cheap rungs, and certifies the accuracy lost relative to the team with a
+    variance-adaptive betting test inside fixed-sequence testing (\S\ref{sec:calib}).
+    \item On three models and four benchmarks we verify that the guarantee holds in practice, show that uncertified rules of
+    similar cost can lose unpredictable amounts, and find that, when most losses are zero, variance adaptivity matters as much as keeping the loss's sign (\S\ref{sec:results}).
+\end{itemize}

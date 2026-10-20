@@ -1,0 +1,22 @@
+[
+  {
+    "name": "FlatCredit",
+    "success_rate": 0.0,
+    "reviewer_survival": 0.02,
+    "mean_borrowed_tokens": 5078.78,
+    "total_borrowed_tokens": 253939,
+    "mean_reserve_left": 17818.56,
+    "credit_scores": {}
+  },
+  {
+    "name": "ScoredCredit",
+    "success_rate": 0.2,
+    "reviewer_survival": 0.68,
+    "mean_borrowed_tokens": 1593.86,
+    "total_borrowed_tokens": 79693,
+    "mean_reserve_left": 16827.5,
+    "credit_scores": {
+      "Executor": 0.056
+    }
+  }
+]

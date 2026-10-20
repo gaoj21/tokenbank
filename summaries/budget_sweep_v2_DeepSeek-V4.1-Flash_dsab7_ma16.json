@@ -1,0 +1,30 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    16000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "V5.1-Ab7-NoVerbal",
+      "success_rate": 0.55,
+      "cps": 0.00040090909090909093,
+      "mean_tokens": 7308.1725,
+      "cost": 0.0882
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "V5.1-Ab7-NoVerbal",
+      "sr_mean": 0.55,
+      "sr_std": 0.0,
+      "cps_mean": 0.00040090909090909093,
+      "tokens_mean": 7308.1725
+    }
+  ]
+}

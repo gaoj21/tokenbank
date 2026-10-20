@@ -1,0 +1,22 @@
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.3pt}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+ & \multicolumn{3}{c}{$\eps = 5\%$} & \multicolumn{3}{c}{$\eps = 10\%$} & \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Variant & gpt & Gem. & All & gpt & Gem. & All & Viol. \\
+\midrule
+Ref.: first draft & 68 & 83 & 73 & 43 & 49 & 45 & 2\% \\
+Ref.: single agent $L_1$ & 94 & 80 & 89 & 77 & 49 & 67 & 3\% \\
+\midrule
+Random score & 67 & 66 & 67 & 33 & 32 & 33 & 2\% \\
+Agreement only & 70 & 95 & 79 & 46 & 76 & 56 & 3\% \\
+Log-prob.\ only & 60 & 82 & 67 & 31 & 52 & 38 & 2\% \\
+Log-prob.\ + agr.\ (ours) & 57 & 71 & 62 & 30 & 44 & 35 & 2\% \\
+\bottomrule
+\end{tabular}
+\caption{Ablations: mean tokens as a share of the reference's over gpt-oss's eight settings, Gemma's four and all twelve. The first two rows change the reference, with the deployed score. The rest change the score of the deployed ladder (random: mean of five draws), ending with \climb{}'s. Viol.: largest violation rate over all settings and $\eps \in \{2, 5, 10\}\%$. Per setting in Table~\ref{tab:ablations}.}
+\label{tab:ablmain}
+\end{table}

@@ -1,0 +1,64 @@
+{
+  "model": "google/gemma-4-31b-it",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    8000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "V5-Unconstrained",
+      "success_rate": 0.04188210961737332,
+      "cps": 0.0014074074074074076,
+      "mean_tokens": 2444.923474663909,
+      "cost": 0.114
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "V5-Unc-Fmt",
+      "success_rate": 0.07755946225439504,
+      "cps": 0.000744,
+      "mean_tokens": 2392.880558428128,
+      "cost": 0.1116
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "V5.1-Ab7-NoVerbal",
+      "success_rate": 0.09617373319544985,
+      "cps": 0.00040161290322580646,
+      "mean_tokens": 1553.6928645294727,
+      "cost": 0.0747
+    }
+  ],
+  "agg": [
+    {
+      "budget": 8000,
+      "name": "V5-Unconstrained",
+      "sr_mean": 0.04188210961737332,
+      "sr_std": 0.0,
+      "cps_mean": 0.0014074074074074076,
+      "tokens_mean": 2444.923474663909
+    },
+    {
+      "budget": 8000,
+      "name": "V5-Unc-Fmt",
+      "sr_mean": 0.07755946225439504,
+      "sr_std": 0.0,
+      "cps_mean": 0.000744,
+      "tokens_mean": 2392.880558428128
+    },
+    {
+      "budget": 8000,
+      "name": "V5.1-Ab7-NoVerbal",
+      "sr_mean": 0.09617373319544985,
+      "sr_std": 0.0,
+      "cps_mean": 0.00040161290322580646,
+      "tokens_mean": 1553.6928645294727
+    }
+  ]
+}

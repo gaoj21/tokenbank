@@ -1,0 +1,180 @@
+{
+  "timestamp": "2026-07-29T17:08:24.589638",
+  "benchmark": "GAIA",
+  "mock_mode": false,
+  "primary_model": "Qwen/Qwen3.6-35B-A3B",
+  "configurations": [
+    {
+      "name": "Unconstrained",
+      "success_rate": 0.69,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 4040.3,
+      "std_tokens": 4744.2,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0.012,
+      "cost_per_success": 0.0002,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "Static Quota",
+      "success_rate": 0.0,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 662.3,
+      "std_tokens": 245.3,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0.0,
+      "cost_per_success": 0.0,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "TB-v1 (Hard)",
+      "success_rate": 0.0,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 0.0,
+      "std_tokens": 0.0,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0,
+      "cost_per_success": 0.0,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "TB-v2-Full",
+      "success_rate": 0.31,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 1728.3,
+      "std_tokens": 633.5,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.31,
+      "total_cost_usd": 0.0042,
+      "cost_per_success": 0.0001,
+      "mean_borrows": 1.84
+    },
+    {
+      "name": "TB-v2-Grace",
+      "success_rate": 0.11,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 1153.2,
+      "std_tokens": 344.4,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.11,
+      "total_cost_usd": 0.0007,
+      "cost_per_success": 0.0001,
+      "mean_borrows": 0.83
+    },
+    {
+      "name": "TB-v2-Throttle",
+      "success_rate": 0.13,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 1115.4,
+      "std_tokens": 335.9,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.13,
+      "total_cost_usd": 0.0007,
+      "cost_per_success": 0.0001,
+      "mean_borrows": 0.83
+    },
+    {
+      "name": "TB-v2-Scored",
+      "success_rate": 0.0,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 661.1,
+      "std_tokens": 249.9,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0.0,
+      "cost_per_success": 0.0,
+      "mean_borrows": 0.09
+    }
+  ],
+  "ablation": [
+    {
+      "name": "Full TB-v2",
+      "success_rate": 0.1,
+      "std_tokens": 333.8,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.1
+    },
+    {
+      "name": "w/o Predictive",
+      "success_rate": 0.12,
+      "std_tokens": 308.0,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.12
+    },
+    {
+      "name": "w/o Borrowing",
+      "success_rate": 0.0,
+      "std_tokens": 261.7,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0
+    },
+    {
+      "name": "w/o OPL",
+      "success_rate": 0.09,
+      "std_tokens": 323.6,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.09
+    },
+    {
+      "name": "w/o KV",
+      "success_rate": 0.14,
+      "std_tokens": 313.9,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.14
+    },
+    {
+      "name": "Static Quota",
+      "success_rate": 0.0,
+      "std_tokens": 257.8,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0
+    }
+  ],
+  "sensitivity_theta": [
+    {
+      "theta": 0.5,
+      "success_rate": 0.13,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.13,
+      "std_tokens": 320.5
+    },
+    {
+      "theta": 0.6,
+      "success_rate": 0.09,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.09,
+      "std_tokens": 329.3
+    },
+    {
+      "theta": 0.7,
+      "success_rate": 0.13,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.13,
+      "std_tokens": 303.3
+    },
+    {
+      "theta": 0.8,
+      "success_rate": 0.1,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.1,
+      "std_tokens": 303.9
+    },
+    {
+      "theta": 0.9,
+      "success_rate": 0.1,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.1,
+      "std_tokens": 306.2
+    },
+    {
+      "theta": 1.0,
+      "success_rate": 0.13,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.13,
+      "std_tokens": 312.8
+    }
+  ]
+}

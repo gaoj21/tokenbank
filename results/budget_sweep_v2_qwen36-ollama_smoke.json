@@ -1,0 +1,30 @@
+{
+  "model": "qwen3.6:latest",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    8000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "TB-v2-Full",
+      "success_rate": 0.6,
+      "cps": 0.0001,
+      "mean_tokens": 2956.8,
+      "cost": 0.00030000000000000003
+    }
+  ],
+  "agg": [
+    {
+      "budget": 8000,
+      "name": "TB-v2-Full",
+      "sr_mean": 0.6,
+      "sr_std": 0.0,
+      "cps_mean": 0.0001,
+      "tokens_mean": 2956.8
+    }
+  ]
+}

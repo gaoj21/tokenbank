@@ -1,0 +1,47 @@
+{
+  "model": "gemma-4-31B-it",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "Static Quota",
+      "success_rate": 0.18421052631578946,
+      "cps": 0.0014285714285714286,
+      "mean_tokens": 8761.348684210527,
+      "cost": 0.04
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "Improved+Compact",
+      "success_rate": 0.21710526315789475,
+      "cps": 0.0012181818181818181,
+      "mean_tokens": 9928.506578947368,
+      "cost": 0.0402
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "Static Quota",
+      "sr_mean": 0.18421052631578946,
+      "sr_std": 0.0,
+      "cps_mean": 0.0014285714285714286,
+      "tokens_mean": 8761.348684210527
+    },
+    {
+      "budget": 24000,
+      "name": "Improved+Compact",
+      "sr_mean": 0.21710526315789475,
+      "sr_std": 0.0,
+      "cps_mean": 0.0012181818181818181,
+      "tokens_mean": 9928.506578947368
+    }
+  ]
+}

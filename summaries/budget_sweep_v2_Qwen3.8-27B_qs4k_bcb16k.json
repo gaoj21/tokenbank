@@ -1,0 +1,30 @@
+{
+  "model": "qwen3.8-27b-fp8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    16000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "BCB-Single-4k",
+      "success_rate": 0.498,
+      "cps": 4.0160642570281125e-07,
+      "mean_tokens": 515.704,
+      "cost": 0.0001
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "BCB-Single-4k",
+      "sr_mean": 0.498,
+      "sr_std": 0.0,
+      "cps_mean": 4.0160642570281125e-07,
+      "tokens_mean": 515.704
+    }
+  ]
+}

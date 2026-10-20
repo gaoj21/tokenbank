@@ -1,0 +1,17 @@
+\begin{abstract}
+Multi-agent pipelines, such as a team of LLM agents that plans, executes and reviews, can answer more
+accurately than a single agent, at several times its cost. They are not always better: on some tasks the team
+misses an answer a single agent gets right, mostly because its first draft is already wrong and its reviewer
+does not correct it. A natural saving is to call the team only when a cheaper configuration of the same model
+is unlikely to suffice. Deciding this with a confidence threshold can work on
+average but carries no guarantee: in our experiments, a threshold of similar cost lost up to 16 points of
+accuracy. We ask instead how much accuracy a user is
+willing to give up, and spend as little as possible within that. \climb{} climbs from a direct answer to
+a single agent to the team, stopping on confidence and agreement, and deploys the cheapest policy it can certify with a distribution-free guarantee. Because skipping the team can
+also keep correct answers the team would miss, the loss is signed, and testing it with a variance-adaptive betting test typically
+certifies more than clipping it or applying a Hoeffding--Bentkus bound. When no cheaper
+policy can be certified, \climb{} runs the team, so a misleading signal tends to cost savings rather than
+accuracy. Across three open models and four benchmarks, \climb{} exceeded its tolerance in at most 3\% of
+splits against a nominal 10\%, while saving 38\% of tokens on average at a 5-point tolerance and 65\% at
+10 points.
+\end{abstract}

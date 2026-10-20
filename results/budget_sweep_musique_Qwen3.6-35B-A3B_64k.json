@@ -1,0 +1,48 @@
+{
+  "model": "Qwen/Qwen3.6-35B-A3B",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 64000,
+      "name": "Static Quota",
+      "success_rate": 0.38725693007860984,
+      "cps": 0.000794017094017094,
+      "mean_tokens": 10265.58874637981,
+      "cost": 0.7432,
+      "mean_borrows": 0.0,
+      "recovery_rate": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 64000,
+      "name": "TB-v2-Full",
+      "success_rate": 0.4571783202316922,
+      "cps": 0.0007118552036199095,
+      "mean_tokens": 14910.408771203973,
+      "cost": 0.7866,
+      "mean_borrows": 0.11874224244931733,
+      "recovery_rate": 0.15721969383533305
+    }
+  ],
+  "agg": [
+    {
+      "budget": 64000,
+      "name": "Static Quota",
+      "sr_mean": 0.38725693007860984,
+      "sr_std": 0.0,
+      "cps_mean": 0.000794017094017094,
+      "tokens_mean": 10265.58874637981
+    },
+    {
+      "budget": 64000,
+      "name": "TB-v2-Full",
+      "sr_mean": 0.4571783202316922,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007118552036199095,
+      "tokens_mean": 14910.408771203973
+    }
+  ]
+}

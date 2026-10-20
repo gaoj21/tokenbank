@@ -1,0 +1,30 @@
+{
+  "model": "gemma-4-31B-it",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.1-NoPool",
+      "success_rate": 0.1557377049180328,
+      "cps": 0.001836842105263158,
+      "mean_tokens": 9568.745901639344,
+      "cost": 0.0349
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5.1-NoPool",
+      "sr_mean": 0.1557377049180328,
+      "sr_std": 0.0,
+      "cps_mean": 0.001836842105263158,
+      "tokens_mean": 9568.745901639344
+    }
+  ]
+}

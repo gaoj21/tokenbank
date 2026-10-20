@@ -1,0 +1,121 @@
+{
+  "model": "deepseek-v4-flash",
+  "benchmark": "GAIA",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "ZEBRA-Static",
+      "plan": {
+        "planner": 800,
+        "executor": 2077,
+        "reviewer": 1498
+      },
+      "success_rate": 0.0,
+      "cps": 0.0,
+      "mean_tokens": 0.0,
+      "cost": 0
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "ZEBRA-Static",
+      "plan": {
+        "planner": 1600,
+        "executor": 4154,
+        "reviewer": 2997
+      },
+      "success_rate": 0.1732283464566929,
+      "cps": 0.008395454545454546,
+      "mean_tokens": 5587.826771653543,
+      "cost": 0.1847
+    },
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "ZEBRA-Static",
+      "plan": {
+        "planner": 3200,
+        "executor": 8309,
+        "reviewer": 5994
+      },
+      "success_rate": 0.2125984251968504,
+      "cps": 0.012214814814814814,
+      "mean_tokens": 10048.133858267716,
+      "cost": 0.3298
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "ZEBRA-Static",
+      "plan": {
+        "planner": 6400,
+        "executor": 16618,
+        "reviewer": 11989
+      },
+      "success_rate": 0.2047244094488189,
+      "cps": 0.01336923076923077,
+      "mean_tokens": 10707.456692913385,
+      "cost": 0.3476
+    },
+    {
+      "seed": 42,
+      "budget": 64000,
+      "name": "ZEBRA-Static",
+      "plan": {
+        "planner": 12800,
+        "executor": 33237,
+        "reviewer": 23979
+      },
+      "success_rate": 0.2204724409448819,
+      "cps": 0.011946428571428571,
+      "mean_tokens": 10321.543307086615,
+      "cost": 0.3345
+    }
+  ],
+  "agg": [
+    {
+      "budget": 4000,
+      "name": "ZEBRA-Static",
+      "sr_mean": 0.0,
+      "sr_std": 0.0,
+      "cps_mean": 0.0,
+      "tokens_mean": 0.0
+    },
+    {
+      "budget": 8000,
+      "name": "ZEBRA-Static",
+      "sr_mean": 0.1732283464566929,
+      "sr_std": 0.0,
+      "cps_mean": 0.008395454545454546,
+      "tokens_mean": 5587.826771653543
+    },
+    {
+      "budget": 16000,
+      "name": "ZEBRA-Static",
+      "sr_mean": 0.2125984251968504,
+      "sr_std": 0.0,
+      "cps_mean": 0.012214814814814814,
+      "tokens_mean": 10048.133858267716
+    },
+    {
+      "budget": 32000,
+      "name": "ZEBRA-Static",
+      "sr_mean": 0.2047244094488189,
+      "sr_std": 0.0,
+      "cps_mean": 0.01336923076923077,
+      "tokens_mean": 10707.456692913385
+    },
+    {
+      "budget": 64000,
+      "name": "ZEBRA-Static",
+      "sr_mean": 0.2204724409448819,
+      "sr_std": 0.0,
+      "cps_mean": 0.011946428571428571,
+      "tokens_mean": 10321.543307086615
+    }
+  ]
+}

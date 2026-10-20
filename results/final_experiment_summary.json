@@ -1,0 +1,332 @@
+{
+  "setup": {
+    "model": "deepseek-v4-flash",
+    "seed": 42,
+    "temperature": 0,
+    "harness": "Planner/Executor/Reviewer, max 5 rounds, code tool"
+  },
+  "note": "single seed; SR noise band ~\u00b13pp (GAIA n=152), \u00b12pp (FRAMES n=824), \u00b14pp (MATH n=500)",
+  "ablations": {
+    "GAIA-4K -Borrowing": {
+      "sr": 2.6,
+      "tokens": 2340,
+      "verdict": "borrowing is CRITICAL at tight budgets (11.8->2.6)"
+    },
+    "GAIA-4K +CreditScoring": {
+      "sr": 7.9,
+      "tokens": 2566,
+      "verdict": "credit scoring HURTS at tight budgets (11.8->7.9), rejected"
+    },
+    "GAIA-4K Full+Stall+min_tokens=2000": {
+      "sr": 8.6,
+      "tokens": 2927,
+      "stalled": 0,
+      "verdict": "runaway floor works; GAIA-4K Full+Stall vs TB-v2-Full gap was noise (stalled<=1)"
+    },
+    "GAIA-32K -OPL/-KV/-Predictive": {
+      "sr_delta": "-2~2.6pp",
+      "verdict": "within noise at non-binding budget"
+    }
+  },
+  "benchmarks": {
+    "GAIA-152": {
+      "unconstrained": {
+        "sr": 21.7,
+        "tokens": 10961,
+        "cps": 0.0128
+      },
+      "cells": [
+        {
+          "config": "Static Quota",
+          "budget": 4000,
+          "sr": 5.3,
+          "tokens": 2545,
+          "cps": 0.0129,
+          "success": 8
+        },
+        {
+          "config": "Static Quota",
+          "budget": 8000,
+          "sr": 13.2,
+          "tokens": 4645,
+          "cps": 0.0092,
+          "success": 20
+        },
+        {
+          "config": "Static Quota",
+          "budget": 16000,
+          "sr": 16.4,
+          "tokens": 8123,
+          "cps": 0.0127,
+          "success": 25
+        },
+        {
+          "config": "Static Quota",
+          "budget": 32000,
+          "sr": 20.4,
+          "tokens": 10780,
+          "cps": 0.0134,
+          "success": 31
+        },
+        {
+          "config": "TB-v2-Full",
+          "budget": 4000,
+          "sr": 11.8,
+          "tokens": 2881,
+          "cps": 0.0064,
+          "success": 18
+        },
+        {
+          "config": "TB-v2-Full",
+          "budget": 8000,
+          "sr": 16.4,
+          "tokens": 5736,
+          "cps": 0.0088,
+          "success": 25
+        },
+        {
+          "config": "TB-v2-Full",
+          "budget": 16000,
+          "sr": 12.5,
+          "tokens": 7496,
+          "cps": 0.0149,
+          "success": 19
+        },
+        {
+          "config": "TB-v2-Full",
+          "budget": 32000,
+          "sr": 23.0,
+          "tokens": 11880,
+          "cps": 0.012,
+          "success": 35
+        },
+        {
+          "config": "Full+Stall",
+          "budget": 4000,
+          "sr": 8.6,
+          "tokens": 2925,
+          "cps": 0.0089,
+          "success": 13
+        },
+        {
+          "config": "Full+Stall",
+          "budget": 8000,
+          "sr": 18.4,
+          "tokens": 5127,
+          "cps": 0.007,
+          "success": 28
+        },
+        {
+          "config": "Full+Stall",
+          "budget": 16000,
+          "sr": 19.7,
+          "tokens": 5896,
+          "cps": 0.0072,
+          "success": 30
+        },
+        {
+          "config": "Full+Stall",
+          "budget": 32000,
+          "sr": 19.7,
+          "tokens": 8090,
+          "cps": 0.0097,
+          "success": 30
+        }
+      ]
+    },
+    "FRAMES-824": {
+      "benchmark": "FRAMES",
+      "n_tasks": 824,
+      "seed": 42,
+      "temperature": 0,
+      "unconstrained": {
+        "sr": 54.0,
+        "tokens": 5642,
+        "cps": 0.0028
+      },
+      "cells": [
+        {
+          "config": "Static Quota",
+          "budget": 2000,
+          "sr": 0.0,
+          "tokens": 0,
+          "cps": 0
+        },
+        {
+          "config": "Static Quota",
+          "budget": 4000,
+          "sr": 33.0,
+          "tokens": 2065,
+          "cps": 0.0017
+        },
+        {
+          "config": "Static Quota",
+          "budget": 8000,
+          "sr": 46.1,
+          "tokens": 3154,
+          "cps": 0.0018
+        },
+        {
+          "config": "Static Quota",
+          "budget": 16000,
+          "sr": 50.0,
+          "tokens": 4923,
+          "cps": 0.0026
+        },
+        {
+          "config": "TB-v2-Full",
+          "budget": 2000,
+          "sr": 0.0,
+          "tokens": 826,
+          "cps": 0.1871
+        },
+        {
+          "config": "TB-v2-Full",
+          "budget": 4000,
+          "sr": 42.6,
+          "tokens": 2237,
+          "cps": 0.0014
+        },
+        {
+          "config": "TB-v2-Full",
+          "budget": 8000,
+          "sr": 49.4,
+          "tokens": 3567,
+          "cps": 0.0019
+        },
+        {
+          "config": "TB-v2-Full",
+          "budget": 16000,
+          "sr": 53.5,
+          "tokens": 5669,
+          "cps": 0.0027
+        },
+        {
+          "config": "Full+Stall",
+          "budget": 2000,
+          "sr": 0.0,
+          "tokens": 826,
+          "cps": 0.1878
+        },
+        {
+          "config": "Full+Stall",
+          "budget": 4000,
+          "sr": 43.1,
+          "tokens": 2254,
+          "cps": 0.0014
+        },
+        {
+          "config": "Full+Stall",
+          "budget": 8000,
+          "sr": 48.8,
+          "tokens": 3268,
+          "cps": 0.0017
+        },
+        {
+          "config": "Full+Stall",
+          "budget": 16000,
+          "sr": 51.8,
+          "tokens": 3348,
+          "cps": 0.0017
+        }
+      ]
+    },
+    "MATH-500": {
+      "benchmark": "MATH-500",
+      "n_tasks": 500,
+      "seed": 42,
+      "temperature": 0,
+      "unconstrained": {
+        "sr": 79.8,
+        "tokens": 3803,
+        "cps": 0.0012
+      },
+      "cells": [
+        {
+          "config": "Static Quota",
+          "budget": 2000,
+          "sr": 0.0,
+          "tokens": 0,
+          "cps": 0
+        },
+        {
+          "config": "Static Quota",
+          "budget": 4000,
+          "sr": 13.4,
+          "tokens": 1332,
+          "cps": 0.0025
+        },
+        {
+          "config": "Static Quota",
+          "budget": 8000,
+          "sr": 68.4,
+          "tokens": 2547,
+          "cps": 0.0009
+        },
+        {
+          "config": "Static Quota",
+          "budget": 16000,
+          "sr": 75.8,
+          "tokens": 3447,
+          "cps": 0.0011
+        },
+        {
+          "config": "TB-v2-Full",
+          "budget": 2000,
+          "sr": 0.0,
+          "tokens": 664,
+          "cps": 0.0896
+        },
+        {
+          "config": "TB-v2-Full",
+          "budget": 4000,
+          "sr": 48.2,
+          "tokens": 2217,
+          "cps": 0.0011
+        },
+        {
+          "config": "TB-v2-Full",
+          "budget": 8000,
+          "sr": 74.4,
+          "tokens": 2846,
+          "cps": 0.0009
+        },
+        {
+          "config": "TB-v2-Full",
+          "budget": 16000,
+          "sr": 75.8,
+          "tokens": 4027,
+          "cps": 0.0012
+        },
+        {
+          "config": "Full+Stall",
+          "budget": 2000,
+          "sr": 0.0,
+          "tokens": 667,
+          "cps": 0.0894
+        },
+        {
+          "config": "Full+Stall",
+          "budget": 4000,
+          "sr": 49.6,
+          "tokens": 2216,
+          "cps": 0.001
+        },
+        {
+          "config": "Full+Stall",
+          "budget": 8000,
+          "sr": 75.0,
+          "tokens": 2719,
+          "cps": 0.0008
+        },
+        {
+          "config": "Full+Stall",
+          "budget": 16000,
+          "sr": 75.4,
+          "tokens": 2817,
+          "cps": 0.0009
+        }
+      ]
+    }
+  }
+}

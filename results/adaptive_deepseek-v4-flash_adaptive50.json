@@ -1,0 +1,65 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Unconstrained",
+      "success_rate": 0.24,
+      "cps": 0.011000000000000001,
+      "mean_tokens": 10233.98,
+      "cost": 0.132
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Full+Stall",
+      "success_rate": 0.3,
+      "cps": 0.004739999999999999,
+      "mean_tokens": 5875.36,
+      "cost": 0.0711,
+      "mean_borrows": 0.0,
+      "recovery_rate": 0.02
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "TB-v2-Adaptive",
+      "success_rate": 0.18,
+      "cps": 0.01171111111111111,
+      "mean_tokens": 8521.84,
+      "cost": 0.1054,
+      "mean_borrows": 0.06,
+      "recovery_rate": 0.02
+    }
+  ],
+  "agg": [
+    {
+      "budget": 32000,
+      "name": "Unconstrained",
+      "sr_mean": 0.24,
+      "sr_std": 0.0,
+      "cps_mean": 0.011000000000000001,
+      "tokens_mean": 10233.98
+    },
+    {
+      "budget": 32000,
+      "name": "Full+Stall",
+      "sr_mean": 0.3,
+      "sr_std": 0.0,
+      "cps_mean": 0.004739999999999999,
+      "tokens_mean": 5875.36
+    },
+    {
+      "budget": 32000,
+      "name": "TB-v2-Adaptive",
+      "sr_mean": 0.18,
+      "sr_std": 0.0,
+      "cps_mean": 0.01171111111111111,
+      "tokens_mean": 8521.84
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "model": "google/gemma-4-26b-a4b-it-qat",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    100000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 100000,
+      "name": "BCB-Naive",
+      "success_rate": 0.40350877192982454,
+      "cps": 0.0020586956521739127,
+      "mean_tokens": 27787.254385964912,
+      "cost": 0.18939999999999999
+    }
+  ],
+  "agg": [
+    {
+      "budget": 100000,
+      "name": "BCB-Naive",
+      "sr_mean": 0.40350877192982454,
+      "sr_std": 0.0,
+      "cps_mean": 0.0020586956521739127,
+      "tokens_mean": 27787.254385964912
+    }
+  ]
+}

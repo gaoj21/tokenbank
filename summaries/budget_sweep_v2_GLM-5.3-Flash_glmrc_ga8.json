@@ -1,0 +1,47 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    8000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "RC-Adaptive",
+      "success_rate": 0.22950819672131148,
+      "cps": 0.0007892857142857144,
+      "mean_tokens": 5764.713114754099,
+      "cost": 0.0221
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "RC-CapOnly",
+      "success_rate": 0.16393442622950818,
+      "cps": 0.0011250000000000001,
+      "mean_tokens": 6771.836065573771,
+      "cost": 0.022500000000000003
+    }
+  ],
+  "agg": [
+    {
+      "budget": 8000,
+      "name": "RC-Adaptive",
+      "sr_mean": 0.22950819672131148,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007892857142857144,
+      "tokens_mean": 5764.713114754099
+    },
+    {
+      "budget": 8000,
+      "name": "RC-CapOnly",
+      "sr_mean": 0.16393442622950818,
+      "sr_std": 0.0,
+      "cps_mean": 0.0011250000000000001,
+      "tokens_mean": 6771.836065573771
+    }
+  ]
+}

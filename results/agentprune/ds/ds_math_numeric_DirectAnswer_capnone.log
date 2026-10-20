@@ -1,0 +1,46 @@
+/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/class_registry/entry_points.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import iter_entry_points
+Batch 0 --------------------------------------------------------------------------------
+Error during execution of node 5d9j: 
+Batch time 2442.334
+Accuracy: 0.90625
+utilities: [True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, True, True]
+Batch 1 --------------------------------------------------------------------------------
+Batch time 53.247
+Accuracy: 0.875
+utilities: [False, True, True, True, True, True, False, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True]
+Batch 2 --------------------------------------------------------------------------------
+Batch time 113.893
+Accuracy: 0.875
+utilities: [True, True, True, True, True, True, False, True, True, True, True, False, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True]
+Batch 3 --------------------------------------------------------------------------------
+Error during execution of node 5d9j: 
+Batch time 623.092
+Accuracy: 0.8984375
+utilities: [True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+Batch 4 --------------------------------------------------------------------------------
+Error during execution of node 5d9j: 
+Batch time 637.055
+Accuracy: 0.9125
+utilities: [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True]
+Batch 5 --------------------------------------------------------------------------------
+Batch time 45.497
+Accuracy: 0.9270833333333334
+utilities: [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+Batch 6 --------------------------------------------------------------------------------
+Batch time 78.158
+Accuracy: 0.9196428571428571
+utilities: [True, True, True, True, True, True, True, True, True, True, False, True, False, True, True, True, True, True, True, True, True, False, True, True, True, False, True, True, True, True, True, True]
+Batch 7 --------------------------------------------------------------------------------
+Batch time 152.176
+Accuracy: 0.921875
+utilities: [True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True]
+Batch 8 --------------------------------------------------------------------------------
+Batch time 90.573
+Accuracy: 0.9236111111111112
+utilities: [True, True, True, True, True, True, True, False, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+Batch 9 --------------------------------------------------------------------------------
+Batch time 67.541
+Accuracy: 0.921875
+utilities: [True, False, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False]
+DONE

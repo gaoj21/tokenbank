@@ -1,0 +1,64 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    8000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "BCB-Naive",
+      "success_rate": 0.29,
+      "cps": 0.0005806896551724138,
+      "mean_tokens": 6036.724,
+      "cost": 0.08420000000000001
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "BCB-Ab7",
+      "success_rate": 0.482,
+      "cps": 0.0002103734439834025,
+      "mean_tokens": 3229.684,
+      "cost": 0.0507
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "BCB-ReasonLadder",
+      "success_rate": 0.52,
+      "cps": 1.4230769230769232e-05,
+      "mean_tokens": 1143.448,
+      "cost": 0.0037
+    }
+  ],
+  "agg": [
+    {
+      "budget": 8000,
+      "name": "BCB-Naive",
+      "sr_mean": 0.29,
+      "sr_std": 0.0,
+      "cps_mean": 0.0005806896551724138,
+      "tokens_mean": 6036.724
+    },
+    {
+      "budget": 8000,
+      "name": "BCB-Ab7",
+      "sr_mean": 0.482,
+      "sr_std": 0.0,
+      "cps_mean": 0.0002103734439834025,
+      "tokens_mean": 3229.684
+    },
+    {
+      "budget": 8000,
+      "name": "BCB-ReasonLadder",
+      "sr_mean": 0.52,
+      "sr_std": 0.0,
+      "cps_mean": 1.4230769230769232e-05,
+      "tokens_mean": 1143.448
+    }
+  ]
+}

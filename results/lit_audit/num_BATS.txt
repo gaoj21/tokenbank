@@ -1,0 +1,1 @@
+1052:The maximum number of new tokens for generation was set to 65,536 for Gemini models and 64,000

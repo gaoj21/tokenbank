@@ -1,0 +1,64 @@
+{
+  "model": "GLM-5.3-Flash-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-PlanOnly",
+      "success_rate": 0.7225,
+      "cps": 0.00020899653979238755,
+      "mean_tokens": 4773.93,
+      "cost": 0.0604
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-CritOnly",
+      "success_rate": 0.6175,
+      "cps": 0.0005340080971659918,
+      "mean_tokens": 10660.5125,
+      "cost": 0.1319
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-ToolOnly",
+      "success_rate": 0.7,
+      "cps": 0.0002360714285714286,
+      "mean_tokens": 5265.3775,
+      "cost": 0.0661
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "ST-PlanOnly",
+      "sr_mean": 0.7225,
+      "sr_std": 0.0,
+      "cps_mean": 0.00020899653979238755,
+      "tokens_mean": 4773.93
+    },
+    {
+      "budget": 24000,
+      "name": "ST-CritOnly",
+      "sr_mean": 0.6175,
+      "sr_std": 0.0,
+      "cps_mean": 0.0005340080971659918,
+      "tokens_mean": 10660.5125
+    },
+    {
+      "budget": 24000,
+      "name": "ST-ToolOnly",
+      "sr_mean": 0.7,
+      "sr_std": 0.0,
+      "cps_mean": 0.0002360714285714286,
+      "tokens_mean": 5265.3775
+    }
+  ]
+}

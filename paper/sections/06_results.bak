@@ -1,0 +1,85 @@
+\input{sections/tab_main}
+
+We ask whether the guarantee holds (\S\ref{sec:main}), what a tolerance buys (\S\ref{sec:tradeoff}), what
+limits the savings (\S\ref{sec:monotone}), and which ingredients make certification efficient
+(\S\ref{sec:testchoice}).
+
+\subsection{The guarantee holds}
+\label{sec:main}
+
+Proposition~\ref{prop:risk} bounds the probability, over the calibration sample, that the deployed
+policy loses more than $\eps$. We check this event directly by treating each recorded pool as the
+task distribution, drawing calibration sets i.i.d.\ from it and computing the deployed policy's
+exact risk: over 5{,}000 draws per setting and tolerance the failure rate is at most 3.4\% (upper
+95\% limit 3.9\%) against $\delta = 10\%$ (Appendix~\ref{app:checks}). The finite-pool violation rate
+of the replay agrees: at most 2\% in Table~\ref{tab:main} and 3\% anywhere in the tolerance sweep.
+
+The guarantee is what distinguishes these savings from those of simple rules. Without it, rules of
+similar cost lose an amount that can be large and is hard to predict. Always stopping at $L_0$ loses up to
+20.6 points, more than 5 on ten of twelve settings; a fixed threshold on $L_0$'s confidence that spends
+as much as \climb{} (62\% of the pipeline's tokens on average) loses 0.3 to 15.9 points, more than 2 on
+seven settings and more than 5 on four, three of them Gemma's settings with inverted confidence, where the
+threshold keeps exactly the confident repetitions; and the cheapest threshold that stays within 5 points
+on one model loses up to 17 points on another (Figure~\ref{fig:motivation}d). Always stopping at the
+single agent $L_1$, at 20 to 96\% of the pipeline's tokens, loses more than 2 points on eight settings and
+up to 9.4 on Gemma's BBEH, with nothing at deployment to say where.
+
+\subsection{What a tolerance buys}
+\label{sec:tradeoff}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_tradeoff.pdf}
+\caption{(a) Tokens as the tolerance $\eps$ varies (100 splits per point; violation rates at most
+3\%). (b) Tokens as the calibration set grows ($\eps = 5\%$ and $10\%$).}
+\label{fig:tradeoff}
+\end{figure}
+
+The team improves on the direct answer on every setting, by 2.0 to 20.6 points, so savings
+are paid for in accuracy, and $\eps$ sets the price. At $\eps = 2\%$ \climb{} saves little, at most 16\%
+of the pipeline's tokens on MuSiQue and nothing on MATH (Table~\ref{tab:main}). At 5\% it spends 31 to
+96\% of the pipeline's tokens, 62\% on average, for losses of at most 2.8 points; at 10\% it spends 18 to
+62\%, 35\% on average. Savings are smallest where the direct answer's confidence is inverted (Gemma on
+FRAMES and BBEH), so that the certified policy falls back to the team, and on the open-book settings,
+where the cheap rungs read the same documents as the team and pay for them too.
+Figure~\ref{fig:tradeoff}a fills in the curve: MuSiQue starts saving at 2 to 3\%, the other benchmarks
+mostly from 3 to 4\%.
+
+Savings also need data. With 50 calibration tasks \climb{} certifies almost nothing, with 100 only at
+10\%, and savings at 5\% need a few hundred (Figure~\ref{fig:tradeoff}b). Recording them costs 1.5M to
+79M tokens, repaid after 340 to 2{,}000 queries at $\eps = 10\%$ and 460 to 4{,}400 at 5\%, except on
+Gemma's BBEH, where the small saving at 5\% takes 13{,}000
+(Appendix~\ref{app:review}).
+
+\subsection{What limits the savings}
+\label{sec:monotone}
+
+Two things decide how much \climb{} can save, and neither affects the guarantee. \emph{The signal.} By
+Proposition~\ref{prop:threshold} a threshold is optimal when the gain from escalating falls with
+confidence. On the nine settings where $L_0$'s confidence ranks answers correctly (AUROC 0.63 to 0.81) it
+does on eight: pooled over them, the gain falls from 21.6 points for the least confident tenth of tasks to
+5 to 7 for the most confident (Figure~\ref{fig:criterion} in Appendix~\ref{app:monotone}). On Gemma's FRAMES, MuSiQue and BBEH the
+ranking is inverted (AUROC 0.22 to 0.34): greedy decoding without thinking falls into repetitions with
+high log-probability, and the certified policy falls back to the team. \emph{The design.} Stopping on the
+agreement of the two cheap rungs is cheaper where the direct answer is weak, a threshold on $L_0$ where it
+is strong; choosing between them on calibration data, as \climb{} does, is cheapest on average among five
+designs certified the same way, and a learned estimate of the signed gain does no better
+(Appendix~\ref{sec:variants}); a random score keeps the guarantee but saves less at 5 points
+(Appendix~\ref{app:ablations}). An oracle that knows the cheapest correct rung would beat the pipeline by
+up to 12 points, so the headroom lies in better signals.
+
+\subsection{What makes certification efficient}
+\label{sec:testchoice}
+
+\input{sections/tab_calib}
+
+Table~\ref{tab:calib} replaces parts of the procedure while keeping it valid. \emph{The test must adapt to
+the variance.} Most stopped tasks keep the reference's answer, so most losses are zero; mapped to $[0, 1]$
+they sit at $1/2$, and the Hoeffding--Bentkus bound used by existing signed-risk methods
+\citep{wynn2026corrupted}, which assumes the worst variance at that mean, certifies nothing cheaper than the pipeline on our settings.
+\emph{The loss must keep its sign.} Clipping it to the harm indicator counts the answers stopping loses but
+not those it saves, and certifies much less where the team often loses correct answers, for instance 82
+against 44\% of the pipeline's tokens on gpt-oss-20b MuSiQue (Table~\ref{tab:calibfull}); only on MATH,
+where it rarely does, does an exact binomial test of the clipped loss do
+as well or better. Testing the ordered family with a Bonferroni correction instead of in sequence loses
+most of the remaining savings.

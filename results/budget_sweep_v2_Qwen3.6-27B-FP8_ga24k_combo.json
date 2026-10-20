@@ -1,0 +1,30 @@
+{
+  "model": "Qwen/Qwen3.6-27B-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "Combo16k",
+      "success_rate": 0.3815789473684211,
+      "cps": 0.000796551724137931,
+      "mean_tokens": 13311.03947368421,
+      "cost": 0.0462
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "Combo16k",
+      "sr_mean": 0.3815789473684211,
+      "sr_std": 0.0,
+      "cps_mean": 0.000796551724137931,
+      "tokens_mean": 13311.03947368421
+    }
+  ]
+}

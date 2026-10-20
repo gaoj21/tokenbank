@@ -1,0 +1,115 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    8000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "ST-Accum",
+      "success_rate": 0.53,
+      "cps": 0.0001679245283018868,
+      "mean_tokens": 2810.7525,
+      "cost": 0.0356
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "ST-Window2",
+      "success_rate": 0.5025,
+      "cps": 0.00018208955223880598,
+      "mean_tokens": 2809.9675,
+      "cost": 0.0366
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "ST-Summary",
+      "success_rate": 0.535,
+      "cps": 0.0001682242990654206,
+      "mean_tokens": 2805.8375,
+      "cost": 0.036000000000000004
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "ST-Slots",
+      "success_rate": 0.385,
+      "cps": 0.00025714285714285715,
+      "mean_tokens": 3288.8875,
+      "cost": 0.0396
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "ST-Slots-M1",
+      "success_rate": 0.315,
+      "cps": 0.0003341269841269842,
+      "mean_tokens": 4081.0125,
+      "cost": 0.042100000000000005
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "ST-Rebuild-M1",
+      "success_rate": 0.41,
+      "cps": 0.00024939024390243904,
+      "mean_tokens": 4107.37,
+      "cost": 0.0409
+    }
+  ],
+  "agg": [
+    {
+      "budget": 8000,
+      "name": "ST-Accum",
+      "sr_mean": 0.53,
+      "sr_std": 0.0,
+      "cps_mean": 0.0001679245283018868,
+      "tokens_mean": 2810.7525
+    },
+    {
+      "budget": 8000,
+      "name": "ST-Window2",
+      "sr_mean": 0.5025,
+      "sr_std": 0.0,
+      "cps_mean": 0.00018208955223880598,
+      "tokens_mean": 2809.9675
+    },
+    {
+      "budget": 8000,
+      "name": "ST-Summary",
+      "sr_mean": 0.535,
+      "sr_std": 0.0,
+      "cps_mean": 0.0001682242990654206,
+      "tokens_mean": 2805.8375
+    },
+    {
+      "budget": 8000,
+      "name": "ST-Slots",
+      "sr_mean": 0.385,
+      "sr_std": 0.0,
+      "cps_mean": 0.00025714285714285715,
+      "tokens_mean": 3288.8875
+    },
+    {
+      "budget": 8000,
+      "name": "ST-Slots-M1",
+      "sr_mean": 0.315,
+      "sr_std": 0.0,
+      "cps_mean": 0.0003341269841269842,
+      "tokens_mean": 4081.0125
+    },
+    {
+      "budget": 8000,
+      "name": "ST-Rebuild-M1",
+      "sr_mean": 0.41,
+      "sr_std": 0.0,
+      "cps_mean": 0.00024939024390243904,
+      "tokens_mean": 4107.37
+    }
+  ]
+}

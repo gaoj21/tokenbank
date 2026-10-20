@@ -1,0 +1,65 @@
+{
+  "model": "deepseek-v4-pro",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "Unconstrained",
+      "success_rate": 0.56,
+      "cps": 0.007764285714285715,
+      "mean_tokens": 5573.58,
+      "cost": 0.2174
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "Static Quota",
+      "success_rate": 0.44,
+      "cps": 0.005745454545454546,
+      "mean_tokens": 3193.12,
+      "cost": 0.1264,
+      "mean_borrows": 0.0,
+      "recovery_rate": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "TB-v2-Full",
+      "success_rate": 0.46,
+      "cps": 0.006856521739130435,
+      "mean_tokens": 4150.82,
+      "cost": 0.1577,
+      "mean_borrows": 1.02,
+      "recovery_rate": 0.4
+    }
+  ],
+  "agg": [
+    {
+      "budget": 8000,
+      "name": "Unconstrained",
+      "sr_mean": 0.56,
+      "sr_std": 0.0,
+      "cps_mean": 0.007764285714285715,
+      "tokens_mean": 5573.58
+    },
+    {
+      "budget": 8000,
+      "name": "Static Quota",
+      "sr_mean": 0.44,
+      "sr_std": 0.0,
+      "cps_mean": 0.005745454545454546,
+      "tokens_mean": 3193.12
+    },
+    {
+      "budget": 8000,
+      "name": "TB-v2-Full",
+      "sr_mean": 0.46,
+      "sr_std": 0.0,
+      "cps_mean": 0.006856521739130435,
+      "tokens_mean": 4150.82
+    }
+  ]
+}

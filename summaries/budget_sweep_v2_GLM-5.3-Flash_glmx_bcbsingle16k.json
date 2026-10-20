@@ -1,0 +1,47 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    16000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "BCB-Single-1k",
+      "success_rate": 0.352,
+      "cps": 0.0,
+      "mean_tokens": 974.57,
+      "cost": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "BCB-Single-2k",
+      "success_rate": 0.466,
+      "cps": 6.0515021459227474e-05,
+      "mean_tokens": 1252.004,
+      "cost": 0.014100000000000001
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "BCB-Single-1k",
+      "sr_mean": 0.352,
+      "sr_std": 0.0,
+      "cps_mean": 0.0,
+      "tokens_mean": 974.57
+    },
+    {
+      "budget": 16000,
+      "name": "BCB-Single-2k",
+      "sr_mean": 0.466,
+      "sr_std": 0.0,
+      "cps_mean": 6.0515021459227474e-05,
+      "tokens_mean": 1252.004
+    }
+  ]
+}

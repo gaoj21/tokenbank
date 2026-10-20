@@ -1,0 +1,21 @@
+\begin{algorithm}[!t]
+\caption{\climb{} calibration and deployment}
+\label{alg:climb}
+\small
+\begin{algorithmic}[1]
+\Require calibration tasks with recorded $Y_k$, $C_k$, $S_k$, $Y_{\mathrm{ref}}$, $C_{\mathrm{ref}}$; $\eps$, $\delta$; grid $t_1 > \dots > t_M$
+\For{depth $D = 0, 1$} \Comment{decide after $L_0$; after $L_0$ and $L_1$}
+  \State $\mathcal{C}_D \gets \{\varnothing\}$
+  \For{$m = 1, \dots, M$}
+    \State $\ell_i \gets Y_{\mathrm{ref}}(x_i) - Y_{\pi_{D, t_m}}(x_i)$ for $i = 1, \dots, n$
+    \If{$1 / \max_j W_j(\ell_{1:j}) \le \delta / 2$} $\mathcal{C}_D \gets \mathcal{C}_D \cup \{t_m\}$
+    \Else\ \textbf{break}
+    \EndIf
+  \EndFor
+\EndFor
+\State $(D^\star, t^\star) \gets$ the member of $\mathcal{C}_0 \cup \mathcal{C}_1$ with the lowest mean calibration cost
+\State \textbf{Deploy:} if $t^\star = \varnothing$ run the pipeline; else run $L_0, \dots, L_{D^\star}$ and
+return $L_{D^\star}$'s answer if $S_{D^\star} > t^\star$; otherwise run the pipeline.
+\end{algorithmic}
+\end{algorithm}
+

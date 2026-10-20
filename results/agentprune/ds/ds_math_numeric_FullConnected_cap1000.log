@@ -1,0 +1,48 @@
+/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/class_registry/entry_points.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import iter_entry_points
+Batch 0 --------------------------------------------------------------------------------
+Batch time 298.583
+Accuracy: 0.8125
+utilities: [True, True, True, False, True, True, True, False, False, True, False, True, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, True, True]
+Batch 1 --------------------------------------------------------------------------------
+Error during execution of node qxcW: 
+Error during execution of node BE27: 
+Batch time 715.491
+Accuracy: 0.734375
+utilities: [False, True, True, True, True, True, False, True, True, True, True, False, False, True, True, True, True, False, True, True, False, True, True, False, True, True, True, False, False, False, False, True]
+Batch 2 --------------------------------------------------------------------------------
+Error during execution of node BE27: 
+Batch time 1825.738
+Accuracy: 0.75
+utilities: [True, False, False, True, True, True, False, True, True, True, True, False, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, False, False, True, True]
+Batch 3 --------------------------------------------------------------------------------
+Batch time 81.362
+Accuracy: 0.765625
+utilities: [False, True, True, True, False, True, True, True, False, True, False, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, False, True, True, True, True, True]
+Batch 4 --------------------------------------------------------------------------------
+Batch time 82.615
+Accuracy: 0.775
+utilities: [True, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, True, True, False, True, False, False, False, True, True, True, True, True, True]
+Batch 5 --------------------------------------------------------------------------------
+Batch time 77.629
+Accuracy: 0.8072916666666666
+utilities: [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True]
+Batch 6 --------------------------------------------------------------------------------
+Error during execution of node KgU3: 
+Batch time 667.097
+Accuracy: 0.7901785714285714
+utilities: [True, False, True, False, True, True, True, True, True, True, False, True, False, False, True, False, False, True, True, False, True, False, True, True, True, False, True, True, True, True, True, True]
+Batch 7 --------------------------------------------------------------------------------
+Batch time 1878.629
+Accuracy: 0.79296875
+utilities: [False, True, True, True, False, True, False, True, True, True, True, True, True, False, False, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True]
+Batch 8 --------------------------------------------------------------------------------
+Error during execution of node KgU3: 
+Batch time 1840.548
+Accuracy: 0.7986111111111112
+utilities: [True, True, True, True, True, True, True, False, False, True, True, True, True, True, False, False, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True]
+Batch 9 --------------------------------------------------------------------------------
+Batch time 83.315
+Accuracy: 0.80625
+utilities: [True, False, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, False]
+DONE

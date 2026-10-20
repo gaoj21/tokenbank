@@ -1,0 +1,4 @@
+1448:maximum response length 1024, entropy coefficient 0, and no KL term inside the reward. The
+1450:KL coefficients 0.05 and 0.1. Evaluation decodes with vLLM at temperature 0 and a 512-token
+1639: Display Name YAML Key Provider Model ID Reasoning Max Tokens Temp.
+1654: provider, exact model ID, reasoning configuration, maximum output length, and temperature.

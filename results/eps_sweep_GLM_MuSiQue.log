@@ -1,0 +1,6 @@
+GLM MuSiQue 0.01 {'tok': 95.7, 'acc': 38.3, 'viol': 2.0}
+GLM MuSiQue 0.02 {'tok': 85.7, 'acc': 37.6, 'viol': 2.0}
+GLM MuSiQue 0.03 {'tok': 66.5, 'acc': 37.2, 'viol': 0.0}
+GLM MuSiQue 0.05 {'tok': 35.1, 'acc': 35.6, 'viol': 0.0}
+GLM MuSiQue 0.075 {'tok': 7.9, 'acc': 33.6, 'viol': 0.0}
+GLM MuSiQue 0.1 {'tok': 5.2, 'acc': 33.2, 'viol': 0.0}

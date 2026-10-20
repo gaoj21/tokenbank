@@ -1,0 +1,97 @@
+{
+  "benchmark": "MATH-500",
+  "n_tasks": 500,
+  "seed": 42,
+  "temperature": 0,
+  "unconstrained": {
+    "sr": 79.8,
+    "tokens": 3803,
+    "cps": 0.0012
+  },
+  "cells": [
+    {
+      "config": "Static Quota",
+      "budget": 2000,
+      "sr": 0.0,
+      "tokens": 0,
+      "cps": 0
+    },
+    {
+      "config": "Static Quota",
+      "budget": 4000,
+      "sr": 13.4,
+      "tokens": 1332,
+      "cps": 0.0025
+    },
+    {
+      "config": "Static Quota",
+      "budget": 8000,
+      "sr": 68.4,
+      "tokens": 2547,
+      "cps": 0.0009
+    },
+    {
+      "config": "Static Quota",
+      "budget": 16000,
+      "sr": 75.8,
+      "tokens": 3447,
+      "cps": 0.0011
+    },
+    {
+      "config": "TB-v2-Full",
+      "budget": 2000,
+      "sr": 0.0,
+      "tokens": 664,
+      "cps": 0.0896
+    },
+    {
+      "config": "TB-v2-Full",
+      "budget": 4000,
+      "sr": 48.2,
+      "tokens": 2217,
+      "cps": 0.0011
+    },
+    {
+      "config": "TB-v2-Full",
+      "budget": 8000,
+      "sr": 74.4,
+      "tokens": 2846,
+      "cps": 0.0009
+    },
+    {
+      "config": "TB-v2-Full",
+      "budget": 16000,
+      "sr": 75.8,
+      "tokens": 4027,
+      "cps": 0.0012
+    },
+    {
+      "config": "Full+Stall",
+      "budget": 2000,
+      "sr": 0.0,
+      "tokens": 667,
+      "cps": 0.0894
+    },
+    {
+      "config": "Full+Stall",
+      "budget": 4000,
+      "sr": 49.6,
+      "tokens": 2216,
+      "cps": 0.001
+    },
+    {
+      "config": "Full+Stall",
+      "budget": 8000,
+      "sr": 75.0,
+      "tokens": 2719,
+      "cps": 0.0008
+    },
+    {
+      "config": "Full+Stall",
+      "budget": 16000,
+      "sr": 75.4,
+      "tokens": 2817,
+      "cps": 0.0009
+    }
+  ]
+}

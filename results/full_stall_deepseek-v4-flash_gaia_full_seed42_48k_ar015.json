@@ -1,0 +1,29 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 48000,
+      "name": "Full+Stall",
+      "success_rate": 0.17763157894736842,
+      "cps": 0.011185185185185185,
+      "mean_tokens": 8476.78947368421,
+      "cost": 0.302,
+      "mean_borrows": 0.006578947368421052,
+      "recovery_rate": 0.006578947368421052
+    }
+  ],
+  "agg": [
+    {
+      "budget": 48000,
+      "name": "Full+Stall",
+      "sr_mean": 0.17763157894736842,
+      "sr_std": 0.0,
+      "cps_mean": 0.011185185185185185,
+      "tokens_mean": 8476.78947368421
+    }
+  ]
+}

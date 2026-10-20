@@ -1,0 +1,46 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "Unconstrained",
+      "success_rate": 0.23622047244094488,
+      "cps": 0.011243333333333333,
+      "mean_tokens": 10531.488188976378,
+      "cost": 0.3373
+    },
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "TB-v2-Paced",
+      "success_rate": 0.2283464566929134,
+      "cps": 0.010996551724137932,
+      "mean_tokens": 10074.228346456694,
+      "cost": 0.3189,
+      "mean_borrows": 0.7952755905511811,
+      "recovery_rate": 0.10236220472440945
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "Unconstrained",
+      "sr_mean": 0.23622047244094488,
+      "sr_std": 0.0,
+      "cps_mean": 0.011243333333333333,
+      "tokens_mean": 10531.488188976378
+    },
+    {
+      "budget": 16000,
+      "name": "TB-v2-Paced",
+      "sr_mean": 0.2283464566929134,
+      "sr_std": 0.0,
+      "cps_mean": 0.010996551724137932,
+      "tokens_mean": 10074.228346456694
+    }
+  ]
+}

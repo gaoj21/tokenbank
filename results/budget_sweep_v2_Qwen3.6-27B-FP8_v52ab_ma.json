@@ -1,0 +1,64 @@
+{
+  "model": "Qwen/Qwen3.6-27B-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.1-Ab3-NoM2",
+      "success_rate": 0.7075,
+      "cps": 0.00024028268551236752,
+      "mean_tokens": 5647.87,
+      "cost": 0.068
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.1-Ab1-NoM1",
+      "success_rate": 0.7025,
+      "cps": 0.00013274021352313166,
+      "mean_tokens": 3280.765,
+      "cost": 0.0373
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.1-Ab2-NoNotes",
+      "success_rate": 0.7075,
+      "cps": 0.00012473498233215547,
+      "mean_tokens": 3138.9075,
+      "cost": 0.0353
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5.1-Ab3-NoM2",
+      "sr_mean": 0.7075,
+      "sr_std": 0.0,
+      "cps_mean": 0.00024028268551236752,
+      "tokens_mean": 5647.87
+    },
+    {
+      "budget": 24000,
+      "name": "V5.1-Ab1-NoM1",
+      "sr_mean": 0.7025,
+      "sr_std": 0.0,
+      "cps_mean": 0.00013274021352313166,
+      "tokens_mean": 3280.765
+    },
+    {
+      "budget": 24000,
+      "name": "V5.1-Ab2-NoNotes",
+      "sr_mean": 0.7075,
+      "sr_std": 0.0,
+      "cps_mean": 0.00012473498233215547,
+      "tokens_mean": 3138.9075
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+\begin{table*}[h]
+\centering
+\small
+\setlength{\tabcolsep}{3.5pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lrrrrrrc@{}}
+\toprule
+Setting & $n$ & Ref. & Live (loss, $p$) & Replay (loss) & Tok.\ live / replay & Stop $L_0$/$L_1$/$L_2$ live (replay) & Cert. \\
+\midrule
+GLM MATH & 200 & 97.0 & 91.5 ($+5.5$, 0.01) & 95.0 ($+2.0$) & 60 / 65 & 58/14/27 (56/14/31) & yes \\
+GLM FRAMES & 330 & 60.6 & 51.5 ($+9.1$, 0.00) & 53.0 ($+7.6$) & 30 / 30 & 63/20/16 (63/21/16) & no \\
+GLM MuSiQue & 967 & 39.0 & 35.5 ($+3.5$, 0.00) & 35.4 ($+3.6$) & 5 / 5 & 99/1/0 (100/0/0) & no \\
+DeepSeek MATH & 200 & 98.5 & 93.0 ($+5.5$, 0.00) & 93.5 ($+5.0$) & 28 / 27 & 100/0/0 (100/0/0) & no \\
+DeepSeek FRAMES & 330 & 65.8 & 63.0 ($+2.7$, 0.22) & 60.6 ($+5.2$) & 64 / 72 & 31/25/45 (33/23/45) & no \\
+DeepSeek MuSiQue & 967 & 40.4 & 31.1 ($+9.3$, 0.00) & 29.7 ($+10.8$) & 7 / 7 & 100/0/0 (100/0/0) & no \\
+\bottomrule
+\end{tabular}}
+\caption{Earlier live runs of \climb{} on the test halves, re-scored with the corrected scorers. Their thresholds were certified under the original labels; Cert.\ says whether each would still be certified at $\eps = 5\%$ under the corrected labels. Loss: reference minus \climb{} accuracy on the same tasks; $p$: exact McNemar.}
+\label{tab:live_quick}
+\end{table*}

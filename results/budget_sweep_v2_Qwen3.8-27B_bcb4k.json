@@ -1,0 +1,64 @@
+{
+  "model": "Qwen/Qwen3.8-27B",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    4000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "BCB-Naive",
+      "success_rate": 0.26,
+      "cps": 0.0003684615384615385,
+      "mean_tokens": 2518.264,
+      "cost": 0.047900000000000005
+    },
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "BCB-Ours",
+      "success_rate": 0.286,
+      "cps": 0.0001111888111888112,
+      "mean_tokens": 1522.606,
+      "cost": 0.0159
+    },
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "BCB-Ab7",
+      "success_rate": 0.272,
+      "cps": 5.220588235294118e-05,
+      "mean_tokens": 1191.852,
+      "cost": 0.0071
+    }
+  ],
+  "agg": [
+    {
+      "budget": 4000,
+      "name": "BCB-Naive",
+      "sr_mean": 0.26,
+      "sr_std": 0.0,
+      "cps_mean": 0.0003684615384615385,
+      "tokens_mean": 2518.264
+    },
+    {
+      "budget": 4000,
+      "name": "BCB-Ours",
+      "sr_mean": 0.286,
+      "sr_std": 0.0,
+      "cps_mean": 0.0001111888111888112,
+      "tokens_mean": 1522.606
+    },
+    {
+      "budget": 4000,
+      "name": "BCB-Ab7",
+      "sr_mean": 0.272,
+      "sr_std": 0.0,
+      "cps_mean": 5.220588235294118e-05,
+      "tokens_mean": 1191.852
+    }
+  ]
+}

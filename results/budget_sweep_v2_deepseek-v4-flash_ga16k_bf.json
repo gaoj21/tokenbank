@@ -1,0 +1,30 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    16000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "BudgetForcing",
+      "success_rate": 0.18421052631578946,
+      "cps": 0.012228571428571427,
+      "mean_tokens": 8828.177631578947,
+      "cost": 0.3424
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "BudgetForcing",
+      "sr_mean": 0.18421052631578946,
+      "sr_std": 0.0,
+      "cps_mean": 0.012228571428571427,
+      "tokens_mean": 8828.177631578947
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "-Borrowing",
+      "success_rate": 0.20394736842105263,
+      "cps": 0.009009677419354838,
+      "mean_tokens": 7668.578947368421,
+      "cost": 0.2793,
+      "mean_borrows": 0.0,
+      "recovery_rate": 0.013157894736842105
+    }
+  ],
+  "agg": [
+    {
+      "budget": 32000,
+      "name": "-Borrowing",
+      "sr_mean": 0.20394736842105263,
+      "sr_std": 0.0,
+      "cps_mean": 0.009009677419354838,
+      "tokens_mean": 7668.578947368421
+    }
+  ]
+}

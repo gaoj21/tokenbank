@@ -1,0 +1,243 @@
+                                              Toward Reliable Design of LLM-Enabled Agentic
+                                          Workflows: Optimizing Latency-Reliability-Cost Tradeoffs
+
+                                                                        Ya-Ting Yang                                                Quanyan Zhu
+                                                                      New York University                                         New York University
+                                                                      Brooklyn, NY, USA                                           Brooklyn, NY, USA
+                                                                     yy4348@nyu.edu                                               qz494@nyu.edu
+
+                                         ABSTRACT                                                                 2.    LLM AGENTIC WORKFLOWS
+                                            Modern AI systems increasingly rely on workflows composed of            An LLM agentic workflow can be represented as a directed com-
+                                         multiple interacting agents, some powered by large language models       putation graph where nodes correspond to agents and edges repre-
+                                         (LLMs) and others by conventional computational modules. This pa-        sent information flow. Tasks enter the workflow as input messages,
+arXiv:2605.23929v1 [cs.AI] 21 Apr 2026
+
+
+
+
+                                         per analyzes the fundamental tradeoffs between latency, reliability,     propagate through agents, and eventually produce outputs.
+                                         and cost in LLM-enabled agentic workflows. We introduce per-
+                                         formance models for both LLM and non-LLM agents that capture             2.1    LLM Agent Performance Metrics
+                                         the relationship between computational effort and output quality,           In practice, the execution of an LLM agent involves two distinct
+                                         incorporating the impact of reasoning and output tokens for LLM          computational stages. The agent first performs internal reasoning to
+                                         agents using a parametric exponential reliability function. Then,        construct a solution to the task. Then, it generates a sequence of to-
+                                         we study the design of sequential workflows under latency and cost       kens that communicates the solution to downstream agents or to the
+                                         constraints. Main results include a water-filling token allocation       user. Both stages consume computational resources and therefore
+                                         policy and characterizations of optimal workflow reliability in terms    influence latency, reliability, and cost. Considering an LLM agent
+                                         of shadow prices.                                                        indexed by j, we define two key resource variables: Xj denotes
+                                                                                                                  the number of “reasoning tokens” generated internally during the
+                                                                                                                  reasoning process, and Lj denotes the number of “output tokens” for
+                                         1.    INTRODUCTION                                                       the final response. Both quantities are measured in units of tokens.
+                                            With recent advances in artificial intelligence (AI), particularly    The variable Xj represents the internal computational effort, while
+                                         large language models (LLMs), modern systems increasingly rely           Lj determines the length of the communicated response.
+                                         on workflows composed of multiple interacting agents. In these              Latency: The latency of an LLM agent depends on network con-
+                                         systems, agents collaborate to solve complex tasks by exchang-           ditions, system scheduling, and variability in model execution. We
+                                         ing intermediate information and progressively refining their out-       model the latency of agent j as a random variable Tj measured in
+                                         puts [1, 6]. These agents may include LLM-based components               units of time (e.g., seconds). The latency consists of two compo-
+                                         as well as conventional computational modules, such as database          nents: infrastructure delay and model inference. The infrastructure
+                                         queries, optimization solvers, and verification tools. As these work-    delay is denoted by τj , which captures network transmission and
+                                         flows grow in scale and complexity, their deployment also becomes        orchestration overhead. This quantity is treated as a random variable
+                                         increasingly resource-intensive. This raises fundamental challenges      with mean τ̄j = E[τj ]. During model inference, processing rates
+                                         in how to configure LLM-enabled systems efficiently and reliably.        differ in stages [4]. We denote by λth the average processing rate for
+                                         In practice, system design is often guided by heuristics or costly       reasoning tokens and by λgen the average generation rate for output
+                                         trial-and-error. Hence, there is a need for mathematical and principle                                                       X      Lj
+                                                                                                                  tokens. The total latency of agent j is Tj = τj + λthj + λgen , where
+                                         frameworks to analyze and optimize agentic LLM workflows.                the first term captures the stochastic infrastructure delay, and the
+                                            From a systems perspective, workflow performance can be char-         remaining terms represent deterministic computation time. Taking
+                                         acterized by three key quantities: latency, reliability, and cost. Op-   expectations yields the mean latency
+                                         timizing these performance metrics requires understanding how
+                                         individual agent characteristics combine to determine overall work-                      T̄j = τ̄j + (Xj /λth ) + (Lj /λgen ),             (1)
+                                         flow behavior. This study develops performance models for LLM-
+                                         enabled agentic workflows and derives optimal resource allocation        which we use as the latency metric in subsequent analysis.
+                                         policies under latency and cost constraints. We introduce para-             Reliability: The reliability of agent j is defined as the prob-
+                                         metric models that capture the relationship between computational        ability that the output produced by the agent is acceptable. We
+                                         effort and output quality for both LLM and non-LLM agents. Then,         define the reliability function ρj : R2+ → [0, 1] by ρj (Xj , Lj ) =
+                                         we focus on sequential workflows, formulate the design problem as        Pr(output of j is acceptable|Xj , Lj ). This function captures how
+                                         maximizing reliability subject to resource budgets, and derive closed-   the quality of the agent’s output depends on the computational re-
+                                         form allocation policies using convex optimization method [2]. Our       sources allocated to reasoning and generation. Typically, increasing
+                                         results provide designers with principled methods for configuring        the reasoning effort Xj improves the quality of the internal solution;
+                                         LLM-based systems to achieve desired performance tradeoffs.              increasing the output length Lj may enhance the clarity, explanation,
+                                                                                                                  or verification of the result [5]. To capture diminishing marginal
+                                                                                                                  returns in both dimensions, we adopt the following parametric form:
+
+                                                                                                                              ρj (Xj , Lj ) = 1 − e−αj Xj 1 − e−βj Lj ,
+                                                                                                                                                                         
+                                         Copyright is held by author/owner(s).                                                                                                       (2)
+where αj > 0 and βj > 0 are agent-specific parameters in units of         j execute in the sequence i → j for K iterations. Each iteration
+(tokens)−1 . This choice ensures that the arguments of the exponen-       has latency Ti + Tj , so the expected latency after K iterations is
+tial functions are dimensionless and that ρj (Xj , Lj ) ∈ [0, 1].         E[Tfb ] = K(E[Ti ] + E[Tj ]). If both agents must produce correct
+   Cost: There are two distinct cost notions that arise in LLM-           outputs in each iteration, the reliability becomes Rfb = (ρi ρj )K .
+based systems. First, the user-visible cost is associated with the
+number of output tokens generated. We denote by ctok > 0 the              3.      PERFORMANCE OPTIMIZATION
+price per output token, measured in units of currency per token.
+The resulting user cost of agent j is Cju (Lj ) = ctok Lj . Second,          We now turn to the design problem of optimizing agentic work-
+the system provider incurs computational cost when processing             flows. In this work, we focus on the case of sequential composi-
+tokens. Since both reasoning tokens and output tokens must be             tion. It is worth noting that studying sequential workflows is not
+processed by the model, the total token workload equals Xj + Lj .         a loss of generality: more complex architectures constructed from
+Let ccomp > 0 denote the computational cost per processed token (in       parallel or feedback structures can be viewed as sequential composi-
+units of currency per token). The corresponding computational cost        tions of composite modules, where each module corresponds to a
+is Cjc (Xj , Lj ) = ccomp (Xj + Lj ).                                     sub-workflow whose latency and reliability are determined by the
+                                                                          aggregation rules introduced in Section 2.3.
+   Remark 1. According to OpenAI [3], the floating point of op-              Consider a sequential workflow consisting of agents indexed
+erations (FLOPs) per token for the transformer-based model is:            by k = 1, . . . , n. Let ALLM denote the set of LLM agents and
+2β + 2nlayer nctx nattn , where β is the number of parameters, nlayer ,   ANLLM denote the set of non-LLM agents. For non-LLM agents
+nctx , and nattn are the number of layers, maximum input tokens, and      i ∈ ANLLM , the expected latency E[Ti ] and reliability ρi are fixed
+the dimension of the attention output, respectively.Hence, ccomp can     parameters determined by the system implementation. For LLM
+be expressed as: ccomp = ce · 2β + 2nlayer nctx nattn , where ce ∈ R+     agents j ∈ ALLM , the response length Lj is a decision variable
+denotes the monetary computational (energy) cost per FLOP. Note           chosen by the system designer. For LLM agents, expected latency
+that ccomp and ctok may also be related.                                  E[Tj (Lj )] follows (1) and the reliability ρj (Lj ) follows (2).
+                                                                             Since agents operate sequentially, the expected latency of
+2.2     Non-LLM Agent Performance Metrics                                 the workflow P   equals the sum ofP      individual expected latencies,
+   Non-LLM agents typically perform deterministic or algorithmic          E[Twf (L)] =                       ] +
+                                                                                             i∈ANLLM   E[T i         j∈ALLM E[Tj (Lj )]. Then, as-
+computations on structured inputs and do not generate token se-           suming independent failures across agents, the workflow reliability
+quences. In many cases, the latency Ti of agent i can be modeled          equals the product of the reliabilities of all agents in the pipeline.
+using queueing-theoretic abstractions. For instance, if the service       For non-LLM agents i ∈ ANLLM , the reliability ρi ∈ [0, 1] is a fixed
+time follows an exponential distribution with rate λi (measured in        parameter determined by the system implementation. For LLM
+(time)−1 ), the expected latency is E[Ti ] = 1/λi . The reliability       agents j ∈ ALLM , reliability depends on both the reasoning effort
+of the agent is defined as the probability that the agent produces a      Xj and the output length   Q Lj . The overall    workflow reliability is
+correct output given a valid input, denoted by ρi ∈ [0, 1]. The pair
+                                                                                                                     Q
+                                                                          therefore Rwf (X, L) = i∈ANLLM ρi j∈ALLM ρj (Xj , Lj ).
+(Ti , ρi ) therefore provides a compact representation of the latency        In the subsequent analysis, we treat the reasoning allocations Xj
+and reliability characteristics of a non-LLM agent.                       as fixed parameters determined by the internal reasoning policy of
+                                                                          each agent. We therefore introduce the reduced reliability func-
+2.3     Workflow Aggregation                                              tion ρ̂j (Lj ) := ρj (Xj , Lj ), which depends only on the response
+   Agentic workflows combine heterogeneous agents in different            length Lj . Under   this assumption,   the workflow reliability becomes
+structural configurations. Let k denote an arbitrary agent with la-
+                                                                                       Q              Q
+                                                                          Rwf (L) = i∈ANLLM ρi j∈ALLM ρ̂j (Lj ).
+tency Tk and reliability ρk ∈ [0, 1]. The performance of a workflow
+depends not only on the characteristics of individual agents but          3.1      Latency-Cost-Constrained Design
+also on the structural configuration through which agents interact.
+                                                                            Suppose that the workflow must satisfy both a latency constraint
+We consider three common configurations: sequential composition,
+                                                                          T and a user cost budget C. The system designer selects the re-
+parallel composition, and feedback (iterative) loops.
+                                                                          sponse lengths Lj for the LLM agents to maximize the reliability of
+   Sequential: In a sequential configuration, the output of one agent
+                                                                          the workflow. The resulting design problem can be written as
+becomes the input to the next. Consider a pipeline of n agents
+indexed by k = 1, . . . , n. Since each stage must complete before
+                                                                                         Y
+                                                                               max            ρ̂j (Lj )                                   (3)
+the next stage begins, the expected workflow latency is E[Tseq ] =             Lj ,j∈ALLM
+                                                                                             j∈ALLM
+P   n
+    k=1 E[Tk ]. The workflow produces a correct   Q result only if all                        X       Lj                    X
+agents succeed, yielding the reliability Rseq = n    k=1 ρk .                         s.t.                 ≤ T − Tfixed ,     Cju (Lj ) ≤ C, (4)
+   Parallel: In a parallel configuration, multiple agents process                            j∈ALLM
+                                                                                                      λgen                j∈A
+                                                                                                                          LLM
+the same input simultaneously. The latency of the parallel stage is                      Lj ≥ 0, j ∈ ALLM ,                                  (5)
+determined by the critical path. For two agents i and j, the expected
+latency is E[Ti∥j ] = E[max(Ti , Tj )]. Reliability, however, depends                                                             X   
+                                                                          where Tfixed = i∈ANLLM E[Ti ] + j∈ALLM τ̄j + λthj represents
+                                                                                           P                   P
+on how the outputs are aggregated. If both outputs are required for       the latency that does not depend on the response. Since the logarithm
+the workflow to succeed, the reliability is Ri∥j = ρi ρj . In contrast,   is a strictly increasing function, maximizing the product in (3) is
+if the workflow succeeds whenever at least one branch produces a          equivalent to maximizing the sum of logarithms. We have
+correct result, the reliability becomes Ri∥j = 1 − (1 − ρi )(1 − ρj ).                      X
+These two cases correspond to conjunctive and redundant parallel                  max            log ρ̂j (Lj ) s.t. constraints (4), (5)
+                                                                               Lj ,j∈ALLM                                                    (6)
+execution patterns, respectively.                                                             j∈ALLM
+   Feedback: Many agentic workflows employ iterative reasoning in
+which agents repeatedly exchange information to refine a solution.        3.2      Optimal Token Allocation
+Such structures arise in debate systems, verification loops, and           We now solve the log-equivalent problem (6). We denote by
+iterative plannings. Consider a feedback loop in which agents i and       BT = T − Tfixed the latency budget available for output generation.
+Since the reasoning allocations Xj are treated as fixed parameters,
+the reduced reliability function is ρ̂j (Lj ) = 1 − e−αj Xj 1 −
+                                                                 
+
+e−βj Lj . Substituting the reliability model in (2), the objective func-
+         
+
+tion in (6) becomes j∈ALLM log(1−e−αj Xj )+ j∈ALLM log(1−
+                    P                               P
+
+e−βj Lj ). Since Xj is fixed, the first term is constant with respect
+to the decision variables Lj . Consequently, the optimization over
+response lengths is equivalent to maximizing only the second term.
+               X
+                    log 1 − e−βj Lj
+                                       
+     max                                                                          Figure 1: Output token allocations under different strategies.
+ Lj ,j∈ALLM
+                j∈ALLM
+                                                                       (7)
+                 X       Lj             X
+         s.t.                 ≤ BT ,            ctok Lj ≤ C, Lj ≥ 0.
+                j∈ALLM
+                         λgen          j∈ALLM
+   P ROPOSITION 1 (WATER - FILLING TOKEN ALLOCATION ).
+Consider problem (7) and assume βj > 0, ∀j ∈ ALLM . De-
+fine the effective token budget as B = min {λgen BT , C/ctok }.
+Then the optimal response lengths satisfy the water-filling rule
+                     β 
+L∗j = β1j log 1 + θj + , where θ ≥ 0 is the Lagrange multiplier
+       
+
+associated with the effective budget constraint and is chosen so that
+P           ∗                               ∗                                     Figure 2: Workflow reliability under different token budgets.
+   j∈ALLM Lj = B. The optimal solution L is unique.
+                                                                             tokens to agents with lower values of βj . This result reflects that
+   P ROOF. The constraints inP  (7)imply that the feasible set of (7)
+                                                                             agents with higher βj quickly reach high reliability with fewer to-
+is equivalent to {Lj ≥ 0 :       j Lj ≤ B}. Then, we apply the               kens, while agents with lower βj require more tokens to achieve
+Karush-Kuhn-Tucker     (KKT)  conditions  by introducing a multiplier
+            P                                                                comparable levels. Figure 2 shows the reliability of the workflow
+θ ≥ 0 for j Lj ≤ B and multipliers νj ≥ 0 for nonnegativity
+                                                                             under different token budgets and strategies; the optimal allocation
+constraints. The Lagrangian is L(L, θ, ν) = j log(1−e−βj Lj )−
+                                              P
+   P                P                                                        rule consistently dominates all baseline strategies.
+θ( j Lj − BL ) + j νj Lj . The KKT stationarity condition gives
+∂L/∂Lj = (βj e−βj Lj )/(1 − e−βj Lj ) − θ + νj = 0. Consider                 5.     CONCLUSION
+an agent with Lj > 0. Complementary slackness implies νj = 0,                   This work proposed a framework for analyzing and optimizing
+yielding βj e−βj Lj /(1 − e−βj Lj ) = θ. Rearranging this equation           LLM-enabled agentic workflows under latency and cost constraints.
+gives Lj = β1j log(1 + βj /θ). If this value is negative, the non-           We introduced performance models quantifying trade-offs among
+negativity constraint becomes active and L∗j = 0. Combining these            reliability, latency, and cost, and derived closed-form optimal token
+two cases yields the water-filling rule. As the objective function is        allocation policies for sequential workflows. The optimal allocation
+strictly concave and the feasible set is convex, KKT conditions are          equalizes marginal gains in log reliability across agents, with the
+necessary and sufficient for optimality. The solution is unique.             allocation determined by a shadow price that reflects the scarcity
+                                                                             of the token budget. Future work includes joint optimization of
+   Remark 2 (Shadow Price Interpretation). The multiplier θ                  reasoning and response length, as well as adaptive allocation policies
+in Proposition 1 admits a natural economic interpretation as the             that dynamically adjust token budgets based on intermediate results.
+shadow price of the token budget, representing the marginal value
+of an additional token in terms of log reliability. From the KKT con-
+ditions, every agent with L∗j > 0 satisfies ∂L
+                                             ∂
+                                                  log ρj (Xj , L∗j ) = θ,
+                                                                             6.     REFERENCES
+                                               j
+which implies that the optimal allocation equalizes the marginal             [1] D. B. Acharya, K. Kuppan, and B. Divya. Agentic ai:
+gain in log reliability per token across active agents.                          Autonomous intelligence for complex goals—a comprehensive
+                                                                                 survey. IEEE Access, 13:18912–18936, 2025.
+   C OROLLARY 1 (O PTIMAL WORKFLOW RELIABILITY ). Let                        [2] S. Boyd and L. Vandenberghe. Convex optimization.
+L∗ be the optimal token allocation characterized in Proposi-                     Cambridge university press, 2004.
+tion 1. The corresponding optimal workflow reliability is thus               [3] J. Kaplan, S. McCandlish, T. Henighan, T. B. Brown, B. Chess,
+  ∗     Q                    ∗      Q              −αj Xj
+                                                           βj                   R. Child, S. Gray, A. Radford, J. Wu, and D. Amodei. Scaling
+Rwf  =      j∈ALLM ρj (Xj , Lj ) =    j∈ALLM 1 − e         βj +θ
+                                                                 ,
+                                                                                 laws for neural language models. arXiv preprint
+where θ is the effective shadow token price.
+                                                                                 arXiv:2001.08361, 2020.
+   P ROOF. The proof follows the model in (2) and the optimal                [4] W. Kwon, Z. Li, S. Zhuang, Y. Sheng, L. Zheng, C. H. Yu,
+                                             ∗
+allocation in Proposition 1 that gives e−βj Lj = θ/(βj + θ).                     J. Gonzalez, H. Zhang, and I. Stoica. Efficient memory
+                                                                                 management for large language model serving with
+                                                                                 pagedattention. In Proceedings of the 29th symposium on
+4.    NUMERICAL EXPERIMENTS                                                      operating systems principles, pages 611–626, 2023.
+   We illustrate the water-filling allocation policy of Proposition 1        [5] X. Wang, J. Wei, D. Schuurmans, Q. Le, E. Chi, S. Narang,
+through a numerical example. Consider a sequential workflow com-                 A. Chowdhery, and D. Zhou. Self-consistency improves chain
+prising n = 5 LLM agents with heterogeneous reliability parameters               of thought reasoning in language models. arXiv preprint
+βj ∈ {0.001, 0.002, 0.0005, 0.003, 0.0015}. The total output to-                 arXiv:2203.11171, 2022.
+ken budget is B = 12000 tokens. Figure 1 compares the optimal
+                                                                             [6] Y.-T. Yang and Q. Zhu. Internet of agentic ai:
+water-filling allocation against three baseline strategies: uniform
+                                                                                 Incentive-compatible distributed teaming and workflow. arXiv
+(equal tokens to all agents), proportional (tokens ∝ βj ), and inverse
+                                                                                 preprint arXiv:2602.03145, 2026.
+proportional (tokens ∝ 1/βj ). The water-filling rule allocates more
+

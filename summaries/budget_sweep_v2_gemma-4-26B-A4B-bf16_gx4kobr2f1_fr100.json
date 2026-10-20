@@ -1,0 +1,30 @@
+{
+  "model": "google/gemma-4-26b-a4b-it",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    10000000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 10000000,
+      "name": "V5-Unc-Fmt",
+      "success_rate": 0.3933333333333333,
+      "cps": 0.022879661016949153,
+      "mean_tokens": 299939.4266666667,
+      "cost": 1.3499
+    }
+  ],
+  "agg": [
+    {
+      "budget": 10000000,
+      "name": "V5-Unc-Fmt",
+      "sr_mean": 0.3933333333333333,
+      "sr_std": 0.0,
+      "cps_mean": 0.022879661016949153,
+      "tokens_mean": 299939.4266666667
+    }
+  ]
+}

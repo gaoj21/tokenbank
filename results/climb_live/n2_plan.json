@@ -1,0 +1,18 @@
+{
+ "MATH": {
+  "threshold": -0.05,
+  "n_test": 200
+ },
+ "GAIA": {
+  "threshold": "direct",
+  "n_test": 61
+ },
+ "FRAMES": {
+  "threshold": "direct",
+  "n_test": 330
+ },
+ "MuSiQue": {
+  "threshold": -0.05,
+  "n_test": 967
+ }
+}

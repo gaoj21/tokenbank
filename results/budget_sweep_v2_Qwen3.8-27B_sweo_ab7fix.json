@@ -1,0 +1,30 @@
+{
+  "model": "qwen3.8-27b-fp8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "SWEO-Ab7",
+      "success_rate": 0.982,
+      "cps": 6.680244399185336e-05,
+      "mean_tokens": 2331.074,
+      "cost": 0.0328
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "SWEO-Ab7",
+      "sr_mean": 0.982,
+      "sr_std": 0.0,
+      "cps_mean": 6.680244399185336e-05,
+      "tokens_mean": 2331.074
+    }
+  ]
+}

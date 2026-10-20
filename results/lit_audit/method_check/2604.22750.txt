@@ -1,0 +1,1545 @@
+                                         How Do AI Agents Spend Your Money? Analyzing and Pre-
+                                         dicting Token Consumption in Agentic Coding Tasks
+
+                                          Longju Bai1 Zhemin Huang2,5 Xingyao Wang3 Jiao Sun4                                                             Rada Mihalcea1
+                                          Erik Brynjolfsson2 Alex Pentland2,6 Jiaxin Pei2 ∗
+                                          1 University of Michigan   2 Stanford University    3 All Hands AI                                              4 Google       Deepmind
+                                          5 Microsoft AI   6 Massachusetts Institute of Technology
+
+
+
+
+                                                                                                          Abstract
+arXiv:2604.22750v2 [cs.CL] 29 Apr 2026
+
+
+
+
+                                                      The wide adoption of AI agents in complex human workflows is driving
+                                                      rapid growth in LLM token consumption.1 When agents are deployed on
+                                                      tasks that require a significant amount of tokens, three questions naturally
+                                                      arise: (1) Where do AI agents spend the tokens? (2) Which models are
+                                                      more token-efficient? and (3) Can agents predict their token usage before
+                                                      task execution? In this paper, we present the first systematic study of token
+                                                      consumption patterns in agentic coding tasks. We analyze trajectories
+                                                      from eight frontier LLMs on SWE-bench Verified and evaluate models’
+                                                      ability to predict their own token costs before task execution. We find that:
+                                                      (1) agentic tasks are uniquely expensive, consuming 1000× more tokens
+                                                      than code reasoning and code chat, with input tokens rather than output
+                                                      tokens driving the overall cost; (2) token usage is highly variable and
+                                                      inherently stochastic: runs on the same task can differ by up to 30× in total
+                                                      tokens, and higher token usage does not translate into higher accuracy;
+                                                      instead, accuracy often peaks at intermediate cost and saturates at higher
+                                                      costs; (3) models vary substantially in token efficiency: on the same tasks,
+                                                      Kimi-K2 and Claude-Sonnet-4.5, on average, consume over 1.5 million
+                                                      more tokens than GPT-5; (4) task difficulty rated by human experts only
+                                                      weakly aligns with actual token costs, revealing a fundamental gap between
+                                                      human-perceived complexity and the computational effort agents actually
+                                                      expend; and (5) frontier models fail to accurately predict their own token
+                                                      usage (with weak-to-moderate correlations, up to 0.39) and systematically
+                                                      underestimate real token costs. Our study offers new insights into the
+                                                      economics of AI agents and can inspire future research in this direction.
+                                                      Code and data are available on the project website.
+
+
+                                                           Input/output ratio                       Average token usage                            Average task cost ($)
+                                                                                            107
+                                                                              153.85                                      4.17M
+                                             102                                                                                                                        $1.857
+                                                                                            106                                        100
+
+                                             101
+                                                                                            105
+
+                                                                   1.33                                                                10   1
+
+                                             100                                            104
+                                                                                                              3.39k                                         $0.023
+                                                       0.16                                       1.19k                                         $0.016
+                                             10   1                                         103                                        10   2
+                                                  Code Reasoning Code Chat Agentic Coding    Code Reasoning Code Chat Agentic Coding        Code Reasoning Code Chat Agentic Coding
+
+                                         Figure 1: Agentic coding tasks cost significantly more tokens than Code Reasoning (single-
+                                         turn problem solving without tool interaction) and Code Chat (multi-turn dialogue about a
+                                         coding problem) tasks. Such a difference is largely driven by the increase of input tokens.
+
+
+                                           ∗ Correspondence            to longju@umich.edu and pedropei@stanford.edu
+                                           1We use “token consumption” and “token usage” interchangeably to refer to both input and output
+                                         tokens used by LLM agents.
+
+
+                                                                                                               1
+1   Introduction
+
+Coding Agents are autonomous systems that can read repositories, reason about issues, call
+tools, and propose solutions with minimal human supervision (OpenAI, 2025; Liu et al.,
+2023a;b; Jimenez et al., 2024; Wang et al., 2023; 2024). While coding agents were originally
+developed mainly for coding tasks, due to their exceptional capabilities for using tools and
+working on long-horizon tasks, they have also been increasingly used in a wide range of
+tasks and domains beyond coding. Despite the wide adoption of coding agents and the
+productivity boost they bring, the prevailing pricing model for coding agents has been
+widely criticized for two reasons: (1) lack of transparency, users do not know the final
+cost until a task is finished; and (2) no guarantee of completion, users still need to pay for
+the token costs even if the task fails (Kinde, 2024). These concerns converge on a central
+question: Can we predict token consumption before a task is executed? If we could
+estimate token usage up front, users would better understand potential costs and choose
+models accordingly; providers could also design clearer pricing tiers, enforce budget caps,
+and trigger early alerts for large bills.
+In this paper, we present what is to our knowledge the first systematic study on AI Agent
+token consumption, complementing concurrent work on token distribution in multi-agent
+systems (Salim et al., 2026; Wang et al., 2025b), and token pricing in reasoning models
+(Chen et al., 2026). To first understand the overall pattern of token usage in agentic coding
+tasks, we conduct an empirical study on trajectories generated by eight frontier LLMs using
+OpenHands agent (Wang et al., 2025c) and SWE-bench-verified (Jimenez et al., 2024). Our
+analysis reveals five key findings. First, agentic coding tasks are uniquely expensive, con-
+suming orders of magnitude more tokens than chat (Crystalcare AI, 2023) and reasoning (Gu
+et al., 2024) tasks (Figure 1). Strikingly, input tokens, not output tokens, dominate the
+overall cost in agentic coding, even when token caching is enabled, consistent with recent
+analyses of token allocation across coding and reasoning tasks (Wang et al., 2025b; Salim
+et al., 2026). Second, token usage is highly variable and inherently stochastic: while more
+complex tasks tend to consume more tokens on average, usage varies substantially across
+runs, with some runs using up to 30× more tokens than others on the same task. Third,
+more tokens do not translate into higher accuracy: accuracy often peaks at intermediate
+cost and degrades at the highest cost levels, suggesting that excess token expenditure fre-
+quently reflects unproductive exploration rather than deeper reasoning. Fourth, models
+differ substantially in token efficiency: on the same set of tasks, Kimi-K2 and Claude
+Sonnet-4.5 consume, on average, over 1.5 million more tokens than GPT-5. This gap holds
+even when restricting to the easy subset that all models solve successfully, showing that
+efficiency differences stem from model-specific behavior rather than intrinsic task difficulty.
+Finally, human-rated task difficulty only weakly aligns with actual token costs, revealing
+a fundamental gap between human-perceived complexity and the computational effort
+agents actually expend. Together, these findings highlight both the heavy-tailed nature of
+token usage and the central role of context ingestion in agentic tasks.
+Building on these observations, we further study agents’ capabilities to predict their token
+costs before task execution. We formalize the pre-execution agent token consumption pre-
+dict tasks in which the agent is asked to predict input and output token usage given all
+its available tools and the coding environment. Rather than relying on static predictors or
+handcrafted features, the agent needs to act autonomously in the environment to produce
+cost estimates prior to execution. We find that agents can capture coarse trends in token
+consumption, but achieve only weak-to-moderate correlation with real usage across mod-
+els. In general, output-token usage is easier to predict than input-token usage, reflecting the
+uncertainty introduced by context construction, retrieval, and tool-driven exploration. Ad-
+ditionally, all the models systematically underestimate the actual token usage, suggesting
+that token usage estimation is a very challenging task even for the most advanced models.
+Although accurate instance-level prediction remains challenging, self-prediction provides
+a useful coarse-grained signal of relative cost. This suggests that agent-driven estimation
+can potentially support early budget alerts before launching expensive runs, improving cost
+transparency without overpromising precise token-level accuracy. Overall, our work makes
+the following contributions:
+
+
+                                              2
+     • We present the first large-scale empirical study of token consumption in agentic
+       coding tasks, and open-source all agent trajectories from our experiments to support
+       future research in this direction.
+     • Our analysis reveals important insights into agent token consumption patterns that
+       can inform future research and practice on agent pricing and model development.
+     • We formulate the pre-execution agent token consumption prediction task and
+       benchmark a range of frontier models, revealing a fundamental capability gap in
+       estimating token usage before task execution.
+
+Taken together, our empirical analysis and prediction study illuminate where tokens go
+in agentic coding and what can be anticipated before execution, providing concrete steps
+toward more predictable and user-aligned agent pricing.
+
+2   Data and Method
+
+We use OpenHands (Wang et al., 2025c) as our basic agent framework and collect agent
+trajectories on the SWE-Bench-Verified (Jimenez et al., 2024; Chowdhury et al., 2024), a
+benchmark of real-world GitHub issues paired with corresponding code repositories and
+tests. Each problem is evaluated with four independent runs across a diverse set of LLMs,
+including Claude Sonnet-3.7, Sonnet-4, Sonnet-4.5, GPT-5, GPT-5.2, Qwen3-Coder-480B-
+A35B-Instruct, Kimi-K2, and Gemini-3-Pro. We selected these models because they cover a
+diverse set of architectures, training paradigms, and deployment settings, while offering
+strong coding capabilities and reliable execution stability.
+In this study, we focus specifically on token consumption throughout the end-to-end
+problem-solving process: given an initial task description, the LLM agent autonomously
+interacts with the environment to finish the task without any human intervention. For each
+problem instance, the agent proceeds in multiple rounds: in each round, the LLM generates
+a response based on the current prompt, followed by a tool call and execution. In particular,
+the full conversation history, including all previous prompts and completions, is carried
+forward unchanged into subsequent rounds.
+To enable a more detailed analysis of LLM behavior and its corresponding token con-
+sumption during problem-solving, we extract a set of fine-grained metrics from the LLM
+completion history, such as per-type token cost, monetary cost, and action types. These
+metrics are obtained by parsing the structured JSON outputs of the agent and leveraging the
+usage information, which records all LLM interactions at each round. Together, the extracted
+metrics capture both the functional behavior of the agent, such as tool usage and file access
+patterns, as well as the underlying token-level dynamics. For all token-related metrics, we
+report values averaged over the four independent runs per problem. The collected data
+include full execution trajectories, inference logs, intermediate outputs, evaluation results,
+and metadata, enabling a comprehensive analysis of agent behaviors and cost dynamics.
+
+3   Overall Agent Token Consumption Patterns
+
+In this section, we present key findings on agent token consumption in agentic coding
+tasks. We begin with a systematic comparison among agentic coding, code chat, and code
+reasoning tasks. Then we discuss the variances of token usage across tasks and runs, and
+whether higher token costs lead to more task completion. Finally, we discuss whether expert
+perception of task difficulty is aligned with actual agent token costs.
+
+Agentic tasks are uniquely expensive, and input tokens drive the cost of AI Agents We
+compare token usage across three coding-related tasks: code reasoning (Gu et al., 2024),
+coding chat (Crystalcare AI, 2023), and agentic coding (Jimenez et al., 2024; Chowdhury
+et al., 2024). Figure 1 shows the average token usage, monetary costs, and input/output
+token ratio averaged across all the tasks. On average, agentic coding tasks consume 3500x
+more tokens than a typical single-round reasoning task and 1200x more tokens than a
+
+
+                                              3
+                1.5 1e7
+
+
+
+
+                                                                                                     Max/min ratio (tokens)
+                               Mean (All Models)
+                1.0            ±1 Std Dev                                                                                     6
+
+Total tokens    0.5                                                                                                           4
+                0.0
+                                                                                                                              2
+                0.5
+                           0               100            200          300           400   500                                0
+                                                   Instance Index (sorted by mean)
+                                                                                                                              5
+                       $
+
+
+
+
+                                                                                                     Max/min ratio (USD)
+                  15           Mean (All Models)                                                                              4
+   Total cost (USD)
+
+
+
+
+                  10           ±1 Std Dev
+                                                                                                                              3
+                   5
+                                                                                                                              2
+                   0
+                                                                                                                              1
+                  -5
+                           0               100            200          300           400   500                                0   GPT-5   GPT-5.2     Claude     Claude     Claude Qwen3-CoderGemini-3-Pro Kimi-K2
+                                                   Instance Index (sorted by mean)                                                                  -Sonnet-3.7 -Sonnet-4 -Sonnet-4.5 -480B     -Preview
+
+
+  (a) Across 500 problems, the most expensive in-                                                        (b) On the same problem, the most expensive run
+  stance costs ∼7M more tokens than the cheapest.                                                        is ∼2× the cheapest across all models.
+
+  Figure 2: Token cost is highly variable both across problems and across repeated runs of
+  the same problem. (a) Per-instance mean ±1 SD across the four runs and eight models, with
+  instances sorted by mean cost; the heavy right tail indicates that high-cost problems also
+  exhibit the largest cross-run variance. (b) Per-model max/min cost ratio, averaged across
+  the 500 instances; error bars show ±1 SD across instances. Together, these results suggest
+  that token cost is highly variable, making upfront cost prediction fundamentally difficult.
+
+
+  multi-round chatting task. Such a gap is primarily driven by the exponential growth of
+  input tokens. Agentic workflows accumulate the information from different sources and
+  the same context gets fed into the models repeatedly, resulting in a dramatically higher
+  input/output ratio than the other two task types and significantly higher costs even with
+  token caching. Such a result reveals that agentic tasks are fundamentally different from
+  other types of tasks and further motivates our study on agent token consumption.
+
+  Token usage is highly variable across problems and runs Are certain tasks costing more
+  tokens, and do agents consume a similar amount of tokens when they are working on
+  the same problem again? We analyze the variances of agent token usage across different
+  problems (averaged over four independent runs) and across different runs of the same prob-
+  lem. Figure 2a shows the aggregated agent token usage and cost across problems and runs.
+  We find that agents’ token usage has large variances across different problems. The most
+  expensive problem, on average, costs ∼7 million more tokens than the cheapest problem.
+  Furthermore, high-token-cost problems exhibit larger cross-run variance, indicating that
+  agent behavior becomes increasingly unstable on more complex tasks. Figure 2b shows
+  the token usage difference for the most and least expensive runs for the same agent and
+  problem. In general, the most expensive runs double the token and monetary cost of the
+  least expensive runs, suggesting that the agent’s token consumption has large variances
+  even when working on exactly the same problem. Together, these results suggest that the
+  token costs have large variances across problems and runs, making token usage prediction
+  and agent pricing a fundamentally challenging task.
+
+  More tokens do not lead to higher success rates Given the large variances of agent token
+  consumption, one may wonder whether higher token usage leads to better performance.
+  We first study this question at the problem level: whether tasks consuming more tokens
+  have lower overall accuracy. As shown in Figure 2a, problems costing more input tokens
+  have overall lower accuracy, and such a pattern is consistent across different models. One
+  intuitive explanation for this result is that more difficult tasks may naturally be more
+  complicated, which further leads to higher token consumption. A similar trend is also
+  observed for output tokens and we present the results in Appendix A.
+  When a coding agent is working on a specific task multiple times, the user may naturally
+  expect the runs that cost more tokens to lead to higher accuracy. But do high-token-usage
+  runs actually lead to higher accuracy? In our experiment, we run the same agent on a
+  single problem four times. For each problem, we rank the four runs by token cost and
+  group them into four categories: MinCost, LowerCost, UpperCost, and MaxCost. As shown
+
+
+                                                                                                 4
+                                    (a) Problems costing more tokens                                                         0.08
+                                                                                                                                    (b) Accuracy peaks at intermediate cost
+                                        have overall lower accuracy
+                                                            GPT-5           GPT-5.2                                          0.07                **            **
+                              1.0                           Qwen3-Coder
+                                                            Sonnet-4.5
+                                                                            Gemini-3-Pro
+                                                                            Kimi-K2                                                                                           *
+                                                                                                                             0.06
+
+
+
+
+                                                                                                Accuracy coefficient
+                                                            Sonnet-4        Overall trend
+                              0.8                           Sonnet-3.7
+                                                                                                                             0.05
+Group accuracy
+
+
+                                                                                                                             0.04
+                              0.6
+                                                                                                                             0.03
+                              0.4                                                                                            0.02
+                              0.2                                                                                            0.01
+                                                                                                                             0.00
+                              0.0 0.0      0.2       0.4        0.6       0.8        1.0                                        Min Cost     Lower Cost     Upper Cost   Max Cost
+                                            Mean total input tokens per group         1e7                                                            Cost level
+
+
+   Figure 3: Task accuracy and token cost across models. (a) Group-level accuracy and
+   mean input tokens for each difficulty/model bin; the dashed line shows the overall trend.
+   (b) Relative agent accuracy across cost quartiles, compared to the minimum-cost setting
+   and estimated via mixed-effects regression. When working on the same problem, agent
+   performance peaks at the intermediate-cost run and then saturates with higher costs.
+
+                                  (a) Higher-cost runs have more                                                                   (b) Higher-cost runs have more
+                                      repeated file modification                                                                       repeated file viewing
+                                                                                  ***                                        2.5                                           ***
+                              4
+Repeated modify coefficient
+
+
+
+
+                                                                                                 Repeated view coefficient
+
+
+
+                                                                                                                             2.0
+                              3                                  **                                                                                               **
+                                                                                                                             1.5
+                              2                                                                                              1.0
+                              1                                                                                              0.5
+                              0                                                                                              0.0
+                              Min Cost      Lower Cost      Upper Cost          Max Cost                                       Min Cost      Lower Cost    Upper Cost    Max Cost
+                                                    Cost level                                                                                      Cost level
+
+
+   Figure 4: When working on the same problem, high-cost runs are associated with repeated
+   view and edits for the same file. Relative frequency of repeated file modifications (a) and
+   repeated file views (b) across cost quartiles, compared to the minimum-cost setting and
+   estimated via mixed-effects regression.
+
+
+
+   in Figure 2b, accuracy increases modestly from MinCost to LowerCost, but then saturates
+   in higher-cost settings. This non-monotonic trend is consistent with recent findings on
+   inverse test-time scaling (Snell et al., 2024; Wu et al., 2025; Gema et al., 2025; Zeng et al., 2025;
+   Yang et al., 2025; Aggarwal et al., 2025), which show that additional reasoning steps or
+   longer chains of thought do not necessarily improve accuracy and may instead amplify
+   distractors, spurious correlations, or inefficient reasoning cycles. In agentic settings, similar
+   efficiency–performance trade-offs have been observed in long-horizon or ensemble-style
+   systems, where increased computation does not reliably translate to improved task resolu-
+   tion (Fan et al., 2025; Wang et al., 2025a). Our results provide further evidence along this
+   line that simply scaling token usage may not lead to higher execution performance.
+    Motivated by these observations, we further examine the behavioral patterns underlying
+    high-cost failures by analyzing repeated file view and modify actions across cost levels. As
+    shown in Figure 4, the frequency of repeated viewing and editing sharply increases in the
+    more expensive runs. This indicates that many expensive but failed runs have potentially
+    redundant back-and-forth file access and re-editing, reflecting inefficient search dynamics
+    that inflate context length and token usage without proportional progress. While not all
+
+
+                                                                                            5
+Expected                           <15 min                                  15 min 1 hr                            >1 hr
+                                                                                                                                                    >1 hr
+  Actual                                                        vs.                                                              10M                15 min 1 hr
+                                                                                                                                                    <15 min
+            10M
+
+
+
+
+                                                                                                                           Total tokens
+    Total tokens                               6.7% of "<15 min" tasks cost more than the average ">1 hr" tasks
+                                               11.1% of ">1 hr" tasks cost less than the average "<15 min" tasks
+                    >1 hr mean
+
+
+                    <15 min mean
+               1M                                                                                                                   1M
+                                                                                                                                                Kendall -b = 0.32
+                                                                                                                                               95% CI [0.25, 0.38]
+                                 Tasks ordered by actual token consumption (low high)                                                     0     1               2
+                                                                                                                                              Density
+
+Figure 5: Expert-rated task difficulty is a weak predictor of agent token consumption.
+Left: each vertical bar represents one of the 500 SWE-bench tasks, sorted by actual token
+consumption (low → high) and colored by human difficulty rating. The top reference strip
+shows the expected coloring under perfect alignment (clean light-to-dark gradient); the
+actual coloring below it is scrambled throughout. Dashed lines mark the <15 min and
+>1 hour group means. Right: density of token consumption per difficulty group, with
+substantial overlap across the full range.
+
+
+high-cost runs are dominated by redundancy, this pattern provides a concrete behavioral
+explanation for the inverse accuracy–cost relationship observed above.
+
+Expert-rated task difficulty is a weak predictor of agent token consumption Human
+engineers need different amounts of time and effort to complete different tasks. SWE-bench-
+Verified (Jimenez et al., 2024; Chowdhury et al., 2024) provides expert-estimated difficulty
+levels which categorize problems based on the estimated time required by professional
+developers to resolve them (e.g., “<15 min”, “15 min – 1 hour”, “1–4 hours”, “>4 hours”).
+Because there are only three instances in the >4 hours category, we merge it with the 1–4
+hours group and report them together under “>1 hour.” Is expert-perceived task difficulty
+a good predictor of agent token usage? Figure 5 shows the distribution of total token usage
+and compares it with the expected distribution if it were fully aligned with human-perceived
+difficulty. While overall resource consumption tends to rise with problem difficulty, the
+relationship is far from linear. The rank-monotonic association between human difficulty
+and token consumption is statistically real but modest (Kendall τb = 0.32), and the two
+distributions overlap substantially: 6.7% of tasks labeled as “<15-minute” required more
+total tokens than the average “>1-hour” instance, and 11.1% of “>1-hour” tasks consumed
+fewer tokens than the average “<15-minute” instance. These outliers highlight that human-
+estimated difficulty does not always align with the model’s notion of complexity. Tasks that
+seem easy to humans may still demand extensive reasoning, exploration, or tool interaction
+from the model, whereas some “hard” problems may be efficiently solvable given the
+model’s prior knowledge or search strategies. Consequently, human-labeled difficulty is a
+weak predictor of agent resource expenditure.
+
+4            Which Models are More Token Efficient
+
+The rapid growth in token consumption creates an urgent cost control problem for users
+and organizations deploying coding agents at scale. A natural response is to select the
+most cost-efficient model that can still complete the task. In this section, we examine the
+accuracy-cost trade-off and the token efficiency of eight frontier models.
+
+Accuracy–cost differences across models. To understand how token efficiency differs
+across models, we first analyze the trade-off between task accuracy and token consumption.
+Figure 6a shows that models operating at higher token budgets generally achieve higher
+accuracy, but vary significantly in how well they navigate this trade-off. GPT-5 and GPT-
+5.2 achieve strong accuracy at low cost, while Claude Sonnet 4.5, Claude Sonnet 4, and
+Qwen3-Coder-480B operate in a higher-cost regime. Kimi-K2 remains an outlier with both
+the highest cost and the lowest accuracy. Figure 6b further shows the models’ token usage
+
+
+                                                                                 6
+               0.75 (a) Average token usage vs. accuracy per model                            (b) Token cost: success vs. failure subset
+                                                     Claude Sonnet-4.5              Claude
+                                                                                 Sonnet-4.5
+               0.70                                 Claude Sonnet-4                 Kimi-K2
+                                                                                    Claude
+Average accuracy
+
+                                             Qwen3-Coder 480B                     Sonnet-4
+               0.65                                                            Qwen3-Coder
+                           GPT5.2                                                     480B
+                                      Claude Sonnet-3.7                        Gemini-3-Pro
+               0.60 GPT5                  Gemini-3-Pro Preview                     Preview
+                                                                                    Claude
+                                                                                 Sonnet-3.7
+               0.55                                              Kimi-K2            GPT-5.2
+                                                                                                                      Shared success (n=230)
+                                                                                     GPT-5                            Shared failure (n=100)
+               0.501.0M    1.5M     2.0M     2.5M     3.0M        3.5M                          1.0M       2.0M       3.0M     4.0M
+                             Average total token usage                                                 Average total token usage
+     Figure 6: Token efficiency varies substantially across models and reflects model-specific
+     behavior rather than task difficulty. (a) Mean total token usage vs. mean accuracy across all
+     500 SWE-bench instances; one point per model. (b) Model token usage on the shared success
+     and failure tasks, blue dots show mean token usage on the shared success subset (n=230,
+     solved by all models) and red diamonds show the shared failure subset (n=100, failed by all
+     models). Models’ relative token usage remains consistent on both subsets, suggesting that
+     token efficiency is an inherent characteristic of the model.
+
+
+    across the shared success and shared failure subsets. In an ideal situation, stronger models
+    should be able to consume fewer tokens on the easy task that all the models could solve and
+    stop early on the hard tasks that every model fails. However, as shown in Figure 6b, the
+    relative ranking of models token usage persists across both the shared success and shared
+    failure subsets. This suggests that the gap is not driven by task difficulty or by some models
+    attempting harder problems. Instead, the same task is simply more expensive for some
+    models than others, reflecting a behavioral tendency of the model rather than a property of
+    the problem. Additionally, models generally consume more tokens on the shared failure
+    subset than on the shared success subset, but the size of this gap varies substantially across
+    models: GPT-5 and GPT-5.2 show only a mild increase (<0.5M tokens), whereas Kimi-K2
+    exhibits a much larger rise (∼2M tokens). One likely explanation is that models lack a
+    reliable mechanism to recognize when a task is unsolvable and stop early. Instead, they
+    continue exploring, retrying, and re-reading context, accumulating cost without progress.
+    The size of this excess spending appears to be model-specific, indicating that efficiency
+    differences are systematic and become amplified under failure.
+
+    Fine-grained action differences across models. Building on the observed model-level
+    differences in accuracy and token efficiency, we then examine more fine-grained action
+    patterns to understand how these differences arise. More specifically, we look at file view
+    actions and modification actions. As shown in Figure 7, token-efficient models (GPT-5,
+    GPT-5.2) perform fewer file views and modifications and have fewer repeated file actions.
+    In contrast, higher-cost models such as Qwen3-Coder-480B, Claude Sonnet 4, and Kimi-K2
+    perform more file actions and around 50% of them are repeated actions on the same file,
+    indicating more exploratory and redundant interaction patterns. Overall, these results
+    indicate that model efficiency depends not only on the number of actions taken, but also on
+    how effectively those actions are executed.
+
+
+     5             Token–Cost Dynamics Across Phases and Rounds
+
+    Long-horizon agentic tasks produce long and complex trajectories: the agent accumulates
+    context over many rounds, interleaves different action types, and repeatedly reads and
+    writes to the same files. On the cost side, LLM providers bill different token types at different
+    rates. As a result, the same total token count can translate into very different monetary costs
+    depending on when and how each token was spent. In this section, we conduct a case study
+
+
+                                                                           7
+                         (a) File View Actions                                                                            (b) File Modification Actions
+               Claude                                         6.86                                              Claude                                                 8.90
+            Sonnet-3.7                       3.52                                                            Sonnet-3.7                             4.37
+
+               Claude                                                                    14.20                  Claude                                                              10.70
+             Sonnet-4                                          7.17                                           Sonnet-4                              4.45
+
+               Claude                                                       11.24                               Claude                                                     8.95
+            Sonnet-4.5                                 5.80                                                  Sonnet-4.5                2.48
+
+          Qwen3-Coder                                                                            15.42   Qwen3-Coder                                                              10.20
+                 480B                                                7.93                                       480B                        3.18
+
+          Gemini-3-Pro                                         7.14                                      Gemini-3-Pro                                           7.32
+              Preview                        3.54                                                            Preview                               4.11
+
+                                                                                               15.27                                                                                               14.02
+              Kimi-K2                                                7.92
+                                                                                                               Kimi-K2                                         7.05
+
+                                      2.38                                                                                           1.93
+                GPT-5        0.65
+                                                                                                                 GPT-5        0.82
+
+                                           3.18                                                                                      2.00
+              GPT-5.2          1.10                                                 Overall actions            GPT-5.2        0.87                                                        Overall actions
+                                                                                    Repeated actions                                                                                      Repeated actions
+                         0             3              6                 9    12           15                              0             3                  6           9                  12         15
+                                                    Average action count                                                                           Average action count
+
+Figure 7: Fine-grained file interaction patterns on the shared success subset. For each
+model, we report the average number of overall and repeated file view actions (a) and
+modification actions (b).
+
+
+of Claude Sonnet-4.5 to open up the black box of agent cost and examine where tokens are
+spent and how that spending translates into dollars.
+
+5.1   Experimentation Setup
+
+Most commercial LLM providers charge different types of tokens at different rates. Output
+tokens are the most expensive because the model has to generate them one at a time.
+Standard input tokens, used when the model processes a fresh prompt, sit in the middle.
+Cached input tokens are the cheapest: once a chunk of context has been seen, the provider
+can reuse the work of processing it, so later reads are billed at a steep discount. Providers
+that expose caching explicitly, such as Anthropic, split the cache side further into cache
+creation (writing context into the cache for later reuse) and cache read (retrieving it in a later
+round at the discounted rate). This structure matters especially for agentic workloads:
+because long trajectories keep adding to the context, the same material would otherwise
+be re-processed on every round. Caching, therefore, has become an essential strategy for
+keeping token costs manageable.
+We analyze agent cost at two levels of granularity. The first is the phase level, where we
+divide each trajectory into five stages of problem-solving (Setup, Explore, Fix, Validate,
+Closeout) and compare how token counts and costs vary from stage to stage. The second is
+the round level, where we trace a single trajectory step by step to see how each round’s cost
+breaks down by token type and which type dominates at different points in the task. We
+use Claude Sonnet-4.5 for the analyses in this section. Its API reports each round’s cost as
+the sum of four separately-priced categories: non-cached input, output, cache creation, and
+cache read. Cache creation is priced according to how long the cache persists; we use the
+5-minute write rate throughout.2
+
+5.2   Phase-Level Token Usage Dynamics
+
+We divide each problem-solving trajectory into five semantically grounded phases based on
+the agent’s functional behavior: Setup, Explore, Fix, Validate, and Closeout. Table 1 describes
+each phase and reports its share of total rounds. The Fix and Explore phases together
+account for roughly two-thirds of all rounds, while Setup, Validate, and Closeout fill out the
+remaining third. For each phase, we aggregate across 500 problem instances and compute
+average token counts, dollar costs, and per-phase correlations between token types and
+total cost.
+   2 Pricing details at https://docs.claude.com/en/docs/about-claude/pricing; full cost formulas
+in Appendix B.
+
+
+                                                                                                         8
+            Phase                                         Description                                                                                                               Proportion
+            Setup                                         Task planning, environment setup, initial reproduction                                                                        9.98%
+            Explore                                       Code search, file inspection, root-cause analysis                                                                            30.37%
+            Fix                                           Code edits, debugging iterations, patch refinement                                                                           33.53%
+            Validate                                      Testing, regression checks, verification                                                                                     16.59%
+            Closeout                                      Final checks, cleanup, summary output                                                                                         9.53%
+
+Table 1: Phases of agent trajectories. Percentages are computed over all rounds across
+Sonnet-4.5 runs.
+
+                                             (a) Token count by problem-solving phase                                                     (b) Token cost by problem-solving phase
+                                                Output Tokens                   Input Tokens (non-cached)                                    Output Tokens
+                                                Cache Creation Input Tokens     Cache Read Input Tokens                            0.30      Cache Creation Input Tokens
+                                       106                                                                                                   Input Tokens (non-cached)
+                                                                                                                                             Cache Read Input Tokens
+        Number of tokens (log scale)
+
+
+
+
+                                                                                                                                   0.25
+
+                                                                                                                                   0.20
+
+
+
+
+                                                                                                                  Cost (dollars)
+                                       105
+                                                                                                                                   0.15
+
+                                                                                                                                   0.10
+                                       104
+                                                                                                                                   0.05
+
+                                               Setup         Explore          Fix       Validate       Closeout                    0.00     Setup         Explore          Fix   Validate Closeout
+                                                                Problem-solving phase                                                                       Problem-solving phase
+
+Figure 8: Phase-level token usage and cost dynamics. Input tokens dominate both raw
+token usage and dollar cost across phases.
+
+
+We find that cache reads dominate both raw token volume and dollar cost. In every phase,
+cache-read input tokens are the largest category by a wide margin (Figure 8a), reflecting the
+cumulative reuse of prior context. Non-cached input and cache-creation tokens track each
+other closely, consistent with newly introduced context being cached as soon as it enters the
+conversation, while output tokens are relatively high only in Setup, where planning-heavy
+generation is concentrated. Figure 8b further shows the actual dollar cost of each stage.
+Cache reads remain the dominant cost contributor in every phase. Given that output tokens
+are individually priced roughly 80× higher than cache reads, such a result further highlights
+that the sheer volume of accumulated context is large enough that cheap-per-token cache
+reads still outweigh expensive-per-token output in aggregate.
+
+5.3   Round-Level Cost Dynamics
+
+To further illustrate the round-level token-cost dynamics, we zoom into a representative
+agent trajectory (on task astropy astropy-7336). Figure 9 shows the per-round cost decom-
+posed across the four token categories.
+Cache-read costs accumulate gradually as the trajectory progresses and form a relatively
+stable baseline in each round. Total per-round cost, however, is far from monotonic. The
+visible cost spikes are driven by specific actions that introduce new content into the context:
+repository exploration, file creation, test execution, and final summarization. In other words,
+the accumulated cost of reusing context is steady and predictable; what makes individual
+rounds expensive is what the agent chooses to add to the context on that round.
+These patterns line up with the functional roles of the different phases. In the Setup phase,
+where the agent starts to reason and plan, output tokens dominate the overall costs. Fol-
+lowing, as repository inspection and code reading pull large amounts of content into the
+context window, the input tokens gradually take over in the Explore phase. In the later
+phases (Fix, Validate, Closeout), output tokens come back into play for script generation and
+code edits, while input tokens reflect the cost of reading test results and execution output.
+Table 2 further illustrates representative rounds and their dominant cost source. Rounds 10,
+23, and 28 involve input-heavy tool calls like viewing new files, running tests, and cleaning
+
+
+                                                                                                                  9
+                              Cache Read Input Tokens         Input Tokens (non-cached)              Cache Creation Input Tokens             Output Tokens
+
+                    3.0       Setup                     Explore                                           Fix                       Validate             Closeout
+
+                    2.5                                                                                                                      terminal
+                                                                     file_editor                                                   (pytest + cleanup)
+    Cost (x 1e-2 USD)
+
+                                                                     (view + create)
+                    2.0
+                                                                                                                                   terminal (pytest)              finish
+                    1.5        think                                                                                               + file_editor
+                                                                                       file_editor
+                                                                                          (create)
+                    1.0
+
+                    0.5
+
+                    0.0   1            3   5       7      9         11        13       15            17     19      21      23          25        27         29        31
+                                                                                          Round
+
+Figure 9: Round-level token-cost dynamics of the agent trajectory on astropy astropy-
+7336. The cost of cache read stably increases with the accumulation of the input contexts.
+Cost spikes are driven by discrete actions that introduce new content (file views, test
+execution, script generation, final summary).
+
+                              Dominant          cost
+       Round                                            Tool usage                                          Action summary
+                              source
+                    1         Output                    think                                               Planning and reasoning about the issue.
+                   10         Non-cached input          file editor (view + create)                         Reads test file and creates reproducer.
+                   17         Output                    file editor (create)                                Writes test script for debugging.
+                   23         Non-cached input          terminal (pytest) + file editor                     Runs tests and creates verification script.
+                   28         Non-cached input          terminal (pytest + cleanup)                         Runs tests and cleans up files.
+                   31         Output                    finish                                              Produces final summary of the fix.
+
+
+Table 2: Six representative rounds from the trajectory in Figure 9, grouped by their dominant
+cost source. Input-heavy rounds are driven by new content returned from tool calls; output-
+heavy rounds are driven by the agent’s own reasoning and generation.
+
+
+up artifacts, which lead to a sharp increase in non-cached input cost. As a comparison,
+rounds 1, 17, and 31 involve output-heavy actions like planning and editing, leading to a
+high output token cost.
+
+
+6                       Predicting Agent Token Consumption before Execution
+
+The patterns discussed so far expose a fundamental tension in how AI agents are priced
+today. Token consumption varies widely across tasks and runs, and higher cost does not
+reliably translate into better outcomes. Users end up committing to a bill they cannot see in
+advance, sometimes paying substantial sums for runs that ultimately fail. Providers face a
+different but related problem: without a way to anticipate cost up front, it is hard to design
+pricing tiers that feel predictable to customers while staying financially viable, and hard
+to enforce budget caps or catch expensive runs before they spiral. Reliable cost estimation
+before execution would help on both sides. Users could compare agents on expected cost
+rather than hoping for the best. Providers could offer tiered plans and budget guarantees
+with known exposure. And both could set early alerts on runs heading toward the high tail
+of the cost distribution.
+In this section, we set up the agent token consumption prediction problem and empirically
+test whether agents can predict their own token costs before executing a task. We focus on
+self-prediction, where the same coding agent used for task execution is repurposed to estimate
+token usage. We view this as a foundational capability for autonomous agents: an agent that
+can reason about its own behavior well enough to anticipate the resources it will consume
+is also better positioned to plan, budget, decide when a task is worth attempting, and
+recognize when to stop. Cost estimation is one concrete instance of this broader capacity for
+behavioral self-modeling, and one that is directly measurable. Beyond this, self-prediction
+is an appealing setting for two practical reasons. First, the executing agent has privileged
+
+
+                                                                                        10
+                     (a) Correlation between predicted                                                                (b) Overhead of token usage prediction
+                         and actual token usage
+           Claude                                          0.24                                             Claude                                                           2.29
+       -Sonnet-3.7                                 0.21                                                 -Sonnet-3.7
+
+            Claude                                                0.28                                       Claude                                                   2.09
+         -Sonnet-4                                                        0.33                            -Sonnet-4
+           Claude                                                           0.34                            Claude             0.32
+       -Sonnet-4.5                                                                   0.39               -Sonnet-4.5
+      Qwen3-Coder                                  0.21                                                Qwen3-Coder                       0.52
+            -480B                                   0.21                                                     -480B
+      Gemini-3-Pro       0.05                                                                          Gemini-3-Pro               0.36
+         -Preview        0.04                                                                             -Preview
+                                                                                   0.38
+          Kimi-K2                     0.12                                                                 Kimi-K2         0.19
+
+                                                             0.26
+             GPT5                                                        0.32                                 GPT5                    0.47
+
+                                                           0.24
+           GPT5.2                                            0.26                   Input Token             GPT5.2      0.05
+                                                                                    Output Token
+                 0.0            0.1          0.2                  0.3              0.4           0.5              0.0              0.5          1.0     1.5     2.0             2.5
+                                              Pearson r                                                                                  Predicted Cost / Task Cost
+
+Figure 10: Self-prediction performance and overhead across models. (a) Pearson correla-
+tion between predicted and actual token counts. (b) Overhead of self-prediction, measured
+as the ratio of prediction cost to actual task cost. Overall, predicting token usage before
+execution is challenging for all the tested models and there is much space for improving the
+prediction efficiency.
+
+
+access to the information that drives cost: the repository structure it would explore, the tools
+it would call, and the planning depth it would invoke. A separate predictor would have to
+reconstruct this context from scratch. Second, self-prediction requires no additional model,
+training pipeline, or infrastructure to deploy: any agent that can run a task can, in principle,
+also estimate its cost, making the approach immediately usable in existing systems.
+
+Experimentation settings We use the coding agent itself as the predictor of its own token
+consumption. The agent retains its full tool-calling and interaction capabilities, allowing it
+to inspect the repository structure, run preliminary commands, and reason about potential
+execution paths before producing an estimate, but is instructed to output a token estimate
+rather than attempt a fix. This mirrors how a developer might inspect a codebase to scope
+effort before committing to an implementation. Prior work on self-feedback (Madaan et al.,
+2023) and language model calibration (Kadavath et al., 2022) provides theoretical grounding
+for the broader claim that models can reason about their own outputs and uncertainty.
+We use a fine-grained prediction prompt: the agent is instructed to decompose the task
+into stages and report separate estimates for input tokens, output tokens, and total cost
+(see Appendix C.2). The prompt also includes one human-written worked example that
+demonstrates the expected reasoning process and output format. Due to budget constraints,
+we run three independent predictions per model on the same 500 SWE-bench instances. We
+evaluate prediction quality with Pearson correlation between predicted and actual token
+counts, and we additionally report the overhead of self-prediction as the ratio of prediction
+cost to actual task cost.
+
+Results Figure 10 summarizes prediction performance and overhead across the eight
+models. Overall, self-prediction achieves non-trivial but modest correlations with real token
+usage overall. Within the Claude Sonnet family, correlation improves steadily with newer
+generations and peaks at 0.39 for output-token prediction with Sonnet 4.5. GPT-5, GPT-5.2,
+Kimi K2, and Qwen3-Coder reach similar modest correlations, while Gemini-3-Pro trails
+well behind on both input and output tokens. Input-token prediction is consistently harder
+than output-token prediction, which is unsurprising given the scale and growth rate of
+input tokens over long trajectories. Kimi K2 is the one exception: it attains the highest input-
+token correlation (0.38), suggesting it is potentially more sensitive to context expansion
+than the other models. Taken together, these results indicate that self-prediction captures
+coarse-grained trends in token usage but remains noisy at the instance level.
+
+Prediction overhead relative to task execution Given that token consumption prediction
+is also an agentic task, the prediction itself may lead to additional token costs. In an ideal
+
+
+                                                                                                         11
+                              Claude Sonnet-3.7      Claude Sonnet-4   Claude Sonnet-4.5   Qwen3-Coder 480B                                   Claude Sonnet-3.7       Claude Sonnet-4   Claude Sonnet-4.5   Qwen3-Coder 480B
+
+
+
+
+                                                                                                               Predicted Output Token Usage
+Predicted Input Token Usage
+
+                              Gemini-3-Pro Preview      Kimi-K2             GPT5               GPT5.2                                         Gemini-3-Pro Preview       Kimi-K2             GPT5               GPT5.2
+
+
+
+
+                                                     Real Input Token Usage                                                                                          Real Output Token Usage
+
+     Figure 11: Predicted vs. real token usage across models. The dashed diagonal indicates
+     perfect calibration. Agents systematically underestimate both input and output token usage.
+
+
+     situation, we define the prediction overhead as the ratio of prediction token cost to actual
+     task token cost and present the result in Figure 10b. For most models, self-prediction
+     is substantially cheaper than execution itself, typically costing less than half the original
+     task. But the relationship between overhead and accuracy is not monotonic. Sonnet 3.7
+     and Sonnet 4 spend more than 2× the task cost on prediction and yet do not achieve the
+     strongest correlations. Sonnet 4.5 delivers the highest correlation at just 0.32× the task cost,
+     and GPT-5.2 drops prediction overhead below 6% while still hitting moderate correlations.
+     Taken together, these numbers suggest that better prediction is possible with a reasonable
+     amount of compute, and there is substantial room to improve prediction accuracy without
+     proportional increases in overhead.
+
+     Models systematically underestimate the tokens they need. Correlation captures the
+     strength of the association between predicted and actual token usage but not its direction.
+     To examine whether models over- or underestimate, we compare the predicted and actual
+     token distributions in Figure 11. Models consistently underestimate the tokens they need:
+     most points fall below the diagonal for every model we tested. The bias is especially
+     pronounced for input tokens, whose predictions stay compressed even as real values grow
+     into the millions. Appendix D provide further evidence that this pattern persist when no
+     in-context example is presented.
+     Taken together, our results indicate that predicting token usage before execution is a gen-
+     uinely difficult task for current models. Correlations with actual usage are consistently
+     above chance but remain too modest to support precise, instance-level cost estimates. Self-
+     prediction also carries non-trivial latency and overhead of its own, especially for models
+     that explore extensively before committing to a number, which is hard to justify in real
+     interactive or time-sensitive settings. Our result suggest that while self-prediction could still
+     be useful as a coarse-grained signal of relative cost and task difficulty, making it reliable,
+     efficient, and cleanly integrated with execution remains an open problem.
+
+
+      7                          Discussion
+
+      In this paper, we presented the first systematic analysis of agent token consumption and
+      empirically tested whether models can predict their own token cost before execution. In this
+      section, we discuss the main limitations of our study and the implications of our findings
+      for the design and pricing of agent-based systems.
+
+     Limitations One of the key limitations of our study is the set of agentic models we
+     evaluate. We cover eight frontier models (Claude Sonnet 3.7, Sonnet 4, Sonnet 4.5, GPT-5,
+     GPT-5.2, Qwen3-Coder, Kimi-K2, and Gemini 3 Pro Preview), which is a broad sample by the
+     standards of existing work, but still only a slice of the agentic model landscape. Collecting
+     full execution trajectories is computational expensive, which constrained how many models
+     we could include. The qualitative patterns we observe hold consistently across the models
+     we tested, but validating them on a wider range of architectures and agent designs would
+
+
+                                                                                                              12
+further strengthen their generality. To support such extensions, we release our experimental
+pipeline so that future work can replicate and build on our analysis.
+
+User transparency Reliable token usage predictions before execution is very important
+for greater pricing transparency and user trust. Ideally, an agentic system would tell users
+the likely cost of a task before execution, letting them make informed decisions. Current
+language models are not yet good enough at point estimation to make this realistic for exact
+costs. Our results nonetheless suggest that agents themselves can potentially serve as useful
+predictors of their own cost, at least at the coarse-grained level of identifying high-cost
+tasks. Even without precise estimates, this kind of signal is enough for providers to issue
+early warnings, request explicit user approval, or offer alternative execution modes before
+committing to an expensive run.
+
+Agent pricing Pricing is one of the central challenges for providers of agentic systems.
+Subscription models work for products like ChatGPT because typical users consume a
+predictable, bounded number of tokens. Agentic tasks break this assumption: even simple
+problems can burn through large token budgets due to multi-step reasoning and tool use,
+which makes accurate cost prediction important for designing sustainable pricing strategies.
+Our findings show that token usage, especially input tokens, is highly variable and hard to
+predict because agent trajectories are inherently stochastic. Purely upfront pricing therefore
+remains difficult, and consumption-based pricing will likely stay the most practical option
+until pre-execution estimation becomes more reliable. Complementary mechanisms such
+as budget-aware tool-use policies (Liu et al., 2025) can help mitigate cost volatility by ...
+enforcing runtime token constraints. More broadly, designing pricing schemes that are both
+sustainable for providers and predictable for users remains an important open direction for
+future research.
+
+8   Conclusion
+
+With the rapid growth of token consumption in agentic settings, the ability to predict
+token usage before a task executes becomes central to building transparent and sustainable
+pricing models for AI agents. In this paper, we present the first systematic study of agent
+token consumption and empirically evaluate whether models can predict their own token
+usage before execution. Our results suggest that agentic tasks lead to complex token usage
+dynamics and that predicting potential token consumption before task execution remains a
+fundamentally challenging problem for frontier models. Our study provides new insights on
+agent behavior and could inspire new studies on building more controllable and transparent
+agent pricing schemes.
+
+
+
+
+                                             13
+References
+
+Pranjal Aggarwal, Seungone Kim, Jack Lanchantin, Sean Welleck, Jason Weston, Ilia Kulikov,
+  and Swarnadeep Saha. Optimalthinkingbench: Evaluating over and underthinking in
+  llms. arXiv preprint arXiv:2508.13141, 2025.
+
+Lingjiao Chen, Chi Zhang, Yeye He, Ion Stoica, Matei Zaharia, and James Zou. The price
+  reversal phenomenon: When cheaper reasoning models end up costing more. arXiv
+  preprint arXiv:2603.23971, 2026.
+
+Neil Chowdhury, James Aung, Chan Jun Shern, Oliver Jaffe, Dane Sherburn, Giulio Starace,
+ Evan Mays, Rachel Dias, Marwan Aljubeh, Mia Glaese, Carlos E. Jimenez, John Yang,
+ Leyton Ho, Tejal Patwardhan, Kevin Liu, and Aleksander Madry. Introducing SWE-bench
+ verified, 2024. URL https://openai.com/index/introducing-swe-bench-verified/.
+
+Crystalcare AI.       Code-feedback sharegpt.         https://huggingface.co/datasets/
+  Crystalcareai/Code-feedback-sharegpt-renamed, 2023. A large-scale dataset of coding-
+  related multi-turn chat conversations derived from ShareGPT, focusing on code feedback
+  and interactive code discussion.
+
+Zhiyu Fan, Kirill Vasilevski, Dayi Lin, Boyuan Chen, Yihao Chen, Zhiqing Zhong, Jie M
+  Zhang, Pinjia He, and Ahmed E Hassan. Swe-effi: Re-evaluating software ai agent system
+  effectiveness under resource constraints. arXiv preprint arXiv:2509.09853, 2025.
+
+Aryo Pradipta Gema, Alexander Hägele, Runjin Chen, Andy Arditi, Jacob Goldman-Wetzler,
+  Kit Fraser-Taliente, Henry Sleight, Linda Petrini, Julian Michael, Beatrice Alex, et al.
+  Inverse scaling in test-time compute. arXiv preprint arXiv:2507.14417, 2025.
+
+Alex Gu, Baptiste Roziere, Hugh James Leather, Armando Solar-Lezama, Gabriel Synnaeve,
+  and Sida Wang. CRUXEval: A benchmark for code reasoning, understanding and execu-
+  tion. In Ruslan Salakhutdinov, Zico Kolter, Katherine Heller, Adrian Weller, Nuria Oliver,
+  Jonathan Scarlett, and Felix Berkenkamp (eds.), Proceedings of the 41st International Confer-
+  ence on Machine Learning, volume 235 of Proceedings of Machine Learning Research, pp. 16568–
+  16621. PMLR, 21–27 Jul 2024. URL https://proceedings.mlr.press/v235/gu24c.html.
+
+Carlos E Jimenez, John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir Press, and
+  Karthik R Narasimhan. SWE-bench: Can language models resolve real-world github
+  issues? In The Twelfth International Conference on Learning Representations, 2024. URL
+  https://openreview.net/forum?id=VTF8yNQM66.
+
+Saurav Kadavath, Tom Conerly, Amanda Askell, Tom Henighan, Dawn Drain, Ethan Perez,
+  Nicholas Schiefer, Zac Hatfield-Dodds, Nova DasSarma, Eli Tran-Johnson, et al. Language
+  models (mostly) know what they know. arXiv preprint arXiv:2207.05221, 2022.
+
+Kinde.    Ai token pricing optimization: Dynamic cost management for llm-
+  powered saas, 2024.     URL https://kinde.com/learn/billing/billing-for-ai/
+  ai-token-pricing-optimization-dynamic-cost-management-for-llm-powered-saas.
+
+Tengxiao Liu, Zifeng Wang, Jin Miao, I Hsu, Jun Yan, Jiefeng Chen, Rujun Han, Fangyuan
+  Xu, Yanfei Chen, Ke Jiang, et al. Budget-aware tool-use enables effective agent scaling.
+  arXiv preprint arXiv:2511.17006, 2025.
+
+Tianyang Liu, Canwen Xu, and Julian McAuley. Repobench: Benchmarking repository-level
+  code auto-completion systems, 2023a. URL https://arxiv.org/abs/2306.03091.
+
+Xiao Liu, Hao Yu, Hanchen Zhang, Yifan Xu, Xuanyu Lei, Hanyu Lai, Yu Gu, Hangliang
+  Ding, Kaiwen Men, Kejuan Yang, Shudan Zhang, Xiang Deng, Aohan Zeng, Zhengxiao
+  Du, Chenhui Zhang, Sheng Shen, Tianjun Zhang, Yu Su, Huan Sun, Minlie Huang,
+  Yuxiao Dong, and Jie Tang. Agentbench: Evaluating llms as agents, 2023b. URL https:
+  //arxiv.org/abs/2308.03688.
+
+
+                                              14
+Aman Madaan, Niket Tandon, Prakhar Gupta, Skyler Hallinan, Luyu Gao, Sarah Wiegreffe,
+ Uri Alon, Nouha Dziri, Shrimai Prabhumoye, Yiming Yang, et al. Self-refine: Iterative
+ refinement with self-feedback. Advances in neural information processing systems, 36:46534–
+ 46594, 2023.
+OpenAI. Introducing codex, 2025. URL https://openai.com/blog/introducing-codex.
+Mohamad Salim, Jasmine Latendresse, SayedHassan Khatoonabadi, and Emad Shihab.
+ Tokenomics: Quantifying where tokens are used in agentic software engineering. arXiv
+ preprint arXiv:2601.14470, 2026.
+Charlie Snell, Jaehoon Lee, Kelvin Xu, and Aviral Kumar. Scaling llm test-time compute
+ optimally can be more effective than scaling model parameters, 2024. URL https://
+ arxiv.org/abs/2408.03314.
+Guanzhi Wang, Yuqi Xie, Yunfan Jiang, Ajay Mandlekar, Chaowei Xiao, Yuke Zhu, Linxi
+ Fan, and Anima Anandkumar. Voyager: An open-ended embodied agent with large
+ language models. arXiv preprint arXiv:2305.16291, 2023.
+Ningning Wang, Xavier Hu, Pai Liu, He Zhu, Yue Hou, Heyuan Huang, Shengyu Zhang,
+ Jian Yang, Jiaheng Liu, Ge Zhang, et al. Efficient agents: Building effective agents while
+  reducing cost. arXiv preprint arXiv:2508.02694, 2025a.
+Qian Wang, Zhenheng Tang, Zichen Jiang, Nuo Chen, Tianyu Wang, and Bingsheng He.
+  Agenttaxo: Dissecting and benchmarking token distribution of llm multi-agent systems.
+  In ICLR 2025 Workshop on Foundation Models in the Wild, 2025b.
+Xingyao Wang, Yangyi Chen, Lifan Yuan, Yizhe Zhang, Yunzhu Li, Hao Peng, and Heng Ji.
+  Executable code actions elicit better llm agents. In Forty-first International Conference on
+  Machine Learning, 2024.
+Xingyao Wang, Boxuan Li, Yufan Song, Frank F. Xu, Xiangru Tang, Mingchen Zhuge,
+  Jiayi Pan, Yueqi Song, Bowen Li, Jaskirat Singh, Hoang H. Tran, Fuqiang Li, Ren Ma,
+  Mingzhang Zheng, Bill Qian, Yanjun Shao, Niklas Muennighoff, Yizhe Zhang, Binyuan
+  Hui, Junyang Lin, Robert Brennan, Hao Peng, Heng Ji, and Graham Neubig. Openhands:
+  An open platform for AI software developers as generalist agents. In The Thirteenth
+  International Conference on Learning Representations, 2025c. URL https://openreview.net/
+  forum?id=OJd3ayDDoF.
+Yangzhen Wu, Zhiqing Sun, Shanda Li, Sean Welleck, and Yiming Yang. Inference scaling
+  laws: An empirical analysis of compute-optimal inference for problem-solving with
+  language models, 2025. URL https://arxiv.org/abs/2408.00724.
+Wenkai Yang, Shuming Ma, Yankai Lin, and Furu Wei. Towards thinking-optimal scaling of
+ test-time compute for LLM reasoning. In The Thirty-ninth Annual Conference on Neural In-
+ formation Processing Systems, 2025. URL https://openreview.net/forum?id=6ICFqmixlS.
+Zhiyuan Zeng, Qinyuan Cheng, Zhangyue Yin, Yunhua Zhou, and Xipeng Qiu. Revisiting
+  the test-time scaling of o1-like models: Do they truly possess test-time scaling capabilities?
+  In Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics
+ (Volume 1: Long Papers), pp. 4651–4665, 2025.
+
+
+
+
+                                              15
+    A                                 Output Token Analyses
+
+   This appendix presents complementary analyses using output tokens in place of input tokens.
+   Across all settings, the output-token results closely mirror the trends reported in the main
+   text: accuracy decreases as output-token cost increases, and higher-cost runs are associated
+   with a sharp rise in repeated file view and modify actions. These findings reinforce the
+   conclusion that excessive computation is primarily driven by redundant agent behavior
+   rather than productive progress, and that the inverse accuracy–cost relationship is not
+   specific to input tokens.
+
+
+                                      (a) Problems costing more tokens                                                                    (b) Accuracy peaks at intermediate cost
+                                          have overall lower accuracy                                                              0.08
+                                                               GPT-5           GPT-5.2                                                                 **
+                                1.0                            Qwen3-Coder
+                                                               Sonnet-4.5
+                                                                               Gemini-3-Pro
+                                                                               Kimi-K2                                                                               *            *
+                                                                                                                                   0.06
+
+
+
+
+                                                                                                    Accuracy coefficient
+                                                               Sonnet-4        Overall trend
+                                0.8                            Sonnet-3.7
+Group accuracy
+
+
+
+
+                                0.6                                                                                                0.04
+
+                                0.4                                                                                                0.02
+                                0.2
+                                                                                                                                   0.00
+                                0.0        1      2        3       4       5      6                                                   Min Cost      Lower Cost    Upper Cost   Max Cost
+                                               Mean total output tokens per group        1e4                                                               Cost level
+   (a) Higher output-token usage is associated with                                                     (b) Accuracy improves at intermediate cost lev-
+   lower task accuracy.                                                                                 els but declines at higher costs.
+                                    (c) Higher-cost runs have more                                                                       (d) Higher-cost runs have more
+                                        repeated file modification                                                                           repeated file viewing
+                                                                                      ***                                          2.0                                           ***
+                                4
+repeated Modify Coefficient c
+
+
+
+
+                                                                                                     repeated View Coefficient d
+
+
+
+
+                                3                                                                                                  1.5                                  **
+                                                                     **
+                                2                                                                                                  1.0
+
+                                1                                                                                                  0.5
+
+                                0                                                                                                  0.0
+                                Min Cost        Lower Cost      Upper Cost      Max Cost                                             Min Cost      Lower Cost    Upper Cost    Max Cost
+                                                        Cost level                                                                                        Cost level
+   (c) Repeated file modification actions increase                                                      (d) Repeated file viewing actions increase with
+   with task cost.                                                                                      task cost.
+
+    Figure 12: Output-token analyses. Top: Group-level accuracy vs. mean output tokens
+    by model, with mixed-effects trends controlling for model identity.Bottom: Mixed-effects
+    coefficients (vs. MinCost) for repeated modify and view actions across cost levels.Higher
+    costs reduce accuracy and sharply increase redundant file operations.
+
+
+
+    B                                 Cost Calculation Details
+
+    B.1                               Explicit Caching Models (Claude Models)
+
+
+
+                                                                 Inputnon-cached = Inputtotal − CacheRead.                                                                             (1)
+
+
+                                                                                               16
+                           Costround = (Inputnon-cached × rin )
+                                         + (Output × rout )
+                                         + (CacheCreation × rcache create )
+                                         + (CacheRead × rcache read ).                          (2)
+
+where rin is the base input rate, rout is the output rate, rcache create is the cache creation rate
+(5-minute writes in our setting), and rcache read is the cache read rate.
+
+B.2    Implicit Cache (GPT5 and alike)
+
+For GPT-5 models, we use OpenAI’s implicit caching mechanism. The API reports cached
+input tokens automatically, without explicit cache creation. At the time of our experiments,
+the official pricing is: Input: $1.250 / 1M tokens, Cached input: $0.125 / 1M tokens, and Output:
+$10.000 / 1M tokens.3
+The non-cached prompt is
+                          Inputnon-cached = Inputtotal − CacheReadimplicit .                    (3)
+
+The total cost is
+                             Costround = (Inputnon-cached × rin )
+                                          + (CacheReadimplicit × 0.2 rin )
+                                          + (Output × rout ).                                   (4)
+
+C     Prompt for Self-Prediction by the Same Agent
+
+C.1    System Prompt
+
+ System Role You are an OpenHands agent, a helpful AI assistant that can interact with
+ a computer to estimate token costs for software engineering tasks.
+ Role Definition Your primary role in this configuration is token estimation for SWE-
+ bench–style software engineering tasks. You should thoroughly understand the task and
+ repository using normal tools (e.g., bash, IPython, browsing, file viewing) as needed for
+ analysis. However, instead of implementing a fix, you must output a final token cost
+ estimate for completing the task with this agent. If the user asks a question (e.g., “why is
+ X happening”), answer directly.
+ Token Estimation Objective Your goal is to predict how many LLM tokens will be
+ consumed in total if this agent were to complete the task end-to-end. You must provide:
+      • predicted input tokens: Estimated total tokens sent to the LLM
+        • predicted output tokens: Estimated total tokens generated by the LLM
+        • predicted total tokens: Sum of input and output tokens
+        • confidence: A number in [0, 1]
+        • breakdown by phase: A JSON object breaking down input/output tokens
+          across phases (e.g., repo cloning, initial reading, test setup, debugging, cod-
+          ing iterations, verification, review cleanup)
+
+ Critical Constraint: Token Estimation Only            IMPORTANT:
+
+        • You are a token estimation agent, not a problem-solving agent.
+        • Your only goal is to estimate token costs, not to fix bugs or implement features.
+
+    3 See   the official pricing documentation: https://openai.com/index/introducing-gpt-5/
+
+
+                                                  17
+     • You must call the finish tool with a JSON estimate.
+     • Never output actual code changes.
+     • If you find yourself writing code to fix the problem, stop and call finish.
+
+Examples of what you should do:
+
+     • Explore the codebase to understand the problem.
+     • Run tests to observe current failures.
+     • Analyze code complexity and required changes.
+     • Estimate token usage for the complete solution.
+     • Call finish with a JSON estimate.
+
+Examples of what you must not do:
+
+     • Write actual code fixes.
+     • Modify source files.
+     • Create test files.
+     • Commit changes.
+     • Call finish with code patches.
+
+Efficiency Guidelines
+
+     • Each action you take is somewhat expensive.
+     • Wherever possible, combine multiple actions into a single command.
+     • Use efficient tools such as find, grep, and git with appropriate filters to minimize
+       unnecessary operations.
+
+File System Guidelines
+
+     • Do not assume user-provided paths are relative to the current working directory.
+     • Use efficient tools (e.g., grep, find, cat) to inspect files.
+     • You may read files for analysis, but must not modify source files.
+     • Delete any temporary files created strictly for exploration or testing.
+
+Estimation Workflow
+
+     1. Exploration: Explore relevant files and understand the task context.
+     2. Analysis: Consider multiple solution approaches and estimate token costs for
+        each phase.
+     3. Testing (for estimation purposes):
+         • You may run existing tests to understand failures and complexity.
+         • Do not create new tests or modify existing tests.
+         • If tests cannot be run, estimate based on code analysis.
+     4. Estimation:
+         • Synthesize findings into a token usage plan.
+         • Base estimates on repository size, test runs, iterations, and tool usage.
+         • Consider all phases: repo cloning, initial reading, test setup, debugging,
+           coding iterations, verification, and review cleanup.
+         • Delete any temporary exploration files.
+     5. Output: Produce the estimate as a JSON object and call finish.
+
+
+                                              18
+Security
+
+      • Only use GITHUB TOKEN or other credentials when explicitly requested and ex-
+        pected.
+      • Use APIs for GitHub or other platforms unless browsing is required.
+
+Environment Setup
+
+      • If an application is missing, install it and rerun the command.
+      • If dependencies are missing:
+           1. Look for dependency files (e.g., requirements.txt, pyproject.toml,
+              package.json).
+           2. Install dependencies using those files if present.
+           3. Install individual packages only if no dependency files exist.
+
+Troubleshooting
+
+      • If issues arise during exploration or testing:
+           1. Document the issue in your reasoning.
+           2. Factor added complexity into token estimates.
+           3. Continue estimation with available information.
+
+Token Estimation Output Format
+
+{
+    "predicted_input_tokens": <integer>,
+    "predicted_output_tokens": <integer>,
+    "predicted_total_tokens": <integer>,
+    "confidence": <float between 0 and 1>,
+    "breakdown_by_phase": {
+      "repo_cloning": { ... },
+      "initial_reading": { ... },
+      "test_setup": { ... },
+      "debugging": { ... },
+      "coding_iterations": { ... },
+      "verification": { ... },
+      "review_cleanup": { ... }
+    }
+}
+
+
+
+
+                                            19
+C.2   In-context Example and User Instruction
+
+Running Example (Token Cost Estimation for a Software Engineering Task)
+
+START OF EXAMPLE
+      USER: I’ve uploaded a python code repository in the directory
+      example repo. You are a TOKEN ESTIMATION agent. Estimate the
+      token cost to fix the following issue description:
+         <issue description>
+         Fix a bug where the version comparison function fails for development
+         versions (e.g., "1.2.3.dev0") when used across multiple modules in a
+         large codebase with complex dependencies.
+         </issue description>
+         ASSISTANT: I’ll explore the codebase to understand the problem and
+         estimate token costs.
+         <function=execute bash>
+         <parameter=command>
+         cd example repo && find . -name "*.py" -type f | head -50
+         </parameter>
+         </function>
+         USER: EXECUTION RESULT of [execute bash]:
+         ./src/core/version.py
+         ./src/core/utils.py
+         ./src/api/endpoints.py
+         ./src/api/middleware.py
+         ./src/processing/transformers.py
+         ./src/processing/validators.py
+         ./src/integration/external_api.py
+         ./src/integration/adapters.py
+         ./tests/unit/test_version.py
+         ./tests/unit/test_integration.py
+         ./tests/integration/test_api.py
+         ./tests/functional/test_workflows.py
+         ... (45 more files)
+         ASSISTANT: This is a larger codebase. Let me explore the structure and
+         find where version comparison is used:
+        <function=execute bash>
+        <parameter=command>
+        cd example repo && grep -r          "compare versions\|LooseVersion"
+        --include="*.py" | head -30
+        </parameter>
+        </function>
+         USER: EXECUTION RESULT of [execute bash]:
+         ./src/core/version.py:from distutils.version import LooseVersion
+         ./src/core/version.py:def compare_versions(v1, v2):
+         ./src/api/endpoints.py:from src.core.version import compare_versions
+         ./src/processing/transformers.py:from src.core.version import
+          ,→ compare_versions
+         ./src/integration/external_api.py:from src.core.version import
+          ,→ compare_versions
+         ./src/integration/adapters.py:from src.core.version import
+          ,→ compare_versions
+         ... (12 more usages)
+
+
+                                          20
+ASSISTANT: The version comparison function is used in many places.
+Let me read the main version module and understand the dependencies:
+<function=execute bash>
+<parameter=command>
+cat example repo/src/core/version.py
+</parameter>
+</function>
+USER: EXECUTION RESULT of [execute bash]:
+from distutils.version import LooseVersion
+
+def compare_versions(v1, v2):
+    return LooseVersion(v1) >= LooseVersion(v2)
+ASSISTANT: Now let me check how it’s used in the integration modules
+to understand the impact:
+<function=execute bash>
+<parameter=command>
+cat example repo/src/integration/external api.py | head -100
+</parameter>
+</function>
+USER: EXECUTION RESULT of [execute bash]:
+import requests
+from src.core.version import compare_versions
+# ... (large file with 500+ lines using compare_versions in multiple
+ ,→ places)
+ASSISTANT: Let me check the test files to understand the expected
+behavior and test coverage:
+<function=execute bash>
+<parameter=command>
+cat example repo/tests/unit/test version.py
+</parameter>
+</function>
+USER: EXECUTION RESULT of [execute bash]:
+import pytest
+from src.core.version import compare_versions
+
+def test_compare_versions():
+    assert compare_versions("1.2.3", "1.2.2") == True
+    assert compare_versions("1.2.3.dev0", "1.2.2") == True          # This
+     ,→ currently fails
+
+def test_compare_versions_edge_cases():
+    # ... (multiple edge case tests)
+ASSISTANT: Let me run the existing tests to see the current failures:
+<function=execute bash>
+<parameter=command>
+cd example repo && python -m pytest tests/unit/test version.py -v
+</parameter>
+</function>
+USER: EXECUTION RESULT of [execute bash]:
+
+
+
+                                  21
+FAILED tests/unit/test_version.py::test_compare_versions - ValueError:
+ ,→ invalid version number '1.2.3.dev0'
+FAILED tests/unit/test_version.py::test_compare_versions_edge_cases -
+ ,→ ValueError: invalid version number '1.2.3.dev0'
+ASSISTANT: Let me also check integration tests that might be affected:
+<function=execute bash>
+<parameter=command>
+cd example repo && python -m pytest tests/integration/ -v
+--tb=short 2>&1 | head -50
+</parameter>
+</function>
+USER: EXECUTION RESULT of [execute bash]:
+FAILED tests/integration/test_api.py::test_version_checking -
+ ,→ ValueError: invalid version number '1.2.3.dev0'
+FAILED tests/integration/test_api.py::test_external_api_integration -
+ ,→ ValueError: invalid version number '1.2.3.dev0'
+... (8 more failures)
+ASSISTANT: Based on my exploration, I can now estimate the token
+costs. This is a complex issue that requires:
+ 1. Understanding the problem across a large codebase with 50+ files
+ 2. Reading and analyzing multiple files that use the version comparison
+    function
+ 3. Finding an alternative solution that maintains backward compatibil-
+    ity
+ 4. Updating all affected modules and ensuring no regressions
+ 5. Running comprehensive test suites (unit, integration, functional)
+ 6. Multiple debugging iterations to handle edge cases
+ 7. Verifying the fix works across all integration points
+
+<function=finish>
+<parameter=message>
+
+
+
+
+                                  22
+       {"predicted_input_tokens": 1250000, "predicted_output_tokens": 18500,
+        ,→ "predicted_total_tokens": 1268500, "confidence": 0.82,
+        ,→ "breakdown_by_phase": {"repo_cloning": {"input_tokens": 5000,
+        ,→ "output_tokens": 800, "total_tokens": 5800, "description":
+        ,→ "Exploring large codebase structure, finding all Python files,
+        ,→ understanding directory layout"}, "initial_reading":
+        ,→ {"input_tokens": 450000, "output_tokens": 3500, "total_tokens":
+        ,→ 453500, "description": "Reading issue description, searching for
+        ,→ version comparison usage across codebase, reading version.py (˜2000
+        ,→ tokens), reading 8+ files that import it (˜15000 tokens each),
+        ,→ reading test files (˜8000 tokens), understanding dependencies and
+        ,→ integration points"}, "test_setup": {"input_tokens": 120000,
+        ,→ "output_tokens": 2500, "total_tokens": 122500, "description":
+        ,→ "Running unit tests, integration tests, functional tests, analyzing
+        ,→ failure patterns, understanding test coverage requirements"},
+        ,→ "debugging": {"input_tokens": 280000, "output_tokens": 4200,
+        ,→ "total_tokens": 284200, "description": "Analyzing solution options
+        ,→ (packaging.version vs custom parser), checking library
+        ,→ availability, understanding backward compatibility requirements,
+        ,→ evaluating impact on all integration points"}, "coding_iterations":
+        ,→ {"input_tokens": 320000, "output_tokens": 4800, "total_tokens":
+        ,→ 324800, "description": "Implementing fix in version.py, updating
+        ,→ all affected modules, handling edge cases, multiple test-run-fix
+        ,→ cycles, ensuring no regressions in existing functionality"},
+        ,→ "verification": {"input_tokens": 65000, "output_tokens": 2200,
+        ,→ "total_tokens": 67200, "description": "Running full test suite
+        ,→ (unit + integration + functional), verifying edge cases, checking
+        ,→ integration points, validating backward compatibility"},
+        ,→ "review_cleanup": {"input_tokens": 5000, "output_tokens": 500,
+        ,→ "total_tokens": 5500, "description": "Final code review,
+        ,→ documentation updates, ensuring code quality standards"}}}
+       </parameter>
+       </function>
+
+END OF EXAMPLE
+
+
+
+New Task Description Do not assume the environment is the same as in the example
+above.
+
+Uploaded files:
+
+/workspace/{{ workspace_dir_name }}
+
+I’ve uploaded a python code repository in the directory {{ workspace dir name }}. You
+are a TOKEN ESTIMATION agent. Estimate the token cost to fix the following issue
+description:
+
+<issue description>
+{{ instance.problem statement }}
+</issue description>
+
+Important Constraints
+
+     • You are a TOKEN ESTIMATION agent, NOT a problem-solving agent.
+     • Your ONLY goal is to estimate token costs, NOT to fix bugs or implement features.
+
+
+
+                                          23
+     • You MUST call the finish tool with a JSON estimate, NEVER with actual code
+       changes.
+
+Granularity Rules
+     • Unit: token (integer).
+     • Avoid coarse rounding (e.g., 100s/1000s). Use a step size of 1.
+
+Phases for Estimation Your task is to estimate how many LLM tokens would be con-
+sumed to solve this problem if a coding agent were to complete it end-to-end.
+
+Phase 1. Exploration: Explore the codebase to understand the problem
+     1.   Read the problem description and understand what needs to be fixed
+     2.   Explore relevant files and directories to understand the codebase structure
+     3.   Search for key functions, classes, or variables related to the issue
+     4.   Identify the root cause and complexity of the problem
+Phase 2. Analysis: Analyze the complexity and required changes
+     1.   Assess the scope of changes needed (number of files, lines of code)
+     2.   Consider the debugging iterations likely needed
+     3.   Evaluate the testing complexity and iterations
+     4.   Estimate the number of tool calls and reasoning steps
+Phase 3. Token Estimation: Calculate token usage for the complete solution
+     1. Estimate input tokens for:
+          • Repository exploration and file reading
+          • Code analysis and debugging
+          • Implementation iterations
+          • Testing and verification
+     2. Estimate output tokens for:
+          • Reasoning and analysis responses
+          • Code generation and explanations
+          • Debugging responses
+          • Test results interpretation
+     3. Calculate total tokens and confidence level
+Phase 4. Finish: Provide final token estimate
+     1. Call the finish tool with a JSON object containing:
+         • predicted input tokens
+         • predicted output tokens
+         • predicted total tokens
+         • confidence (0–1)
+         • breakdown by phase
+
+Reminder Remember: You are estimating COSTS, not implementing SOLUTIONS. Do
+not write actual code fixes or modify any files. Your final deliverable is a JSON token
+estimate, not a working solution.
+
+
+END OF NEW TASK DESCRIPTION
+
+
+                                             24
+Output Constraint (Format) Please follow the format strictly. Please emit one and only
+one function call per message.
+
+
+
+
+                                         25
+D    Self-Prediction Without In-Context Example
+
+To examine whether the observed underestimation is induced by the in-context demon-
+stration used in our main setup, we conducted additional runs without providing any
+example.
+In practice, most models failed to consistently follow the instruction to perform token
+estimation without such demonstration; therefore, we report results for Sonnet 4.5 and
+GPT-5.2, which remained instruction-compliant. As shown in Figure 13, underestimation
+persists, and becomes more severe, particularly for input tokens.
+Table 3 further shows that correlation with real token usage degrades substantially without
+the in-context example. These results indicate that the downward bias is not caused by
+example-induced anchoring; instead, the demonstration improves calibration, while the
+underlying difficulty of anticipating long-horizon token growth remains.
+
+
+
+
+                      (a)                                              (b)
+
+Figure 13: Self-prediction behavior without in-context demonstration (Sonnet 4.5 and
+GPT-5.2). The dashed diagonal indicates perfect calibration. Underestimation remains
+pronounced.
+
+
+ Model        Token         Corr w/ GT   Corr (AbsErr, task cost)   Corr (Pred cost, task cost)
+ Sonnet-4.5   Input           0.1355                 0.1155                   0.1185
+ Sonnet-4.5   Output          0.1229                -0.4563                   0.1185
+ GPT-5.2      Input           0.1796                0.2243                    0.2461
+ GPT-5.2      Output          0.2130                0.0822                    0.2461
+
+Table 3: Self-prediction performance without in-context example. Correlation metrics
+degrade compared to the main setup with demonstration.
+
+
+
+
+                                               26
+

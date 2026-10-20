@@ -1,0 +1,64 @@
+{
+  "model": "gemma-4-31B-it",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "Unconstrained",
+      "success_rate": 0.24,
+      "cps": 0.0012180555555555556,
+      "mean_tokens": 9667.833333333334,
+      "cost": 0.0877
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "Static Quota",
+      "success_rate": 0.22333333333333333,
+      "cps": 0.0009850746268656716,
+      "mean_tokens": 7316.18,
+      "cost": 0.066
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "Improved+Compact",
+      "success_rate": 0.25,
+      "cps": 0.0007906666666666666,
+      "mean_tokens": 7312.18,
+      "cost": 0.0593
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "Unconstrained",
+      "sr_mean": 0.24,
+      "sr_std": 0.0,
+      "cps_mean": 0.0012180555555555556,
+      "tokens_mean": 9667.833333333334
+    },
+    {
+      "budget": 24000,
+      "name": "Static Quota",
+      "sr_mean": 0.22333333333333333,
+      "sr_std": 0.0,
+      "cps_mean": 0.0009850746268656716,
+      "tokens_mean": 7316.18
+    },
+    {
+      "budget": 24000,
+      "name": "Improved+Compact",
+      "sr_mean": 0.25,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007906666666666666,
+      "tokens_mean": 7312.18
+    }
+  ]
+}

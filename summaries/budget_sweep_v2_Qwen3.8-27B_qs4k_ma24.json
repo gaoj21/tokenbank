@@ -1,0 +1,30 @@
+{
+  "model": "qwen3.8-27b-fp8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Single-Fmt-4k",
+      "success_rate": 0.7675,
+      "cps": 2.6384364820846903e-05,
+      "mean_tokens": 1163.78,
+      "cost": 0.0081
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5-Single-Fmt-4k",
+      "sr_mean": 0.7675,
+      "sr_std": 0.0,
+      "cps_mean": 2.6384364820846903e-05,
+      "tokens_mean": 1163.78
+    }
+  ]
+}

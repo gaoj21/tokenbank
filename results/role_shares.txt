@@ -1,0 +1,12 @@
+  GLM      MATH     planner  30.4%  executor  46.5%  reviewer  23.2%   (roles sum 100% of total_used)
+  GLM      GAIA     planner  15.1%  executor  56.4%  reviewer  28.6%   (roles sum 100% of total_used)
+  GLM      FRAMES   planner  20.4%  executor  48.0%  reviewer  31.6%   (roles sum 100% of total_used)
+  GLM      MuSiQue  planner  20.6%  executor  46.5%  reviewer  32.9%   (roles sum 100% of total_used)
+  GLM      pooled   planner  21.0%  executor  47.6%  reviewer  31.4%   (roles sum 100% of total_used)
+  DeepSeek MATH     planner  37.5%  executor  45.3%  reviewer  17.1%   (roles sum 100% of total_used)
+  DeepSeek GAIA     planner  17.9%  executor  51.2%  reviewer  30.9%   (roles sum 100% of total_used)
+  DeepSeek FRAMES   planner  28.8%  executor  42.5%  reviewer  28.7%   (roles sum 100% of total_used)
+  DeepSeek MuSiQue  planner  31.6%  executor  40.7%  reviewer  27.7%   (roles sum 100% of total_used)
+  DeepSeek pooled   planner  30.3%  executor  42.2%  reviewer  27.5%   (roles sum 100% of total_used)
+  GLM       items=3616 files=['bcb16k', 'fr16', 'ga16', 'ma16', 'mu16']
+  DeepSeek  items=3116 files=['fr16', 'ga16', 'ma16', 'mu16']

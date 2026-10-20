@@ -1,0 +1,81 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "RC-Adaptive",
+      "success_rate": 0.5975,
+      "cps": 0.00018075313807531382,
+      "mean_tokens": 3331.3525,
+      "cost": 0.0432
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "RC-CapOnly",
+      "success_rate": 0.615,
+      "cps": 0.000183739837398374,
+      "mean_tokens": 3493.9425,
+      "cost": 0.045200000000000004
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "SS-Static",
+      "success_rate": 0.6075,
+      "cps": 0.00018353909465020576,
+      "mean_tokens": 3501.08,
+      "cost": 0.0446
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "SS-Static-Keep",
+      "success_rate": 0.58,
+      "cps": 0.00018879310344827586,
+      "mean_tokens": 3323.2675,
+      "cost": 0.0438
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "RC-Adaptive",
+      "sr_mean": 0.5975,
+      "sr_std": 0.0,
+      "cps_mean": 0.00018075313807531382,
+      "tokens_mean": 3331.3525
+    },
+    {
+      "budget": 24000,
+      "name": "RC-CapOnly",
+      "sr_mean": 0.615,
+      "sr_std": 0.0,
+      "cps_mean": 0.000183739837398374,
+      "tokens_mean": 3493.9425
+    },
+    {
+      "budget": 24000,
+      "name": "SS-Static",
+      "sr_mean": 0.6075,
+      "sr_std": 0.0,
+      "cps_mean": 0.00018353909465020576,
+      "tokens_mean": 3501.08
+    },
+    {
+      "budget": 24000,
+      "name": "SS-Static-Keep",
+      "sr_mean": 0.58,
+      "sr_std": 0.0,
+      "cps_mean": 0.00018879310344827586,
+      "tokens_mean": 3323.2675
+    }
+  ]
+}

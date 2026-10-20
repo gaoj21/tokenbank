@@ -1,0 +1,76 @@
+[
+  {
+    "seed": 42,
+    "budget": 2000,
+    "name": "TB-v2-FlatCredit",
+    "success_rate": 0.0,
+    "cps": 0.0,
+    "mean_borrows": 0.0,
+    "borrowed_tokens": 0,
+    "credit_efficiency": 0.0,
+    "credit_scores": {}
+  },
+  {
+    "seed": 42,
+    "budget": 2000,
+    "name": "TB-v2-ScoredCredit",
+    "success_rate": 0.0,
+    "cps": 0.0,
+    "mean_borrows": 0.0,
+    "borrowed_tokens": 0,
+    "credit_efficiency": 0.0,
+    "credit_scores": {}
+  },
+  {
+    "seed": 42,
+    "budget": 4000,
+    "name": "TB-v2-FlatCredit",
+    "success_rate": 0.05,
+    "cps": 0.037919999999999995,
+    "mean_borrows": 0.89,
+    "borrowed_tokens": 16002,
+    "credit_efficiency": 0.31246094238220223,
+    "credit_scores": {}
+  },
+  {
+    "seed": 42,
+    "budget": 4000,
+    "name": "TB-v2-ScoredCredit",
+    "success_rate": 0.04,
+    "cps": 0.047,
+    "mean_borrows": 0.74,
+    "borrowed_tokens": 9947,
+    "credit_efficiency": 0.4021312958681009,
+    "credit_scores": {
+      "Planner": 0.077,
+      "Executor": 0.039,
+      "Reviewer": 0.125
+    }
+  },
+  {
+    "seed": 42,
+    "budget": 8000,
+    "name": "TB-v2-FlatCredit",
+    "success_rate": 0.15,
+    "cps": 0.026233333333333334,
+    "mean_borrows": 1.3,
+    "borrowed_tokens": 72302,
+    "credit_efficiency": 0.2074631407153329,
+    "credit_scores": {}
+  },
+  {
+    "seed": 42,
+    "budget": 8000,
+    "name": "TB-v2-ScoredCredit",
+    "success_rate": 0.13,
+    "cps": 0.027376923076923076,
+    "mean_borrows": 0.73,
+    "borrowed_tokens": 35178,
+    "credit_efficiency": 0.36954915003695493,
+    "credit_scores": {
+      "Executor": 0.086,
+      "Reviewer": 0.118,
+      "Planner": 0.333
+    }
+  }
+]

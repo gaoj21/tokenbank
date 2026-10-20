@@ -1,0 +1,46 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 64000,
+      "name": "Unconstrained",
+      "success_rate": 0.2236842105263158,
+      "cps": 0.0124,
+      "mean_tokens": 11050.296052631578,
+      "cost": 0.4216
+    },
+    {
+      "seed": 42,
+      "budget": 64000,
+      "name": "Full+Stall",
+      "success_rate": 0.24342105263157895,
+      "cps": 0.011529729729729729,
+      "mean_tokens": 12303.776315789473,
+      "cost": 0.4266,
+      "mean_borrows": 0.0,
+      "recovery_rate": 0.006578947368421052
+    }
+  ],
+  "agg": [
+    {
+      "budget": 64000,
+      "name": "Unconstrained",
+      "sr_mean": 0.2236842105263158,
+      "sr_std": 0.0,
+      "cps_mean": 0.0124,
+      "tokens_mean": 11050.296052631578
+    },
+    {
+      "budget": 64000,
+      "name": "Full+Stall",
+      "sr_mean": 0.24342105263157895,
+      "sr_std": 0.0,
+      "cps_mean": 0.011529729729729729,
+      "tokens_mean": 12303.776315789473
+    }
+  ]
+}

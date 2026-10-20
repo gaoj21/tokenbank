@@ -1,0 +1,24 @@
+Metadata-Version: 2.4
+Name: token-bank
+Version: 2.0.0
+Summary: Adaptive runtime token-budget governance middleware for multi-agent LLM systems
+Requires-Python: >=3.9
+Description-Content-Type: text/plain
+Requires-Dist: numpy
+Requires-Dist: scipy
+Provides-Extra: forecast
+Requires-Dist: statsmodels; extra == "forecast"
+Provides-Extra: tokenizer
+Requires-Dist: tiktoken; extra == "tokenizer"
+Provides-Extra: service
+Requires-Dist: fastapi; extra == "service"
+Requires-Dist: uvicorn; extra == "service"
+Requires-Dist: httpx; extra == "service"
+Provides-Extra: all
+Requires-Dist: statsmodels; extra == "all"
+Requires-Dist: tiktoken; extra == "all"
+Requires-Dist: fastapi; extra == "all"
+Requires-Dist: uvicorn; extra == "all"
+Requires-Dist: httpx; extra == "all"
+
+Token Bank V2: predictive rebalancing, inter-agent credit market, online priority learning, KV-cache tracking.

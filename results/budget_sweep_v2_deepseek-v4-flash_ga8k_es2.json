@@ -1,0 +1,30 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    8000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "EarlyStop-2",
+      "success_rate": 0.13815789473684212,
+      "cps": 0.008571428571428572,
+      "mean_tokens": 4548.065789473684,
+      "cost": 0.18
+    }
+  ],
+  "agg": [
+    {
+      "budget": 8000,
+      "name": "EarlyStop-2",
+      "sr_mean": 0.13815789473684212,
+      "sr_std": 0.0,
+      "cps_mean": 0.008571428571428572,
+      "tokens_mean": 4548.065789473684
+    }
+  ]
+}

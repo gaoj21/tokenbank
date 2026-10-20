@@ -1,0 +1,24 @@
+29: reset. Trained in this environment, an R1-Distill 1.5B model reasons in 8K-token chunks yet thinks up to 24K tokens,
+101:can think up to 24K tokens, matching and surpassing LongCoT-RL on math benchmarks with the same 24K thinking
+331:per-chunk budget C (e.g., 8K tokens). The policy’s effective context is therefore independent of the total reasoning
+546:Figure 6: We vary C while holding the total thinking budget at ≈ 24K tokens, so smaller C implies a smaller Markovian
+642:environments. Our primary baseline is LongCoT-RL with a 24K token budget. We also include LongCoT-RL with
+668:Delethink and LongCoT-RL 24K both have the same 24K-token thinking budget and start at the same pre-training
+712:dashed curves extend the thinking budget to 256K and 128K tokens for Delethink 96K and Delethink 24K, respectively.
+719:fewer compute resources. The extended budget size is critical. With only 8K tokens, LongCoT-RL 8K underperforms
+803:Below 32K tokens, Delethink can be slower since non-attention blocks dominate, but beyond that point, the quadratic
+813:size m to half the context size, and adjust iterations so the maximum thinking length remains 24K tokens. We refer to
+828:with a 128K token budget. Moreover, the model’s average thinking lengths reach 36K (AIME’24) and 42K (AIME’25)
+932:surpasses its LongCoT performance by significant margin. In contrast, LongCoT quickly plateaus at 32K tokens, which
+1067:have played a role. As most LLM pretraining uses short contexts (e.g., 8K tokens), models may think sharper in shorter
+1071:results forward in spelled-out thoughts. Note that 8K tokens is near 20 textbook pages. Finally, RL on Delethink might
+1624:22 max_new = C if it == 0 else (C - m)
+1629:27 max_new_tokens=max_new,
+1659: closely matched training conditions. The main baseline is LongCoT-RL with a 24K-token budget, alongside an
+1660: additional 8K-token configuration to highlight the effects of scaling reasoning tokens. Accuracy is reported as Pass@1,
+1678:Prompt / response length (tokens) 2,048 / 8,192 2,048 / 24,576
+1715:under a 24K-token budget with the base model (Figure 9). We cap iterations at I = 5, with a Markovian state size
+1942:times as many iterations as C = 8k to reach 128k tokens. We set the carried state to m = C/2 in every configuration so
+2033:to fewer than 8k tokens creates the illusion, for the 24k baseline, that it still has capacity left to continue. However,
+2043:for each query we first sample with temperature 0.6, top-p = 0.95, n = 1 under a 32k token budget. If the model
+2153:that problem, measured under sequential Delethink tracing with a budget that can extend up to 128k tokens.

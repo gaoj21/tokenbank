@@ -1,0 +1,30 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Single-Fmt-4k",
+      "success_rate": 0.58,
+      "cps": 1.6810344827586207e-05,
+      "mean_tokens": 668.505,
+      "cost": 0.0039000000000000003
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5-Single-Fmt-4k",
+      "sr_mean": 0.58,
+      "sr_std": 0.0,
+      "cps_mean": 1.6810344827586207e-05,
+      "tokens_mean": 668.505
+    }
+  ]
+}

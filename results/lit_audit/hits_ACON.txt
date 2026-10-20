@@ -1,0 +1,5 @@
+83: Learning, Seoul, South Korea. PMLR 306, 2026. Copyright 2026 ken truncation or generic summarization are insufficient, as
+280:early or truncate the context heuristically to a maximum
+1116:Peak tokens. Peak tokens are measured as the maximum number of tokens observed in any single sequence throughout
+1622: Premature Completion, Token Truncation, Inefficient Looping, Redundant API
+1998:- Truncate long token/credential strings to "<token>" unless verbatim reuse is

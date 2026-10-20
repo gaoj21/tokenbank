@@ -1,0 +1,3 @@
+108:As a rapidly evolving paradigm, LLM-based multi-agent input lengths fall within 128∼256 tokens (Li et al. 2025a),
+637: max tokens integer Maximum tokens an agent can gen-
+693:(max tokens) an agent can generate in a single turn was

@@ -1,0 +1,30 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.2-ReasonLadder-AllEsc",
+      "success_rate": 0.17631851085832473,
+      "cps": 0.0018281524926686216,
+      "mean_tokens": 10784.658221303,
+      "cost": 0.6234
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5.2-ReasonLadder-AllEsc",
+      "sr_mean": 0.17631851085832473,
+      "sr_std": 0.0,
+      "cps_mean": 0.0018281524926686216,
+      "tokens_mean": 10784.658221303
+    }
+  ]
+}

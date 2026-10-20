@@ -1,0 +1,340 @@
+{
+  "model": "mistralai/Mistral-Small-4-119B-2603-NVFP4",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 2000,
+      "name": "Unconstrained",
+      "success_rate": 0.25984251968503935,
+      "cps": 0.0007696969696969697,
+      "mean_tokens": 6663.905511811024,
+      "cost": 0.0254
+    },
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "Unconstrained",
+      "success_rate": 0.25984251968503935,
+      "cps": 0.0007696969696969697,
+      "mean_tokens": 6663.905511811024,
+      "cost": 0.0254
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "Unconstrained",
+      "success_rate": 0.25984251968503935,
+      "cps": 0.0007696969696969697,
+      "mean_tokens": 6663.905511811024,
+      "cost": 0.0254
+    },
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "Unconstrained",
+      "success_rate": 0.25984251968503935,
+      "cps": 0.0007696969696969697,
+      "mean_tokens": 6663.905511811024,
+      "cost": 0.0254
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Unconstrained",
+      "success_rate": 0.25984251968503935,
+      "cps": 0.0007696969696969697,
+      "mean_tokens": 6663.905511811024,
+      "cost": 0.0254
+    },
+    {
+      "seed": 42,
+      "budget": 64000,
+      "name": "Unconstrained",
+      "success_rate": 0.25984251968503935,
+      "cps": 0.0007696969696969697,
+      "mean_tokens": 6663.905511811024,
+      "cost": 0.0254
+    },
+    {
+      "seed": 42,
+      "budget": 2000,
+      "name": "Static Quota",
+      "success_rate": 0.0,
+      "cps": 0.0,
+      "mean_tokens": 0.0,
+      "cost": 0,
+      "mean_borrows": 0.0,
+      "recovery_rate": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 2000,
+      "name": "TB-v2-Full",
+      "success_rate": 0.0,
+      "cps": 0.0,
+      "mean_tokens": 557.7637795275591,
+      "cost": 0.0,
+      "mean_borrows": 0.8267716535433071,
+      "recovery_rate": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "Static Quota",
+      "success_rate": 0.0,
+      "cps": 0.0,
+      "mean_tokens": 583.4094488188977,
+      "cost": 0.0,
+      "mean_borrows": 0.0,
+      "recovery_rate": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "TB-v2-Full",
+      "success_rate": 0.05511811023622047,
+      "cps": 0.0009857142857142857,
+      "mean_tokens": 1941.236220472441,
+      "cost": 0.006900000000000001,
+      "mean_borrows": 2.0393700787401574,
+      "recovery_rate": 0.05511811023622047
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "Static Quota",
+      "success_rate": 0.05511811023622047,
+      "cps": 0.0014142857142857145,
+      "mean_tokens": 2099.3937007874015,
+      "cost": 0.0099,
+      "mean_borrows": 0.0,
+      "recovery_rate": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "TB-v2-Full",
+      "success_rate": 0.1889763779527559,
+      "cps": 0.0005291666666666667,
+      "mean_tokens": 4074.212598425197,
+      "cost": 0.012700000000000001,
+      "mean_borrows": 1.8818897637795275,
+      "recovery_rate": 0.16535433070866143
+    },
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "Static Quota",
+      "success_rate": 0.2204724409448819,
+      "cps": 0.0005,
+      "mean_tokens": 3809.0,
+      "cost": 0.014,
+      "mean_borrows": 0.0,
+      "recovery_rate": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "TB-v2-Full",
+      "success_rate": 0.31496062992125984,
+      "cps": 0.000465,
+      "mean_tokens": 6080.094488188976,
+      "cost": 0.018600000000000002,
+      "mean_borrows": 0.6692913385826772,
+      "recovery_rate": 0.2204724409448819
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Static Quota",
+      "success_rate": 0.2204724409448819,
+      "cps": 0.0006892857142857143,
+      "mean_tokens": 5137.503937007874,
+      "cost": 0.0193,
+      "mean_borrows": 0.0,
+      "recovery_rate": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "TB-v2-Full",
+      "success_rate": 0.33070866141732286,
+      "cps": 0.0005333333333333334,
+      "mean_tokens": 8362.740157480315,
+      "cost": 0.0224,
+      "mean_borrows": 0.3228346456692913,
+      "recovery_rate": 0.11023622047244094
+    },
+    {
+      "seed": 42,
+      "budget": 64000,
+      "name": "Static Quota",
+      "success_rate": 0.33858267716535434,
+      "cps": 0.0005302325581395349,
+      "mean_tokens": 6093.535433070866,
+      "cost": 0.0228,
+      "mean_borrows": 0.0,
+      "recovery_rate": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 64000,
+      "name": "TB-v2-Full",
+      "success_rate": 0.29133858267716534,
+      "cps": 0.0006837837837837837,
+      "mean_tokens": 9438.692913385827,
+      "cost": 0.0253,
+      "mean_borrows": 0.047244094488188976,
+      "recovery_rate": 0.07086614173228346
+    }
+  ],
+  "agg": [
+    {
+      "budget": 2000,
+      "name": "Unconstrained",
+      "sr_mean": 0.25984251968503935,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007696969696969697,
+      "tokens_mean": 6663.905511811024
+    },
+    {
+      "budget": 2000,
+      "name": "Static Quota",
+      "sr_mean": 0.0,
+      "sr_std": 0.0,
+      "cps_mean": 0.0,
+      "tokens_mean": 0.0
+    },
+    {
+      "budget": 2000,
+      "name": "TB-v2-Full",
+      "sr_mean": 0.0,
+      "sr_std": 0.0,
+      "cps_mean": 0.0,
+      "tokens_mean": 557.7637795275591
+    },
+    {
+      "budget": 4000,
+      "name": "Unconstrained",
+      "sr_mean": 0.25984251968503935,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007696969696969697,
+      "tokens_mean": 6663.905511811024
+    },
+    {
+      "budget": 4000,
+      "name": "Static Quota",
+      "sr_mean": 0.0,
+      "sr_std": 0.0,
+      "cps_mean": 0.0,
+      "tokens_mean": 583.4094488188977
+    },
+    {
+      "budget": 4000,
+      "name": "TB-v2-Full",
+      "sr_mean": 0.05511811023622047,
+      "sr_std": 0.0,
+      "cps_mean": 0.0009857142857142857,
+      "tokens_mean": 1941.236220472441
+    },
+    {
+      "budget": 8000,
+      "name": "Unconstrained",
+      "sr_mean": 0.25984251968503935,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007696969696969697,
+      "tokens_mean": 6663.905511811024
+    },
+    {
+      "budget": 8000,
+      "name": "Static Quota",
+      "sr_mean": 0.05511811023622047,
+      "sr_std": 0.0,
+      "cps_mean": 0.0014142857142857145,
+      "tokens_mean": 2099.3937007874015
+    },
+    {
+      "budget": 8000,
+      "name": "TB-v2-Full",
+      "sr_mean": 0.1889763779527559,
+      "sr_std": 0.0,
+      "cps_mean": 0.0005291666666666667,
+      "tokens_mean": 4074.212598425197
+    },
+    {
+      "budget": 16000,
+      "name": "Unconstrained",
+      "sr_mean": 0.25984251968503935,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007696969696969697,
+      "tokens_mean": 6663.905511811024
+    },
+    {
+      "budget": 16000,
+      "name": "Static Quota",
+      "sr_mean": 0.2204724409448819,
+      "sr_std": 0.0,
+      "cps_mean": 0.0005,
+      "tokens_mean": 3809.0
+    },
+    {
+      "budget": 16000,
+      "name": "TB-v2-Full",
+      "sr_mean": 0.31496062992125984,
+      "sr_std": 0.0,
+      "cps_mean": 0.000465,
+      "tokens_mean": 6080.094488188976
+    },
+    {
+      "budget": 32000,
+      "name": "Unconstrained",
+      "sr_mean": 0.25984251968503935,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007696969696969697,
+      "tokens_mean": 6663.905511811024
+    },
+    {
+      "budget": 32000,
+      "name": "Static Quota",
+      "sr_mean": 0.2204724409448819,
+      "sr_std": 0.0,
+      "cps_mean": 0.0006892857142857143,
+      "tokens_mean": 5137.503937007874
+    },
+    {
+      "budget": 32000,
+      "name": "TB-v2-Full",
+      "sr_mean": 0.33070866141732286,
+      "sr_std": 0.0,
+      "cps_mean": 0.0005333333333333334,
+      "tokens_mean": 8362.740157480315
+    },
+    {
+      "budget": 64000,
+      "name": "Unconstrained",
+      "sr_mean": 0.25984251968503935,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007696969696969697,
+      "tokens_mean": 6663.905511811024
+    },
+    {
+      "budget": 64000,
+      "name": "Static Quota",
+      "sr_mean": 0.33858267716535434,
+      "sr_std": 0.0,
+      "cps_mean": 0.0005302325581395349,
+      "tokens_mean": 6093.535433070866
+    },
+    {
+      "budget": 64000,
+      "name": "TB-v2-Full",
+      "sr_mean": 0.29133858267716534,
+      "sr_std": 0.0,
+      "cps_mean": 0.0006837837837837837,
+      "tokens_mean": 9438.692913385827
+    }
+  ]
+}

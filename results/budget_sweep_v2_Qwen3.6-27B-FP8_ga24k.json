@@ -1,0 +1,115 @@
+{
+  "model": "Qwen/Qwen3.6-27B-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "Static Quota",
+      "success_rate": 0.13157894736842105,
+      "cps": 0.0016049999999999999,
+      "mean_tokens": 7125.9078947368425,
+      "cost": 0.0321
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "TB-v2-Full",
+      "success_rate": 0.3026315789473684,
+      "cps": 0.0011543478260869564,
+      "mean_tokens": 16141.717105263158,
+      "cost": 0.0531
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "Full+Stall",
+      "success_rate": 0.3092105263157895,
+      "cps": 0.0010319148936170214,
+      "mean_tokens": 14501.46052631579,
+      "cost": 0.0485
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "Improved",
+      "success_rate": 0.35526315789473684,
+      "cps": 0.0008944444444444445,
+      "mean_tokens": 14412.71052631579,
+      "cost": 0.0483
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "Compact",
+      "success_rate": 0.35526315789473684,
+      "cps": 0.0008462962962962963,
+      "mean_tokens": 13176.032894736842,
+      "cost": 0.0457
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "Improved+Compact",
+      "success_rate": 0.3815789473684211,
+      "cps": 0.0008051724137931035,
+      "mean_tokens": 13420.763157894737,
+      "cost": 0.0467
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "Static Quota",
+      "sr_mean": 0.13157894736842105,
+      "sr_std": 0.0,
+      "cps_mean": 0.0016049999999999999,
+      "tokens_mean": 7125.9078947368425
+    },
+    {
+      "budget": 24000,
+      "name": "TB-v2-Full",
+      "sr_mean": 0.3026315789473684,
+      "sr_std": 0.0,
+      "cps_mean": 0.0011543478260869564,
+      "tokens_mean": 16141.717105263158
+    },
+    {
+      "budget": 24000,
+      "name": "Full+Stall",
+      "sr_mean": 0.3092105263157895,
+      "sr_std": 0.0,
+      "cps_mean": 0.0010319148936170214,
+      "tokens_mean": 14501.46052631579
+    },
+    {
+      "budget": 24000,
+      "name": "Improved",
+      "sr_mean": 0.35526315789473684,
+      "sr_std": 0.0,
+      "cps_mean": 0.0008944444444444445,
+      "tokens_mean": 14412.71052631579
+    },
+    {
+      "budget": 24000,
+      "name": "Compact",
+      "sr_mean": 0.35526315789473684,
+      "sr_std": 0.0,
+      "cps_mean": 0.0008462962962962963,
+      "tokens_mean": 13176.032894736842
+    },
+    {
+      "budget": 24000,
+      "name": "Improved+Compact",
+      "sr_mean": 0.3815789473684211,
+      "sr_std": 0.0,
+      "cps_mean": 0.0008051724137931035,
+      "tokens_mean": 13420.763157894737
+    }
+  ]
+}

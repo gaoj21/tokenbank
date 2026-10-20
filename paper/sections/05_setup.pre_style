@@ -1,0 +1,32 @@
+\section{Experiments}
+\label{sec:results}
+
+\subsection{Setup}
+\label{sec:setup}
+
+\paragraph{Models and benchmarks.} gpt-oss-20b and gpt-oss-120b \citep{openai2025gptoss} and
+Gemma-4-26B-A4B-it \citep{google2026gemma4}, a mixture-of-experts model. $L_0$ uses each model's cheapest
+reasoning setting (low effort for gpt-oss, thinking off for Gemma) with greedy decoding; $L_1$ and the
+pipeline use the default setting (medium effort, thinking on) at temperature 1.0. We evaluate on MATH-500
+\citep{hendrycks2021math,lightman2024verify}, FRAMES \citep{krishna2025frames}, answerable MuSiQue
+\citep{trivedi2022musique} and BIG-Bench Extra Hard (BBEH; \citealp{kazemi2025bbeh}): test splits of 400,
+660 and 1{,}934 tasks for the first three, whose other 20\% served to build the pipeline, and 874 BBEH
+problems (38 from each of its 23 subtasks), which played no part in it. FRAMES and MuSiQue are open-book: every call receives
+the question's documents (median 17k and 2.4k tokens), so every rung pays for them. MATH is scored by
+symbolic equivalence, BBEH by its official fuzzy match, and FRAMES and MuSiQue by an LLM judge
+(gpt-oss-120b). Cost is prompt plus completion tokens, including hidden reasoning and tool calls, over all
+calls a task makes. Serving, documents, scoring and generation caps are detailed in
+Appendix~\ref{app:details}.
+
+\paragraph{Records and replay.} For every task we record the reference pipeline and \climb{}'s ladder
+forced through every cheap rung, which gives the outcome, cost and confidence of $L_0$ and $L_1$.
+Replaying these records evaluates any policy on any subset of tasks; an escalating task receives the
+reference's outcome and pays its cost on top of the rungs already run.
+
+\paragraph{Protocol and baselines.} Losses are measured against the reference, and tolerances are
+absolute: $\eps = 10\%$ allows a loss of 10 accuracy points. We draw 200 random calibration/evaluation
+splits (50/50; 100 splits of 20/40/40 for policies that need training data) and report means; the \emph{violation
+rate} is the share of splits in which the selected policy's loss on the full pool exceeds $\eps$. We
+compare with uncertified rules (always stopping at $L_0$ or at $L_1$, and a single confidence threshold,
+fixed across settings, that spends as much as \climb{}), an oracle that stops at the cheapest correct rung, and richer escalation
+policies certified as \climb{} is (Appendix~\ref{sec:variants}).

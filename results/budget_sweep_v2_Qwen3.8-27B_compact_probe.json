@@ -1,0 +1,30 @@
+{
+  "model": "Qwen/Qwen3.8-27B",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Compact-Real",
+      "success_rate": 0.6666666666666666,
+      "cps": 0.0002,
+      "mean_tokens": 4773.666666666667,
+      "cost": 0.0008
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5-Compact-Real",
+      "sr_mean": 0.6666666666666666,
+      "sr_std": 0.0,
+      "cps_mean": 0.0002,
+      "tokens_mean": 4773.666666666667
+    }
+  ]
+}

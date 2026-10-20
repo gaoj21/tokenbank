@@ -1,0 +1,6 @@
+GLM FRAMES 0.01 {'tok': 99.8, 'acc': 62.6, 'viol': 1.0}
+GLM FRAMES 0.02 {'tok': 99.2, 'acc': 62.4, 'viol': 4.0}
+GLM FRAMES 0.03 {'tok': 98.7, 'acc': 62.1, 'viol': 0.0}
+GLM FRAMES 0.05 {'tok': 84.5, 'acc': 60.1, 'viol': 4.0}
+GLM FRAMES 0.075 {'tok': 65.5, 'acc': 58.9, 'viol': 2.0}
+GLM FRAMES 0.1 {'tok': 41.8, 'acc': 57.0, 'viol': 0.0}

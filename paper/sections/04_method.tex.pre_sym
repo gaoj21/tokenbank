@@ -1,0 +1,131 @@
+\section{Method}
+\label{sec:method}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/figure_ladder.pdf}
+\caption{The ladder. Calibration picks one depth: stop at the direct answer $L_0$ when it is confident, or
+run both cheap rungs and stop at the single agent $L_1$, agreeing tasks first, each group by $L_1$'s confidence. Every other task runs the full pipeline from scratch.}
+\label{fig:ladder}
+\end{figure}
+
+\climb{} solves the constrained problem~(\ref{eq:constrained}) in two steps. A structural step
+(\S\ref{sec:structure}) shows that, under one condition on the gain, the optimal rule is a threshold on the
+score; a statistical step (\S\ref{sec:calib}) selects the threshold by testing candidates in order, with a guarantee that needs no such condition. \S\ref{sec:ladder} instantiates the ladder (Figure~\ref{fig:ladder}) and the score.
+
+\subsection{When a threshold is optimal}
+\label{sec:structure}
+
+We first take the one-decision setting of \S\ref{sec:problem}. The condition is that escalation
+buys less the more confident the cheap answer is.
+
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+  \item[(M)] \emph{Monotone gain}: $g(s)$ is non-increasing in $s$, and so is $g(s)/c(s)$, the
+  accuracy bought per token of escalation.
+\end{itemize}
+
+\begin{proposition}[Threshold optimality]
+\label{prop:threshold}
+With one decision and under (M), for every $\eps > 0$ the constrained problem~(\ref{eq:constrained}) has an optimal
+policy that is either $\varnothing$ or stops when $S > t$ and escalates when $S < t$, for some
+threshold $t$. If $S$ has a continuous distribution, this policy is deterministic.
+\end{proposition}
+
+The constrained problem is a fractional knapsack whose items are score values, weighted by the risk
+$g(s)$ of stopping there and valued by the cost $c(s)$ it saves; under (M) filling it greedily means
+stopping above a threshold (Appendix~\ref{app:proofs}): a task is answered cheaply when the accuracy at
+stake is worth less than the tokens escalation would spend. Each policy family \climb{} certifies (\S\ref{sec:calib}) makes exactly
+one decision, after $L_0$ or after both cheap rungs, so the proposition applies to each family separately;
+we test (M) for $S_0$ (Appendix~\ref{app:monotone}).
+
+\subsection{Risk-controlled calibration}
+\label{sec:calib}
+
+The optimal threshold depends on the unknown $g$ and $c$. Rather than estimating them, we select it
+with a distribution-free procedure. Following Learn-then-Test \citep{angelopoulos2021ltt}, each
+candidate threshold becomes a null hypothesis that its risk exceeds the tolerance, and a threshold
+is deployable only if the calibration data reject that hypothesis.
+
+\paragraph{Candidates.} $\Lambda = (\varnothing, t_1, \dots, t_M)$ with $t_1 > \dots > t_M$, fixed
+before any calibration label is seen and ending at $t_M = -\infty$, which never escalates. Lower thresholds stop more tasks, so the sequence runs from conservative to aggressive and
+from expensive to cheap. The action $\varnothing$ has zero risk, so it is always admissible.
+
+\paragraph{Testing the loss itself.} The per-task loss of threshold $t$,
+$\ell = Y_{\mathrm{ref}} - Y_{\pi_t} \in \{-1, 0, 1\}$, is signed: stopping can lose an
+answer the pipeline gets right, or keep one the pipeline would get wrong.
+We test its mean directly with a betting test \citep{waudbysmith2024betting}. Under
+$\mathcal{H}_m$, that the loss of $t_m$ has mean above $\eps$, the wealth of a gambler who bets that the mean loss is below $\eps$,
+\begin{equation}
+  W_j = \prod_{i \le j} \big(1 + \lambda_i (\eps - \ell_i)\big), \qquad 0 \le \lambda_i < \tfrac{1}{1 - \eps},
+\end{equation}
+is a nonnegative supermartingale whenever each $\lambda_i$ depends only on earlier tasks, so by
+Ville's inequality \citep{ville1939} $p_m = 1 / \max_j W_j$ is a valid p-value. We set $\lambda_i$
+from the running variance of the earlier losses, which makes the test adapt to how often stopping
+changes the answer at all.
+
+\paragraph{Sequential testing.} On $n$ calibration tasks, each with every cheap rung's and the
+reference's outcomes recorded, we test $\mathcal{H}_1, \mathcal{H}_2, \dots$ in order and stop at the
+first $m$ with $p_m$ above the level of the test ($\delta/2$ per family below). The admissible set $\mathcal{C}$ contains $\varnothing$ and every
+rejected threshold, and \climb{} deploys its cheapest member (Algorithm~\ref{alg:climb} in
+Appendix~\ref{app:impl}).
+
+\paragraph{Choosing the depth.} Whether the second rung pays for itself depends on the model and the
+task, so \climb{} lets the calibration data choose the depth. It runs the test above on two
+one-decision families, a threshold on $L_0$'s score ($D = 0$) and, after both cheap rungs, a threshold on
+$S_1$, which combines the two rungs' agreement with $L_1$'s confidence ($D = 1$), each at level $\delta/2$
+with admissible sets $\mathcal{C}_0$ and $\mathcal{C}_1$, and deploys the cheaper of the two certified policies. By a union bound both
+certificates hold at once with probability at least $1 - \delta$, so the choice costs nothing in
+validity.
+
+\begin{proposition}[Risk control]
+\label{prop:risk}
+If calibration and deployment tasks, together with the model's outputs on them, are i.i.d., then
+with probability at least $1 - \delta$ every policy in $\mathcal{C}_0 \cup \mathcal{C}_1$, including the deployed one,
+has $R \le \eps$. The deployed policy's mean calibration cost is at most the pipeline's.
+\end{proposition}
+
+Testing in a fixed order needs no correction for the $M$ candidates, because a true null can be rejected
+only if the first true null in the sequence is, which happens with probability at most the level; on the event that none is, every certified
+policy is safe, so deploying the cheapest costs nothing (Appendix~\ref{app:proofs}).
+
+\begin{proposition}[Efficiency]
+\label{prop:efficiency}
+Let $r(t) = R(\pi_t)$ and $J(t)$ be the risk and expected cost of the threshold $t$. With one decision and under (M):
+(i) the thresholds with $r(t) \le \eps$ form a prefix $t_1, \dots, t_{m_\eps}$ of the sequence;
+(ii) $J$ does not increase along the sequence, so $t_{m_\eps}$ is the cheapest safe threshold;
+(iii) for every $\eta > 0$, the threshold \climb{} deploys has expected cost at most
+$J(t_{m_{\eps-\eta}}) + o_P(1)$ as $n \to \infty$.
+\end{proposition}
+
+Part (i) is what makes testing in order lose nothing: stopping at the first failure discards no safe
+threshold. With Proposition~\ref{prop:threshold}, (iii) says that \climb{}'s cost approaches,
+up to the grid's resolution, that of the best one-decision policy on the same score as calibration data grow (Appendix~\ref{app:proofs}).
+
+\paragraph{What the guarantee covers.} Proposition~\ref{prop:risk} needs neither (M) nor a calibrated score:
+a weak or even misleading signal tends to cost savings rather than accuracy beyond the tolerance. It bounds the loss
+relative to the pipeline, not to the best achievable system, and its i.i.d.\ assumption covers the
+model's outputs as well as the tasks. We set $\delta = 0.1$; the threshold grid is given in Appendix~\ref{app:impl}.
+
+\subsection{Instantiation}
+\label{sec:ladder}
+
+\paragraph{The ladder.} Two cheap rungs use the same model as the pipeline. $L_0$ answers directly at
+the model's cheapest reasoning setting (low effort, or thinking off where the model has no graded
+setting). $L_1$ is a single agent at the pipeline's own reasoning setting: it answers the question from
+scratch, without $L_0$'s answer, as the pipeline's executor would without a plan or a review.
+Every rung's call ends with a line \texttt{ANSWER: <answer>} and may run Python (Appendix~\ref{app:details}).
+
+\paragraph{The pipeline.} An escalated task runs the reference from scratch: a planner writes a
+step-by-step plan, the executor answers given the plan, and a reviewer judges the answer, ending with
+a line \texttt{VERDICT: YES} or \texttt{NO}; a rejection prompts a revision, for at most five rounds. Its context is rebuilt each round from the question,
+plan and only the latest answer and review. Tasks have no per-task token budget, so the harms we measure
+are unlikely to be artefacts of a per-task budget.
+
+\paragraph{The score.} $S_0$ is the mean token log-probability of the call that produced $L_0$'s answer,
+available at no extra cost. After both rungs, the score adds whether they agree:
+$S_1 = 10 \cdot \mathbf{1}[a_0 = a_1] + \bar s_1$, where $a_k$ is rung $k$'s normalised answer and $\bar s_1$
+the mean log-probability of $L_1$'s final call. Since $L_1$ answers without seeing $L_0$'s answer, agreement
+between them is evidence that costs nothing beyond the two rungs. As $-10 < \bar s_1 \le 0$ on all our records, every task on which the two rungs
+agree ranks above every task on which they do not, and the threshold sequence first stops agreeing tasks
+in order of $L_1$'s confidence.

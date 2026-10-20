@@ -1,0 +1,47 @@
+{
+  "model": "google/gemma-4-31b-it",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    8000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "V5-Accum-Only",
+      "success_rate": 0.07394002068252327,
+      "cps": 0.0007909090909090909,
+      "mean_tokens": 2363.2456049638054,
+      "cost": 0.1131
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "V5-Compact-Real",
+      "success_rate": 0.07807652533609101,
+      "cps": 0.0007298013245033113,
+      "mean_tokens": 2516.1049638055842,
+      "cost": 0.1102
+    }
+  ],
+  "agg": [
+    {
+      "budget": 8000,
+      "name": "V5-Accum-Only",
+      "sr_mean": 0.07394002068252327,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007909090909090909,
+      "tokens_mean": 2363.2456049638054
+    },
+    {
+      "budget": 8000,
+      "name": "V5-Compact-Real",
+      "sr_mean": 0.07807652533609101,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007298013245033113,
+      "tokens_mean": 2516.1049638055842
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "model": "Qwen/Qwen3.6-27B-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Unc-Fmt",
+      "success_rate": 0.19672131147540983,
+      "cps": 0.0020375,
+      "mean_tokens": 13263.737704918032,
+      "cost": 0.0489
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5-Unc-Fmt",
+      "sr_mean": 0.19672131147540983,
+      "sr_std": 0.0,
+      "cps_mean": 0.0020375,
+      "tokens_mean": 13263.737704918032
+    }
+  ]
+}

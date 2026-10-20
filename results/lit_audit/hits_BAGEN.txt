@@ -1,0 +1,10 @@
+186:truncated and counted as a failure. Internal-budget estimation tests whether the model can
+208:The output captures three properties simultaneously: uncertainty (interval width); progressiveness
+1067:and truncate dialogue history at 2,500 context tokens.
+1208:date queried, endpoint or region, reasoning configuration, max output tokens, temperature,
+1312:two-stage floor ($50K per-step penalty whenever cash < 0, hard truncation at cash < −$200K)
+1333:The episode terminates at t = T (default 11) and is force-truncated if cash drops below −$200K.
+1448:maximum response length 1024, entropy coefficient 0, and no KL term inside the reward. The
+1451:response cap.
+1639: Display Name YAML Key Provider Model ID Reasoning Max Tokens Temp.
+1654: provider, exact model ID, reasoning configuration, maximum output length, and temperature.

@@ -1,0 +1,6 @@
+283: 1 Seed-OSS-36B-Instruct with OpenHands and a response length of 65,536.
+342:long-context ReAct agent with same 327K max length, but also achieves performance comparable to agents
+358:This growth is most pronounced on harder instances. For example, on the hard subset, response length rises
+848: ,→ content (may be truncated based on token limits).",
+931:document, which is truncated to the first 4096 tokens. When the agent calls finish, the answer field is used
+972:* If a `command` generates a long output, it will be truncated and marked with `<response clipped>`

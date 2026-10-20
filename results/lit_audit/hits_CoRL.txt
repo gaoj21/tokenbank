@@ -1,0 +1,8 @@
+805:tokens, with a maximum response length of 500 Important: - You are under a low budget - never
+807:and a maximum length of 500 tokens for retrieved ing your own reasoning capabilities - Focus on ac-
+874: plexity - Areas where you’re uncertain about the ous token limits to ensure comprehensive responses
+888: appropriate token limits for cost control
+945: </call> straints. - Impose token limits appropriate to the
+957: straints. - Impose token limits appropriate to the external LLMs - Leverage the superior capabilities
+1017:straints. - Impose token limits appropriate to the
+1032:strict token limits. - Never directly compute the

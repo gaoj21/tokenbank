@@ -1,0 +1,22 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Test ($\eps{=}5\%$) & 20b & 120b & Gemma & Best \\
+\midrule
+HB, signed in $[0,1]$ & 100 & 100 & 100 & 0/12 \\
+Betting, clipped & 82 & 75 & 80 & 0/12 \\
+Binomial, clipped & 79 & 73 & 77 & 3/12 \\
+Betting, signed, Bonferroni & 92 & 90 & 97 & 0/12 \\
+\midrule
+Betting, signed (ours) & \textbf{59} & \textbf{56} & \textbf{71} & \textbf{9/12} \\
+\bottomrule
+\end{tabular}
+\caption{Tokens (\% of the pipeline's, mean over the four benchmarks) certified at $\eps = 5\%$ by tests of
+the same deployed family, and the number of settings where each is cheapest (ties count). HB: Hoeffding--Bentkus
+on the signed loss mapped to $[0, 1]$, as in \citet{wynn2026corrupted}. Clipped: the harm indicator
+$\max(\ell, 0)$. Per-setting values, with Hoeffding and clipped HB, in Table~\ref{tab:calibfull}. Bold: best.}
+\label{tab:calib}
+\end{table}

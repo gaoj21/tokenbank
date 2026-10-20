@@ -1,0 +1,1 @@
+823: Concise thoughts: Impact of output length on LLM reasoning and cost. CoRR, abs/2407.19825, 2024.

@@ -1,0 +1,47 @@
+{
+  "model": "Qwen/Qwen3.6-27B-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    32000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Static Quota",
+      "success_rate": 0.2829954489035995,
+      "cps": 0.0006361111111111111,
+      "mean_tokens": 6139.3231278444355,
+      "cost": 0.4351
+    },
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "Improved+Compact",
+      "success_rate": 0.4402151427389326,
+      "cps": 0.00042744360902255635,
+      "mean_tokens": 8980.19362846504,
+      "cost": 0.4548
+    }
+  ],
+  "agg": [
+    {
+      "budget": 32000,
+      "name": "Static Quota",
+      "sr_mean": 0.2829954489035995,
+      "sr_std": 0.0,
+      "cps_mean": 0.0006361111111111111,
+      "tokens_mean": 6139.3231278444355
+    },
+    {
+      "budget": 32000,
+      "name": "Improved+Compact",
+      "sr_mean": 0.4402151427389326,
+      "sr_std": 0.0,
+      "cps_mean": 0.00042744360902255635,
+      "tokens_mean": 8980.19362846504
+    }
+  ]
+}

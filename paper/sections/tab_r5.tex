@@ -1,0 +1,26 @@
+\begin{table}[!t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+Setting & $n_{\text{cal}}$ & $T_{\text{cal}}$ & $\Delta_{5\%}$ & Payback & $\Delta_{10\%}$ & Payback \\
+\midrule
+20b MATH & 200 & 1.7M & 2{,}326 & 729 & 4{,}078 & 416 \\
+20b FRAMES & 330 & 46.6M & 31{,}579 & 1{,}474 & 62{,}914 & 740 \\
+20b MuSiQue & 967 & 20.5M & 8{,}460 & 2{,}424 & 10{,}402 & 1{,}972 \\
+20b BBEH & 437 & 31.4M & 22{,}362 & 1{,}402 & 46{,}714 & 671 \\
+120b MATH & 200 & 1.5M & 3{,}218 & 464 & 4{,}462 & 335 \\
+120b FRAMES & 330 & 44.3M & 31{,}584 & 1{,}404 & 57{,}694 & 768 \\
+120b MuSiQue & 967 & 17.6M & 6{,}682 & 2{,}629 & 8{,}858 & 1{,}983 \\
+120b BBEH & 437 & 28.4M & 13{,}251 & 2{,}140 & 32{,}000 & 886 \\
+Gemma MATH & 200 & 4.1M & 7{,}113 & 571 & 8{,}231 & 493 \\
+Gemma FRAMES & 330 & 79.2M & 24{,}272 & 3{,}264 & 66{,}523 & 1{,}191 \\
+Gemma MuSiQue & 967 & 68.5M & 15{,}630 & 4{,}381 & 33{,}643 & 2{,}035 \\
+Gemma BBEH & 437 & 68.0M & 5{,}114 & 13{,}297 & 45{,}338 & 1{,}500 \\
+\bottomrule
+\end{tabular}
+\caption{Calibration cost and payback. $T_{\text{cal}}$: tokens to record a calibration set ($n_{\text{cal}}$ tasks, each run through both cheap rungs and the reference). $\Delta$: mean tokens saved per deployed query at the given tolerance. Payback: $T_{\text{cal}} / \Delta$ queries (judge calls excluded).}
+\label{tab:r5}
+\end{table}

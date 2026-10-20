@@ -1,0 +1,25 @@
+\begin{table*}[h]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llccccccrr@{}}
+\toprule
+Model & Bench. & $L_0$ & $L_1$ (cum.) & $L_2$ seeded (cum.) & Pipeline & AUROC $L_0$ & AUROC $L_1$ & Rescue & Harm \\
+\midrule
+\multirow{4}{*}{GLM} & MATH & 89.0 / 0.5k & 89.2 / 1.2k & 96.2 / 6.1k & 96.5 / 5.1k & 0.77 & 0.78 & 9.0 & 1.5 \\
+ & GAIA & 25.4 / 0.9k & 26.2 / 2.0k & 28.7 / 14.8k & 27.0 / 15.6k & 0.70 & 0.68 & 7.4 & 5.7 \\
+ & FRAMES & 53.6 / 0.4k & 55.3 / 1.0k & 61.8 / 7.4k & 62.6 / 6.8k & 0.63 & 0.56 & 12.7 & 3.8 \\
+ & MuSiQue & 33.4 / 0.4k & 34.4 / 0.8k & 38.2 / 6.8k & 38.3 / 7.1k & 0.68 & 0.53 & 9.7 & 4.8 \\
+\midrule
+\multirow{4}{*}{DeepSeek} & MATH & 91.5 / 1.0k & 94.8 / 2.1k & 98.5 / 5.5k & 97.8 / 3.5k & 0.61 & 0.61 & 7.2 & 1.0 \\
+ & GAIA & 29.5 / 1.4k & 30.3 / 3.4k & 31.1 / 14.5k & 32.8 / 13.6k & 0.71 & 0.66 & 8.2 & 4.9 \\
+ & FRAMES & 54.7 / 0.7k & 58.2 / 1.8k & 65.2 / 8.3k & 65.3 / 6.4k & 0.63 & 0.56 & 15.6 & 5.0 \\
+ & MuSiQue & 30.7 / 0.5k & 32.0 / 1.6k & 40.2 / 8.1k & 41.5 / 6.9k & 0.70 & 0.62 & 14.6 & 3.7 \\
+\bottomrule
+\end{tabular}}
+\caption{Per-rung accuracy / mean cumulative tokens on the full test split, from the deployed-configuration records.
+AUROC of each rung's confidence for its own correctness. Rescue: share of tasks the pipeline answers correctly and $L_0$
+does not; Harm: the reverse (\%).}
+\label{tab:rungs}
+\end{table*}

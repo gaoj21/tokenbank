@@ -1,0 +1,36 @@
+\section{Related Work}
+
+\paragraph{Multi-agent systems, their cost and their failures.}
+LLM agents are organised into debating peers \citep{du2024debate,liang2024divergent}, conversational
+frameworks \citep{wu2024autogen}, role-playing societies \citep{li2023camel} and software teams
+\citep{hong2024metagpt,qian2024chatdev}, while self-refinement \citep{madaan2023selfrefine} and reflection
+\citep{shinn2023reflexion} are single-agent analogues of the execute-review loop. Efficiency work prunes
+agents or messages \citep{zhang2025agentprune,wang2025agentdropout,chen2025optima} or splits a budget
+across phases \citep{hamri2026zebra,liu2025bats}, typically inside a pipeline that runs on every task.
+Collaboration can also hurt: debate does not reliably beat simpler prompting once its cost is counted
+\citep{smit2024mad}, self-correction without feedback can turn correct answers wrong \citep{huang2024selfcorrect},
+debaters abandon correct answers to conform \citep{wynn2025talk}, and verification failures are a major
+class of multi-agent breakdowns \citep{cemri2025mast}. We measure both directions, rescue and harm, and
+decide per input whether to call the team at all.
+
+\paragraph{Cascades and routing.}
+Cascades defer uncertain inputs to stronger models using learned scores \citep{chen2023frugalgpt},
+self-verification \citep{aggarwal2024automix}, trained routers \citep{ong2025routellm,ding2024hybrid} or
+answer consistency \citep{yue2024cascades}. DOWN starts a debate only when the first answer's confidence
+is low \citep{eo2025down}, and Signed Rescue Routing ranks queries by the predicted rescue minus harm of
+escalating \citep{wang2026signedrescue}. None of these bounds the accuracy given up.
+
+\paragraph{Risk-controlled escalation.}
+Conformal prediction and risk control \citep{vovk2005algorithmic,angelopoulos2024crc,angelopoulos2021ltt}
+give finite-sample, distribution-free guarantees, applied to generation
+\citep{quach2024conformal,mohri2024factuality} and to cascades: early exits against a model's full depth
+with a clipped loss \citep{schuster2022calm}, cascades of LLM judges \citep{jung2025trust}, delegation to an
+expert under a non-negative risk \citep{pona2026calibrate}, and absolute accuracy across model tiers
+\citep{dou2026conformalcascade}. Signed losses relative to a stronger system have been certified before:
+\citet{jazbec2024fastyetsafe} bound the gap of early exits with a betting bound
+\citep{waudbysmith2024betting} and show that clipping is conservative, and \citet{wynn2026corrupted} map a
+signed loss to $[0, 1]$ for Hoeffding--Bentkus tests inside Learn-then-Test. We use such a variance-adaptive betting test on the signed loss inside fixed-sequence testing, add an
+agreement signal between two cheap rungs, and compare the alternatives directly when most losses are zero,
+as when escalating to a team (\S\ref{sec:testchoice}). Confidence signals
+\citep{kadavath2022know,kuhn2023semantic,xiong2024uncertainty,wang2023selfconsistency} are informative but
+can be weak, and the guarantee holds for any of them.

@@ -1,0 +1,15 @@
+\begin{abstract}
+Multi-agent pipelines can be expensive and are not always better. A plan--execute--review team
+costs up to six times a single reasoning agent, and on some tasks it misses an answer a single agent gets right,
+mostly because its first draft is already wrong and its reviewer does not correct it. Skipping it when it is not
+needed is the obvious saving, but rules for when to skip can fail silently: a confidence threshold
+of similar cost lost up to 16 points of accuracy. We ask instead how much accuracy a user is
+willing to give up, and spend as little as possible within that. \climb{} climbs from a direct answer to
+a single agent to the team, stopping on confidence and agreement, and deploys the cheapest policy it can certify with a distribution-free guarantee. Because skipping the team can
+also keep correct answers the team would miss, the loss is signed, and testing it with a variance-adaptive betting test typically
+certifies more than clipping it or applying a Hoeffding--Bentkus bound. When no cheaper
+policy can be certified, \climb{} runs the team, so a misleading signal tends to cost savings rather than
+accuracy. Across three open models and four benchmarks, \climb{} exceeded its tolerance in at most 3\% of
+splits against a nominal 10\%, while saving 38\% of tokens on average at a 5-point tolerance and 65\% at
+10 points.
+\end{abstract}

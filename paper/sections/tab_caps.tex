@@ -1,0 +1,17 @@
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+& 24k & 16k & 8k \\
+\midrule
+GLM MATH & $+8.0^{*}$ & $+8.0^{*}$ & $-16.8^{*}$ \\
+GLM GAIA & $+9.0^{*}$ & $+1.6$ & $-9.8^{*}$ \\
+DS MATH & $+8.8^{*}$ & $+10.8^{*}$ & $-3.7^{*}$ \\
+DS GAIA & $+13.9^{*}$ & $+6.6^{*}$ & $-4.1$ \\
+\bottomrule
+\end{tabular}
+\caption{Accuracy change of the plain pipeline from a 1{,}024 to a 4{,}096 per-call cap, by task
+budget. $^{*}$: $p < 0.05$, exact McNemar.}
+\label{tab:caps}
+\end{table}

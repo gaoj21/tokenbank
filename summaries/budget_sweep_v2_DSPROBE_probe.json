@@ -1,0 +1,30 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    4000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "BCB-ReasonLadder",
+      "success_rate": 0.6666666666666666,
+      "cps": 5e-05,
+      "mean_tokens": 1248.6666666666667,
+      "cost": 0.0001
+    }
+  ],
+  "agg": [
+    {
+      "budget": 4000,
+      "name": "BCB-ReasonLadder",
+      "sr_mean": 0.6666666666666666,
+      "sr_std": 0.0,
+      "cps_mean": 5e-05,
+      "tokens_mean": 1248.6666666666667
+    }
+  ]
+}

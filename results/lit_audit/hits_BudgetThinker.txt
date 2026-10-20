@@ -1,0 +1,9 @@
+56:output length (Han et al., 2024). Other methods that toggle between "thinking" and "non-thinking"
+81: output length. This technique minimizes the number of inserted tokens and their impact on the
+110:Our method enforces a target output length, or budget, by augmenting the standard autoregressive
+167:alizable across different task types and output lengths. We achieve this by creating a mixture of two
+264:enforces the budget by truncating the reasoning process once the length limit is reached and appending
+285:simply restricting the generation length does not necessarily yield better solutions, as producing a concise
+303:Figure 2 | Pass@1 accuracy of BudgetThinker vs. baselines across various generation budgets on
+304:MATH-500 and AMC 2023. Accuracy is plotted against the maximum generation budget, a metric more
+438:trade-off between output length and model performance. Instead, our work achieves precise token budget

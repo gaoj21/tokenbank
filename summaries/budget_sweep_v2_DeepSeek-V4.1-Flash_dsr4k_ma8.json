@@ -1,0 +1,30 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    8000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "V5-Unc-Fmt",
+      "success_rate": 0.515,
+      "cps": 0.00017815533980582526,
+      "mean_tokens": 2803.58,
+      "cost": 0.0367
+    }
+  ],
+  "agg": [
+    {
+      "budget": 8000,
+      "name": "V5-Unc-Fmt",
+      "sr_mean": 0.515,
+      "sr_std": 0.0,
+      "cps_mean": 0.00017815533980582526,
+      "tokens_mean": 2803.58
+    }
+  ]
+}

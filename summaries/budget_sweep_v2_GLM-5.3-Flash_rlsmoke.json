@@ -1,0 +1,47 @@
+{
+  "model": "GLM-5.3-Flash-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.1-Ab7-NoVerbal",
+      "success_rate": 0.6,
+      "cps": 0.00019166666666666667,
+      "mean_tokens": 3849.15,
+      "cost": 0.0023
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.2-ReasonLadder",
+      "success_rate": 0.65,
+      "cps": 4.615384615384615e-05,
+      "mean_tokens": 1572.7,
+      "cost": 0.0006
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5.1-Ab7-NoVerbal",
+      "sr_mean": 0.6,
+      "sr_std": 0.0,
+      "cps_mean": 0.00019166666666666667,
+      "tokens_mean": 3849.15
+    },
+    {
+      "budget": 24000,
+      "name": "V5.2-ReasonLadder",
+      "sr_mean": 0.65,
+      "sr_std": 0.0,
+      "cps_mean": 4.615384615384615e-05,
+      "tokens_mean": 1572.7
+    }
+  ]
+}

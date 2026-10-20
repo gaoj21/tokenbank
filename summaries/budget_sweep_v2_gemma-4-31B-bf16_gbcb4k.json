@@ -1,0 +1,64 @@
+{
+  "model": "google/gemma-4-31b-it",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    4000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "BCB-Naive",
+      "success_rate": 0.146,
+      "cps": 0.0006849315068493151,
+      "mean_tokens": 2589.786,
+      "cost": 0.05
+    },
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "BCB-Ours",
+      "success_rate": 0.474,
+      "cps": 3.4177215189873416e-05,
+      "mean_tokens": 1299.98,
+      "cost": 0.0081
+    },
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "BCB-Ab7",
+      "success_rate": 0.472,
+      "cps": 2.669491525423729e-05,
+      "mean_tokens": 1256.508,
+      "cost": 0.0063
+    }
+  ],
+  "agg": [
+    {
+      "budget": 4000,
+      "name": "BCB-Naive",
+      "sr_mean": 0.146,
+      "sr_std": 0.0,
+      "cps_mean": 0.0006849315068493151,
+      "tokens_mean": 2589.786
+    },
+    {
+      "budget": 4000,
+      "name": "BCB-Ours",
+      "sr_mean": 0.474,
+      "sr_std": 0.0,
+      "cps_mean": 3.4177215189873416e-05,
+      "tokens_mean": 1299.98
+    },
+    {
+      "budget": 4000,
+      "name": "BCB-Ab7",
+      "sr_mean": 0.472,
+      "sr_std": 0.0,
+      "cps_mean": 2.669491525423729e-05,
+      "tokens_mean": 1256.508
+    }
+  ]
+}

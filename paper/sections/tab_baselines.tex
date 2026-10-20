@@ -1,0 +1,22 @@
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}lcrrr@{}}
+\toprule
+ & & Tokens & \multicolumn{2}{c}{Loss (points)} \\
+\cmidrule(lr){4-5}
+Policy & Cert. & mean & mean & max \\
+\midrule
+Always $L_0$ &  & 15\% & 8.7 & 20.6 \\
+Always $L_1$ &  & 43\% & 3.3 & 9.4 \\
+Threshold, same cost &  & 61\% & 5.0 & 15.9 \\
+\climb{}, $\eps = 5\%$ & \checkmark & 62\% & 1.9 & 2.8 \\
+\climb{}, $\eps = 10\%$ & \checkmark & 35\% & 5.0 & 7.2 \\
+\midrule
+Oracle &  & 65\% & $-$7.2 & 0.0 \\
+\bottomrule
+\end{tabular}
+\caption{Uncertified rules against \climb{} over the twelve settings: tokens (\% of the pipeline's) and accuracy lost (mean and largest). The threshold on $L_0$'s confidence is fixed across settings to spend as much as \climb{} at $\eps = 5\%$. The oracle stops at the cheapest correct rung and is not deployable.}
+\label{tab:baselines}
+\end{table}

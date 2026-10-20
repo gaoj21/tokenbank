@@ -1,0 +1,97 @@
+{
+  "benchmark": "FRAMES",
+  "n_tasks": 824,
+  "seed": 42,
+  "temperature": 0,
+  "unconstrained": {
+    "sr": 54.0,
+    "tokens": 5642,
+    "cps": 0.0028
+  },
+  "cells": [
+    {
+      "config": "Static Quota",
+      "budget": 2000,
+      "sr": 0.0,
+      "tokens": 0,
+      "cps": 0
+    },
+    {
+      "config": "Static Quota",
+      "budget": 4000,
+      "sr": 33.0,
+      "tokens": 2065,
+      "cps": 0.0017
+    },
+    {
+      "config": "Static Quota",
+      "budget": 8000,
+      "sr": 46.1,
+      "tokens": 3154,
+      "cps": 0.0018
+    },
+    {
+      "config": "Static Quota",
+      "budget": 16000,
+      "sr": 50.0,
+      "tokens": 4923,
+      "cps": 0.0026
+    },
+    {
+      "config": "TB-v2-Full",
+      "budget": 2000,
+      "sr": 0.0,
+      "tokens": 826,
+      "cps": 0.1871
+    },
+    {
+      "config": "TB-v2-Full",
+      "budget": 4000,
+      "sr": 42.6,
+      "tokens": 2237,
+      "cps": 0.0014
+    },
+    {
+      "config": "TB-v2-Full",
+      "budget": 8000,
+      "sr": 49.4,
+      "tokens": 3567,
+      "cps": 0.0019
+    },
+    {
+      "config": "TB-v2-Full",
+      "budget": 16000,
+      "sr": 53.5,
+      "tokens": 5669,
+      "cps": 0.0027
+    },
+    {
+      "config": "Full+Stall",
+      "budget": 2000,
+      "sr": 0.0,
+      "tokens": 826,
+      "cps": 0.1878
+    },
+    {
+      "config": "Full+Stall",
+      "budget": 4000,
+      "sr": 43.1,
+      "tokens": 2254,
+      "cps": 0.0014
+    },
+    {
+      "config": "Full+Stall",
+      "budget": 8000,
+      "sr": 48.8,
+      "tokens": 3268,
+      "cps": 0.0017
+    },
+    {
+      "config": "Full+Stall",
+      "budget": 16000,
+      "sr": 51.8,
+      "tokens": 3348,
+      "cps": 0.0017
+    }
+  ]
+}

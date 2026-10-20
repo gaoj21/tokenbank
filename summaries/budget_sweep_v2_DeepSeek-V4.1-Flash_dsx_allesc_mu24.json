@@ -1,0 +1,30 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.2-ReasonLadder-AllEsc",
+      "success_rate": 0.1313340227507756,
+      "cps": 0.0021779527559055117,
+      "mean_tokens": 9496.882109617374,
+      "cost": 0.5532
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5.2-ReasonLadder-AllEsc",
+      "sr_mean": 0.1313340227507756,
+      "sr_std": 0.0,
+      "cps_mean": 0.0021779527559055117,
+      "tokens_mean": 9496.882109617374
+    }
+  ]
+}

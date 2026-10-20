@@ -1,0 +1,6 @@
+GLM MATH 0.01 {'tok': 100.0, 'acc': 96.6, 'viol': 0.0}
+GLM MATH 0.02 {'tok': 99.5, 'acc': 96.4, 'viol': 0.0}
+GLM MATH 0.03 {'tok': 93.1, 'acc': 95.9, 'viol': 0.0}
+GLM MATH 0.05 {'tok': 65.8, 'acc': 94.4, 'viol': 2.0}
+GLM MATH 0.075 {'tok': 38.4, 'acc': 92.5, 'viol': 0.0}
+GLM MATH 0.1 {'tok': 22.6, 'acc': 90.9, 'viol': 0.0}

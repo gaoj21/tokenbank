@@ -1,0 +1,2 @@
+498:but with a token limit prompt (e.g., “use fewer than Bi tokens”); (3) Planned Vanilla / Global
+1150:stages, early termination reduces computation by truncating later tokens without modifying the

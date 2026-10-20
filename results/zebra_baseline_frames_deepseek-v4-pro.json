@@ -1,0 +1,33 @@
+{
+  "model": "deepseek-v4-pro",
+  "benchmark": "FRAMES",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "ZEBRA-Static",
+      "plan": {
+        "planner": 1600,
+        "executor": 4318,
+        "reviewer": 2831
+      },
+      "success_rate": 0.48,
+      "cps": 0.006570833333333334,
+      "mean_tokens": 4003.38,
+      "cost": 0.1577
+    }
+  ],
+  "agg": [
+    {
+      "budget": 8000,
+      "name": "ZEBRA-Static",
+      "sr_mean": 0.48,
+      "sr_std": 0.0,
+      "cps_mean": 0.006570833333333334,
+      "tokens_mean": 4003.38
+    }
+  ]
+}

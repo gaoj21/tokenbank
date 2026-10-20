@@ -1,0 +1,25 @@
+\section*{Limitations}
+
+\paragraph{Scope of the guarantee.} As with other distribution-free risk-control methods, the
+guarantee holds when calibration and deployment tasks, and the model's outputs on them, share one
+distribution, so thresholds should be calibrated on the target tasks and serving stack
+(Appendix~\ref{app:sens}); recalibration takes under a second (Appendix~\ref{app:impl}). Weighted
+or online calibration could extend it to shifting distributions. A served model behind a third-party
+API, as Gemma is here, may change without notice, which this assumption does not cover.
+
+\paragraph{Calibration data.} \climb{} uses every rung's outcome on a few hundred calibration
+tasks, a one-off cost. With less data or tighter tolerances it conservatively falls back to the
+full pipeline: at a 5-point tolerance it can certify less than an uncertified rule that happens to be
+safe, which is the price of the guarantee. Stronger confidence signals would plug in directly.
+
+\paragraph{Breadth of evaluation.} We evaluate three open models, one plan--execute--review pipeline
+and four benchmarks. FRAMES and MuSiQue are given their gold documents rather than a retriever's, so
+retrieval errors, which a team might catch or compound, are outside our measurements; Gemma's runs on
+these and on BBEH were served locally and on MATH through a hosted provider, with the same checkpoint and
+settings. On code generation, where a reviewer that cannot
+run tests rarely improves the executor, the team helps little and escalation saves by staying cheap.
+\climb{} needs only a cost-ordered ladder and a per-rung score, so other topologies require no change to
+the calibration procedure. A few pipeline runs fill the generation cap on every call and end without an
+answer (at most 0.5\% of tasks); they count as the pipeline's errors. Gemma's greedy direct answers and
+some of its reviews fall into repetitions, which makes its confidence a misleading signal on three
+benchmarks; we keep these behaviours, as a deployment would see them, rather than tune them away.

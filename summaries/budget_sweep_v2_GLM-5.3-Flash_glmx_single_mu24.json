@@ -1,0 +1,47 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Single-Fmt-1k",
+      "success_rate": 0.1907962771458118,
+      "cps": 0.0,
+      "mean_tokens": 671.835056876939,
+      "cost": 0.0
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Single-Fmt-2k",
+      "success_rate": 0.2094105480868666,
+      "cps": 0.00015456790123456792,
+      "mean_tokens": 1015.5894519131334,
+      "cost": 0.0626
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5-Single-Fmt-1k",
+      "sr_mean": 0.1907962771458118,
+      "sr_std": 0.0,
+      "cps_mean": 0.0,
+      "tokens_mean": 671.835056876939
+    },
+    {
+      "budget": 24000,
+      "name": "V5-Single-Fmt-2k",
+      "sr_mean": 0.2094105480868666,
+      "sr_std": 0.0,
+      "cps_mean": 0.00015456790123456792,
+      "tokens_mean": 1015.5894519131334
+    }
+  ]
+}

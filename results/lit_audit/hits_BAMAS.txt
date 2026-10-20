@@ -1,0 +1,5 @@
+113: maximum observed output length as an upper bound.
+637: max tokens integer Maximum tokens an agent can gen-
+673:Table 7: Maximum generation tokens of BAMAS for agents
+692:Agent Token Limits The maximum number of tokens
+693:(max tokens) an agent can generate in a single turn was

@@ -1,0 +1,64 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-PlanOnly",
+      "success_rate": 0.2833333333333333,
+      "cps": 0.0007502673796791445,
+      "mean_tokens": 6938.630303030303,
+      "cost": 0.1403
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-CritOnly",
+      "success_rate": 0.2545454545454545,
+      "cps": 0.001373809523809524,
+      "mean_tokens": 11580.55606060606,
+      "cost": 0.2308
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-ToolOnly",
+      "success_rate": 0.2787878787878788,
+      "cps": 0.0007951086956521739,
+      "mean_tokens": 7346.965151515152,
+      "cost": 0.14629999999999999
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "ST-PlanOnly",
+      "sr_mean": 0.2833333333333333,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007502673796791445,
+      "tokens_mean": 6938.630303030303
+    },
+    {
+      "budget": 24000,
+      "name": "ST-CritOnly",
+      "sr_mean": 0.2545454545454545,
+      "sr_std": 0.0,
+      "cps_mean": 0.001373809523809524,
+      "tokens_mean": 11580.55606060606
+    },
+    {
+      "budget": 24000,
+      "name": "ST-ToolOnly",
+      "sr_mean": 0.2787878787878788,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007951086956521739,
+      "tokens_mean": 7346.965151515152
+    }
+  ]
+}

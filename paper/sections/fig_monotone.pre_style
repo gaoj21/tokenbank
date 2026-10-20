@@ -1,0 +1,8 @@
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/figure_monotone.pdf}
+    \caption{Gain of escalating instead of stopping at $L_0$, by quintile of $L_0$'s confidence (Q1 least
+    confident), on twelve settings; inset: Spearman $\rho$. It is non-positive on nine settings and positive on
+    Gemma FRAMES, MuSiQue and BBEH, where $L_0$'s confidence is inverted.}
+    \label{fig:monotone}
+\end{figure*}

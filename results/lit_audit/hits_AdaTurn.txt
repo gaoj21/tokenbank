@@ -1,0 +1,14 @@
+24: trajectory the agent prefers, the interaction is often truncated before any valid
+25: answer is produced; we term this failure catastrophic truncation. To overcome
+50: Truncate w/o answer +60%
+52: Catastrophic Truncation Tool Tool Tool Tool
+67: early when extra turns remain or suffer catastrophic truncation when the allocated budget is smaller
+94:this failure mode catastrophic truncation. For example, Mini-o3’s performance on VisualProbe-Hard
+124: • We formulate budget-aware active visual perception and identify catastrophic truncation as
+286:answer actions are executable. Catastrophic truncation arises when the learned policy still prefers a
+425:the training budget. Mini-o3 [Lai et al., 2025] avoids this penalty by masking truncated cases, but
+442:Conceptually, FA-DAPO converts catastrophic truncation from an artifact of the rollout engine into a
+597:budget regime, where catastrophic truncation is most consequential. At four turns, AdaTurn improves
+640:important for mitigating catastrophic truncation. Among these variants, the default formulation
+681:truncation while preserving the gains of longer rollouts. Empirically, AdaTurn performs favorably in
+1068:mitigates catastrophic truncation by ensuring that the model produces a valid answer even when

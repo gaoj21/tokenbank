@@ -1,0 +1,29 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 32000,
+      "name": "-OPL",
+      "success_rate": 0.17105263157894737,
+      "cps": 0.011349999999999999,
+      "mean_tokens": 8200.526315789473,
+      "cost": 0.2951,
+      "mean_borrows": 0.05921052631578947,
+      "recovery_rate": 0.006578947368421052
+    }
+  ],
+  "agg": [
+    {
+      "budget": 32000,
+      "name": "-OPL",
+      "sr_mean": 0.17105263157894737,
+      "sr_std": 0.0,
+      "cps_mean": 0.011349999999999999,
+      "tokens_mean": 8200.526315789473
+    }
+  ]
+}

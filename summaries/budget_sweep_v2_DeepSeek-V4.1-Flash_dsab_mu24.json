@@ -1,0 +1,98 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-PlanOnly",
+      "success_rate": 0.1625,
+      "cps": 0.0012935897435897435,
+      "mean_tokens": 7070.033333333334,
+      "cost": 0.1009
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-CritOnly",
+      "success_rate": 0.15,
+      "cps": 0.002573611111111111,
+      "mean_tokens": 12888.445833333333,
+      "cost": 0.1853
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-ToolOnly",
+      "success_rate": 0.16875,
+      "cps": 0.0012358024691358025,
+      "mean_tokens": 7037.289583333333,
+      "cost": 0.1001
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-CritOnly-R1k",
+      "success_rate": 0.14166666666666666,
+      "cps": 0.0016514705882352942,
+      "mean_tokens": 7803.78125,
+      "cost": 0.1123
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-Slots-R1k",
+      "success_rate": 0.16041666666666668,
+      "cps": 0.0014272727272727273,
+      "mean_tokens": 7636.36875,
+      "cost": 0.1099
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "ST-PlanOnly",
+      "sr_mean": 0.1625,
+      "sr_std": 0.0,
+      "cps_mean": 0.0012935897435897435,
+      "tokens_mean": 7070.033333333334
+    },
+    {
+      "budget": 24000,
+      "name": "ST-CritOnly",
+      "sr_mean": 0.15,
+      "sr_std": 0.0,
+      "cps_mean": 0.002573611111111111,
+      "tokens_mean": 12888.445833333333
+    },
+    {
+      "budget": 24000,
+      "name": "ST-ToolOnly",
+      "sr_mean": 0.16875,
+      "sr_std": 0.0,
+      "cps_mean": 0.0012358024691358025,
+      "tokens_mean": 7037.289583333333
+    },
+    {
+      "budget": 24000,
+      "name": "ST-CritOnly-R1k",
+      "sr_mean": 0.14166666666666666,
+      "sr_std": 0.0,
+      "cps_mean": 0.0016514705882352942,
+      "tokens_mean": 7803.78125
+    },
+    {
+      "budget": 24000,
+      "name": "ST-Slots-R1k",
+      "sr_mean": 0.16041666666666668,
+      "sr_std": 0.0,
+      "cps_mean": 0.0014272727272727273,
+      "tokens_mean": 7636.36875
+    }
+  ]
+}

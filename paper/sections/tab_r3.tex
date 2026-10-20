@@ -1,0 +1,22 @@
+\begin{table*}[h]
+\centering
+\small
+\setlength{\tabcolsep}{3.5pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Setting & $n$/bin & $\rho$, $L_0$ [95\% CI] & $\rho$, $L_1$ [95\% CI] & Gain, low $\to$ high $S_0$ \\
+\midrule
+GLM MATH & 80 & $-1.00$ {\scriptsize[-1.00, -0.50]} & $-0.82$ {\scriptsize[-1.00, -0.10]} & 15.0 {\scriptsize[4.0, 25.9]} $\to$ 0.0 {\scriptsize[-3.6, 3.6]} \\
+GLM GAIA & 24 & $-0.60$ {\scriptsize[-0.90, +0.31]} & $-0.67$ {\scriptsize[-0.82, +0.20]} & 4.0 {\scriptsize[0.0, 13.6]} $\to$ -4.0 {\scriptsize[-18.2, 10.3]} \\
+GLM FRAMES & 132 & $-0.67$ {\scriptsize[-0.90, +0.70]} & $-0.36$ {\scriptsize[-0.90, +0.50]} & 12.9 {\scriptsize[4.7, 21.1]} $\to$ 6.8 {\scriptsize[0.8, 12.9]} \\
+GLM MuSiQue & 386 & $-0.90$ {\scriptsize[-1.00, -0.50]} & $-0.90$ {\scriptsize[-1.00, +0.30]} & 8.0 {\scriptsize[4.2, 12.2]} $\to$ 0.3 {\scriptsize[-3.2, 3.7]} \\
+DeepSeek MATH & 80 & $-0.56$ {\scriptsize[-0.90, +0.60]} & $-0.67$ {\scriptsize[-0.97, +0.60]} & 10.0 {\scriptsize[2.5, 17.9]} $\to$ 6.2 {\scriptsize[0.0, 13.3]} \\
+DeepSeek GAIA & 24 & $-0.10$ {\scriptsize[-0.70, +0.67]} & $-0.10$ {\scriptsize[-0.70, +0.87]} & 4.0 {\scriptsize[-9.5, 18.2]} $\to$ 4.0 {\scriptsize[-14.3, 21.8]} \\
+DeepSeek FRAMES & 132 & $-0.97$ {\scriptsize[-1.00, -0.30]} & $-0.46$ {\scriptsize[-0.90, +0.90]} & 18.9 {\scriptsize[11.0, 27.2]} $\to$ 0.8 {\scriptsize[-6.4, 7.9]} \\
+DeepSeek MuSiQue & 386 & $-0.90$ {\scriptsize[-1.00, -0.30]} & $-0.90$ {\scriptsize[-1.00, +0.00]} & 14.7 {\scriptsize[10.4, 19.5]} $\to$ 5.2 {\scriptsize[1.6, 8.8]} \\
+\bottomrule
+\end{tabular}}
+\caption{Uncertainty of the monotone-gain diagnostic. Spearman $\rho$ between confidence quintile and the gain $\E[Y_{\mathrm{ref}} - Y_k \mid \text{quintile}]$, with 95\% bootstrap intervals (2{,}000 task resamples), and the gain (points) in the lowest and highest $S_0$ quintile.}
+\label{tab:r3}
+\end{table*}

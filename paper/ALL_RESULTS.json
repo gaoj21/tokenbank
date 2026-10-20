@@ -1,0 +1,1066 @@
+{
+ "v5test_ga": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A0-Full": {
+    "sr": 17.2,
+    "tok": 10486
+   },
+   "V5-A1-NoM1": {
+    "sr": 17.2,
+    "tok": 10643
+   },
+   "V5-A2-NoM2": {
+    "sr": 18.0,
+    "tok": 14302
+   },
+   "V5-A3-NoNotes": {
+    "sr": 13.9,
+    "tok": 9650
+   },
+   "V5-A4-NoM4": {
+    "sr": 13.1,
+    "tok": 4219
+   },
+   "V5-A5-NoM5": {
+    "sr": 13.1,
+    "tok": 9833
+   },
+   "V5-A6-OnlyM3": {
+    "sr": 18.9,
+    "tok": 11231
+   },
+   "V5-M4-Equal": {
+    "sr": 14.8,
+    "tok": 10567
+   },
+   "V5-Unconstrained": {
+    "sr": 15.6,
+    "tok": 13084
+   }
+  }
+ },
+ "v5gem_ga": {
+  "model": "gemma-4-31B-it",
+  "cells": {
+   "V5-A0-Full": {
+    "sr": 13.1,
+    "tok": 11488
+   },
+   "V5-A4-NoM4": {
+    "sr": 9.8,
+    "tok": 9401
+   },
+   "V5-Unconstrained": {
+    "sr": 12.3,
+    "tok": 12337
+   }
+  }
+ },
+ "v54b_ma_fmt": {
+  "model": "gemma-4-31B-it",
+  "cells": {
+   "V5-Unc-Fmt": {
+    "sr": 53.8,
+    "tok": 9137
+   }
+  }
+ },
+ "v51gafix": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-Unified": {
+    "sr": 16.7,
+    "tok": 6748
+   }
+  }
+ },
+ "v5al_ma": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A0-Full": {
+    "sr": 49.2,
+    "tok": 1145
+   },
+   "V5-A4-NoM4": {
+    "sr": 48.8,
+    "tok": 962
+   },
+   "V5-A6-OnlyM3": {
+    "sr": 68.2,
+    "tok": 5821
+   },
+   "V5-Unconstrained": {
+    "sr": 53.2,
+    "tok": 6011
+   }
+  }
+ },
+ "v53e1_ma16": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unc-Fmt": {
+    "sr": 62.5,
+    "tok": 5158
+   }
+  }
+ },
+ "v51t_ga": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-Unified": {
+    "sr": 18.9,
+    "tok": 9029
+   },
+   "V5.1-NoPool": {
+    "sr": 20.5,
+    "tok": 10259
+   }
+  }
+ },
+ "ma24k_gem": {
+  "model": "gemma-4-31B-it",
+  "cells": {
+   "Unconstrained": {
+    "sr": 67.0,
+    "tok": 9241
+   },
+   "Static Quota": {
+    "sr": 51.3,
+    "tok": 7136
+   },
+   "Improved+Compact": {
+    "sr": 63.0,
+    "tok": 8285
+   }
+  }
+ },
+ "v5cal_ga": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A0-Full": {
+    "sr": 23.3,
+    "tok": 10696
+   }
+  }
+ },
+ "v55_ma8": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unconstrained": {
+    "sr": 49.8,
+    "tok": 3790
+   },
+   "V5-Unc-Fmt": {
+    "sr": 58.0,
+    "tok": 3880
+   },
+   "V5.1-NoPool": {
+    "sr": 67.8,
+    "tok": 2244
+   }
+  }
+ },
+ "v53e4_ma": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-NoPool": {
+    "sr": 70.8,
+    "tok": 3237
+   }
+  }
+ },
+ "ga32k": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Static Quota": {
+    "sr": 17.8,
+    "tok": 9149
+   },
+   "Improved+Compact": {
+    "sr": 40.1,
+    "tok": 14949
+   }
+  }
+ },
+ "v53e1_ma24": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unc-Fmt": {
+    "sr": 63.2,
+    "tok": 6489
+   }
+  }
+ },
+ "v54a_ma_ab6": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-Ab6-NoM2NoM1": {
+    "sr": 68.5,
+    "tok": 5750
+   }
+  }
+ },
+ "v52ab_ga": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-Ab3-NoM2": {
+    "sr": 19.7,
+    "tok": 10343
+   },
+   "V5.1-Ab1-NoM1": {
+    "sr": 18.9,
+    "tok": 10438
+   },
+   "V5.1-Ab2-NoNotes": {
+    "sr": 19.7,
+    "tok": 10379
+   }
+  }
+ },
+ "ga24k_gem": {
+  "model": "gemma-4-31B-it",
+  "cells": {
+   "Static Quota": {
+    "sr": 18.4,
+    "tok": 8761
+   },
+   "Improved+Compact": {
+    "sr": 21.7,
+    "tok": 9929
+   }
+  }
+ },
+ "ga16k_gem": {
+  "model": "gemma-4-31B-it",
+  "cells": {
+   "Unconstrained": {
+    "sr": 20.4,
+    "tok": 13652
+   },
+   "Static Quota": {
+    "sr": 15.1,
+    "tok": 5988
+   },
+   "Improved+Compact": {
+    "sr": 18.4,
+    "tok": 8191
+   }
+  }
+ },
+ "ma24k": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Static Quota": {
+    "sr": 71.2,
+    "tok": 3957
+   },
+   "Improved+Compact": {
+    "sr": 75.6,
+    "tok": 5440
+   }
+  }
+ },
+ "v55_ga8_unc": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unconstrained": {
+    "sr": 13.1,
+    "tok": 6056
+   }
+  }
+ },
+ "fr24k": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Improved+Compact": {
+    "sr": 53.4,
+    "tok": 9173
+   }
+  }
+ },
+ "v53e3_ga8": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unc-Fmt": {
+    "sr": 15.6,
+    "tok": 5919
+   },
+   "V5.1-NoPool": {
+    "sr": 17.2,
+    "tok": 5459
+   }
+  }
+ },
+ "v52c1_ga24": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unc-Fmt": {
+    "sr": 19.7,
+    "tok": 13264
+   }
+  }
+ },
+ "v5abl_mu": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A0-Full": {
+    "sr": 8.5,
+    "tok": 5093
+   },
+   "V5-A1-NoM1": {
+    "sr": 7.5,
+    "tok": 5083
+   },
+   "V5-A2-NoM2": {
+    "sr": 6.8,
+    "tok": 7669
+   },
+   "V5-A3-NoNotes": {
+    "sr": 8.1,
+    "tok": 4919
+   },
+   "V5-A4-NoM4": {
+    "sr": 7.9,
+    "tok": 3284
+   },
+   "V5-A5-NoM5": {
+    "sr": 7.7,
+    "tok": 5173
+   },
+   "V5-A6-OnlyM3": {
+    "sr": 7.2,
+    "tok": 6174
+   },
+   "V5-M4-Equal": {
+    "sr": 7.9,
+    "tok": 5145
+   },
+   "V5-Unconstrained": {
+    "sr": 6.0,
+    "tok": 7567
+   }
+  }
+ },
+ "v55_fr8_unc": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unconstrained": {
+    "sr": 9.7,
+    "tok": 4731
+   }
+  }
+ },
+ "v5test_mu": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A0-Full": {
+    "sr": 9.3,
+    "tok": 5365
+   },
+   "V5-A1-NoM1": {
+    "sr": 10.0,
+    "tok": 5327
+   },
+   "V5-A2-NoM2": {
+    "sr": 8.7,
+    "tok": 7945
+   },
+   "V5-A3-NoNotes": {
+    "sr": 9.5,
+    "tok": 5137
+   },
+   "V5-A4-NoM4": {
+    "sr": 9.8,
+    "tok": 3618
+   },
+   "V5-A5-NoM5": {
+    "sr": 10.1,
+    "tok": 5343
+   },
+   "V5-A6-OnlyM3": {
+    "sr": 9.3,
+    "tok": 6330
+   },
+   "V5-M4-Equal": {
+    "sr": 9.8,
+    "tok": 5325
+   },
+   "V5-Unconstrained": {
+    "sr": 7.0,
+    "tok": 7665
+   }
+  }
+ },
+ "v5al_fr": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A0-Full": {
+    "sr": 16.5,
+    "tok": 5901
+   },
+   "V5-A4-NoM4": {
+    "sr": 15.8,
+    "tok": 2628
+   },
+   "V5-A6-OnlyM3": {
+    "sr": 13.7,
+    "tok": 7553
+   },
+   "V5-Unconstrained": {
+    "sr": 11.5,
+    "tok": 8359
+   }
+  }
+ },
+ "v51mufix": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-Unified": {
+    "sr": 6.6,
+    "tok": 4347
+   }
+  }
+ },
+ "mu24k_gem": {
+  "model": "gemma-4-31B-it",
+  "cells": {
+   "Unconstrained": {
+    "sr": 24.0,
+    "tok": 9668
+   },
+   "Static Quota": {
+    "sr": 22.3,
+    "tok": 7316
+   },
+   "Improved+Compact": {
+    "sr": 25.0,
+    "tok": 7312
+   }
+  }
+ },
+ "v51_ga": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A6-OnlyM3": {
+    "sr": 23.3,
+    "tok": 11437
+   },
+   "V5-Unconstrained": {
+    "sr": 10.0,
+    "tok": 14435
+   },
+   "V5.1-Unified": {
+    "sr": 13.3,
+    "tok": 1507
+   },
+   "V5.1-NoPool": {
+    "sr": 23.3,
+    "tok": 10630
+   }
+  }
+ },
+ "v5diag_mu": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Unconstrained": {
+    "sr": 6.0,
+    "tok": 9953
+   },
+   "Unc+Compact": {
+    "sr": 7.1,
+    "tok": 11595
+   }
+  }
+ },
+ "v51t_fr": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-Unified": {
+    "sr": 12.7,
+    "tok": 5316
+   },
+   "V5.1-NoPool": {
+    "sr": 15.2,
+    "tok": 7237
+   }
+  }
+ },
+ "v52ab_ma": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-Ab3-NoM2": {
+    "sr": 70.8,
+    "tok": 5648
+   },
+   "V5.1-Ab1-NoM1": {
+    "sr": 70.2,
+    "tok": 3281
+   },
+   "V5.1-Ab2-NoNotes": {
+    "sr": 70.8,
+    "tok": 3139
+   }
+  }
+ },
+ "v51_mu": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A6-OnlyM3": {
+    "sr": 6.4,
+    "tok": 6145
+   },
+   "V5-Unconstrained": {
+    "sr": 5.2,
+    "tok": 7896
+   },
+   "V5.1-Unified": {
+    "sr": 5.4,
+    "tok": 1675
+   },
+   "V5.1-NoPool": {
+    "sr": 7.2,
+    "tok": 6743
+   }
+  }
+ },
+ "ga16k_compact": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Compact": {
+    "sr": 26.3,
+    "tok": 9499
+   },
+   "Improved+Compact": {
+    "sr": 24.3,
+    "tok": 9350
+   }
+  }
+ },
+ "v52c1_fr16": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unc-Fmt": {
+    "sr": 14.2,
+    "tok": 7648
+   }
+  }
+ },
+ "mu24k": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Static Quota": {
+    "sr": 26.1,
+    "tok": 4979
+   },
+   "Improved+Compact": {
+    "sr": 42.0,
+    "tok": 8096
+   }
+  }
+ },
+ "v51t16_ma": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unconstrained": {
+    "sr": 51.7,
+    "tok": 5362
+   },
+   "V5.1-Unified": {
+    "sr": 70.8,
+    "tok": 2741
+   },
+   "V5.1-NoPool": {
+    "sr": 70.5,
+    "tok": 2965
+   }
+  }
+ },
+ "v5cal_mu": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A0-Full": {
+    "sr": 7.9,
+    "tok": 6485
+   }
+  }
+ },
+ "v5tight_ga": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A0-Full": {
+    "sr": 13.1,
+    "tok": 8901
+   },
+   "V5-A4-NoM4": {
+    "sr": 17.2,
+    "tok": 4629
+   },
+   "V5-Unconstrained": {
+    "sr": 13.1,
+    "tok": 10925
+   }
+  }
+ },
+ "mu32k": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Static Quota": {
+    "sr": 28.3,
+    "tok": 6139
+   },
+   "Improved+Compact": {
+    "sr": 44.0,
+    "tok": 8980
+   }
+  }
+ },
+ "ga32k_gem": {
+  "model": "gemma-4-31B-it",
+  "cells": {
+   "Static Quota": {
+    "sr": 20.4,
+    "tok": 10438
+   },
+   "Improved+Compact": {
+    "sr": 20.4,
+    "tok": 11444
+   }
+  }
+ },
+ "v51t16_fr": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unconstrained": {
+    "sr": 10.0,
+    "tok": 7691
+   },
+   "V5.1-Unified": {
+    "sr": 13.3,
+    "tok": 5158
+   },
+   "V5.1-NoPool": {
+    "sr": 15.3,
+    "tok": 6981
+   }
+  }
+ },
+ "ga24k": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Static Quota": {
+    "sr": 13.2,
+    "tok": 7126
+   },
+   "TB-v2-Full": {
+    "sr": 30.3,
+    "tok": 16142
+   },
+   "Full+Stall": {
+    "sr": 30.9,
+    "tok": 14501
+   },
+   "Improved": {
+    "sr": 35.5,
+    "tok": 14413
+   },
+   "Compact": {
+    "sr": 35.5,
+    "tok": 13176
+   },
+   "Improved+Compact": {
+    "sr": 38.2,
+    "tok": 13421
+   }
+  }
+ },
+ "v5diag_ga": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Unconstrained": {
+    "sr": 19.1,
+    "tok": 18102
+   },
+   "Unc+Compact": {
+    "sr": 16.4,
+    "tok": 21214
+   }
+  }
+ },
+ "v52x1_ga": {
+  "model": "gemma-4-31B-it",
+  "cells": {
+   "V5.1-NoPool": {
+    "sr": 15.6,
+    "tok": 9569
+   }
+  }
+ },
+ "v52c1_fr24": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unc-Fmt": {
+    "sr": 14.8,
+    "tok": 8201
+   }
+  }
+ },
+ "v5tight_mu": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A0-Full": {
+    "sr": 9.4,
+    "tok": 5191
+   },
+   "V5-A4-NoM4": {
+    "sr": 9.7,
+    "tok": 3424
+   },
+   "V5-Unconstrained": {
+    "sr": 6.8,
+    "tok": 6944
+   }
+  }
+ },
+ "v52rr_ga": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-NoPool": {
+    "sr": 17.2,
+    "tok": 9800
+   }
+  }
+ },
+ "ma16k": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Unconstrained": {
+    "sr": 80.4,
+    "tok": 7175
+   },
+   "Static Quota": {
+    "sr": 66.6,
+    "tok": 3320
+   },
+   "Improved+Compact": {
+    "sr": 72.8,
+    "tok": 4440
+   }
+  }
+ },
+ "v53e2_mu_nom3": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-Ab5-NoM3ctx": {
+    "sr": 10.0,
+    "tok": 8451
+   }
+  }
+ },
+ "v51t16_ga": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unconstrained": {
+    "sr": 14.8,
+    "tok": 10944
+   },
+   "V5.1-Unified": {
+    "sr": 17.2,
+    "tok": 8493
+   },
+   "V5.1-NoPool": {
+    "sr": 17.2,
+    "tok": 9398
+   }
+  }
+ },
+ "v51t16_mu": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unconstrained": {
+    "sr": 7.0,
+    "tok": 6960
+   },
+   "V5.1-Unified": {
+    "sr": 8.9,
+    "tok": 4449
+   },
+   "V5.1-NoPool": {
+    "sr": 10.1,
+    "tok": 6489
+   }
+  }
+ },
+ "v51t_mu": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-Unified": {
+    "sr": 8.6,
+    "tok": 4462
+   },
+   "V5.1-NoPool": {
+    "sr": 9.7,
+    "tok": 6582
+   }
+  }
+ },
+ "v53e2b_mu_nom2": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-Ab3-NoM2": {
+    "sr": 9.2,
+    "tok": 6350
+   }
+  }
+ },
+ "v52x1_ma": {
+  "model": "gemma-4-31B-it",
+  "cells": {
+   "V5.1-NoPool": {
+    "sr": 64.8,
+    "tok": 2035
+   }
+  }
+ },
+ "v5gem_ma": {
+  "model": "gemma-4-31B-it",
+  "cells": {
+   "V5-A0-Full": {
+    "sr": 36.0,
+    "tok": 2223
+   },
+   "V5-A4-NoM4": {
+    "sr": 34.0,
+    "tok": 1279
+   },
+   "V5-Unconstrained": {
+    "sr": 39.0,
+    "tok": 9112
+   }
+  }
+ },
+ "v5abl_ga": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A0-Full": {
+    "sr": 20.0,
+    "tok": 9447
+   },
+   "V5-A1-NoM1": {
+    "sr": 20.0,
+    "tok": 8488
+   },
+   "V5-A2-NoM2": {
+    "sr": 16.7,
+    "tok": 13447
+   },
+   "V5-A3-NoNotes": {
+    "sr": 23.3,
+    "tok": 6491
+   },
+   "V5-A4-NoM4": {
+    "sr": 23.3,
+    "tok": 3905
+   },
+   "V5-A5-NoM5": {
+    "sr": 23.3,
+    "tok": 7066
+   },
+   "V5-A6-OnlyM3": {
+    "sr": 10.0,
+    "tok": 11151
+   },
+   "V5-M4-Equal": {
+    "sr": 26.7,
+    "tok": 9199
+   },
+   "V5-Unconstrained": {
+    "sr": 10.0,
+    "tok": 13859
+   }
+  }
+ },
+ "v52c1_ga16": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unc-Fmt": {
+    "sr": 19.7,
+    "tok": 10986
+   }
+  }
+ },
+ "v53e3_fr8": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unc-Fmt": {
+    "sr": 13.2,
+    "tok": 4726
+   },
+   "V5.1-NoPool": {
+    "sr": 14.1,
+    "tok": 5047
+   }
+  }
+ },
+ "ma32k": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Static Quota": {
+    "sr": 70.8,
+    "tok": 4537
+   },
+   "Improved+Compact": {
+    "sr": 79.6,
+    "tok": 6502
+   }
+  }
+ },
+ "v53e2_mu_nom1": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-Ab1-NoM1": {
+    "sr": 9.8,
+    "tok": 6564
+   }
+  }
+ },
+ "v53e2b_mu_fmt": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-Unc-Fmt": {
+    "sr": 9.8,
+    "tok": 8220
+   }
+  }
+ },
+ "ga16k_combo": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Combo16k": {
+    "sr": 23.0,
+    "tok": 9705
+   }
+  }
+ },
+ "ga24k_combo": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Combo16k": {
+    "sr": 38.2,
+    "tok": 13311
+   }
+  }
+ },
+ "fr32k": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Static Quota": {
+    "sr": 35.7,
+    "tok": 6774
+   },
+   "Improved+Compact": {
+    "sr": 53.0,
+    "tok": 9880
+   }
+  }
+ },
+ "fr24k_gem": {
+  "model": "gemma-4-31B-it",
+  "cells": {
+   "Unconstrained": {
+    "sr": 38.0,
+    "tok": 8952
+   },
+   "Static Quota": {
+    "sr": 36.0,
+    "tok": 6751
+   },
+   "Improved+Compact": {
+    "sr": 38.3,
+    "tok": 7108
+   }
+  }
+ },
+ "fr16k_base": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Unconstrained": {
+    "sr": 53.5,
+    "tok": 10888
+   },
+   "Static Quota": {
+    "sr": 29.0,
+    "tok": 4007
+   }
+  }
+ },
+ "v51_ma": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5-A6-OnlyM3": {
+    "sr": 70.0,
+    "tok": 4761
+   },
+   "V5-Unconstrained": {
+    "sr": 56.0,
+    "tok": 4924
+   },
+   "V5.1-Unified": {
+    "sr": 74.0,
+    "tok": 2079
+   },
+   "V5.1-NoPool": {
+    "sr": 74.0,
+    "tok": 2139
+   }
+  }
+ },
+ "v51t_ma": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "V5.1-Unified": {
+    "sr": 70.5,
+    "tok": 2905
+   },
+   "V5.1-NoPool": {
+    "sr": 71.2,
+    "tok": 3283
+   }
+  }
+ },
+ "fr16k": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Improved+Compact": {
+    "sr": 44.4,
+    "tok": 7084
+   }
+  }
+ },
+ "fr24k_base": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Static Quota": {
+    "sr": 32.4,
+    "tok": 5551
+   }
+  }
+ },
+ "mu16k": {
+  "model": "Qwen3.6-27B-FP8",
+  "cells": {
+   "Unconstrained": {
+    "sr": 43.1,
+    "tok": 9869
+   },
+   "Static Quota": {
+    "sr": 24.2,
+    "tok": 3735
+   },
+   "Improved+Compact": {
+    "sr": 36.9,
+    "tok": 6233
+   }
+  }
+ }
+}

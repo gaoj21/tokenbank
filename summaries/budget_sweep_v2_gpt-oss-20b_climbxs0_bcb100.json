@@ -1,0 +1,30 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    100000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 100000,
+      "name": "CLIMB-Live-BCB",
+      "success_rate": 0.42543859649122806,
+      "cps": 0.000720618556701031,
+      "mean_tokens": 10264.451754385966,
+      "cost": 0.0699
+    }
+  ],
+  "agg": [
+    {
+      "budget": 100000,
+      "name": "CLIMB-Live-BCB",
+      "sr_mean": 0.42543859649122806,
+      "sr_std": 0.0,
+      "cps_mean": 0.000720618556701031,
+      "tokens_mean": 10264.451754385966
+    }
+  ]
+}

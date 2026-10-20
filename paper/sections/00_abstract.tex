@@ -1,0 +1,15 @@
+\begin{abstract}
+Multi-agent pipelines in which LLM agents plan, execute and review can outperform a single agent but often cost
+several times as much. They are not uniformly better: the team sometimes misses answers a single agent gets right,
+mostly through wrong first drafts that its reviewer leaves uncorrected. Invoking the team only when a cheaper
+configuration is likely to fail can cut cost, but a confidence threshold gives no guarantee on the accuracy
+lost: in our experiments, one of similar average cost lost up to 16 points. We instead minimise cost subject to a
+user-set tolerance on accuracy loss. \climb{} answers cheaply either directly or after a single agent, as calibration
+selects, and escalates the rest to the team, stopping on confidence and agreement. It deploys the
+cheapest policy that a distribution-free test certifies to meet the tolerance with high probability. Since skipping the team can also keep answers the team
+would miss, the loss is signed, and a variance-adaptive betting test on it typically certifies more than clipping it or
+applying a Hoeffding--Bentkus bound. Without a certified cheaper policy, \climb{} defaults to the full pipeline,
+so an unreliable signal tends to reduce savings rather than accuracy. Replayed on three open models and four
+benchmarks, \climb{} exceeded its tolerance with estimated probability at most 3.4\% (the guarantee allows
+10\%), while saving 38\% of tokens on average at a 5-point tolerance and 65\% at 10 points.
+\end{abstract}

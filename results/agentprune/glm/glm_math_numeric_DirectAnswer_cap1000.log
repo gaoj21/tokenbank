@@ -1,0 +1,83 @@
+/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/class_registry/entry_points.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import iter_entry_points
+Batch 0 --------------------------------------------------------------------------------
+Batch time 43.782
+Accuracy: 0.6875
+utilities: [True, True, True, False, True, True, True, False, False, True, False, True, True, True, True, False]
+Batch 1 --------------------------------------------------------------------------------
+Batch time 33.639
+Accuracy: 0.75
+utilities: [True, False, True, True, True, True, True, True, True, False, True, False, True, True, True, True]
+Batch 2 --------------------------------------------------------------------------------
+Batch time 28.488
+Accuracy: 0.7708333333333334
+utilities: [False, True, True, True, True, True, False, True, True, True, True, True, False, True, True, True]
+Batch 3 --------------------------------------------------------------------------------
+Batch time 30.095
+Accuracy: 0.703125
+utilities: [True, False, True, True, False, True, False, False, True, True, True, False, False, False, False, True]
+Batch 4 --------------------------------------------------------------------------------
+Batch time 23.923
+Accuracy: 0.675
+utilities: [True, False, False, True, False, True, False, True, True, True, True, False, True, True, False, False]
+Batch 5 --------------------------------------------------------------------------------
+Batch time 41.424
+Accuracy: 0.6979166666666666
+utilities: [True, True, True, True, True, True, True, False, True, True, True, True, False, False, True, True]
+Batch 6 --------------------------------------------------------------------------------
+Batch time 29.121
+Accuracy: 0.6875
+utilities: [False, False, False, True, False, True, True, True, False, True, False, True, True, True, True, True]
+Batch 7 --------------------------------------------------------------------------------
+Batch time 24.228
+Accuracy: 0.6953125
+utilities: [True, True, False, True, True, True, False, False, True, True, True, True, True, False, True, True]
+Batch 8 --------------------------------------------------------------------------------
+Batch time 27.069
+Accuracy: 0.7013888888888888
+utilities: [True, True, True, True, True, True, False, True, True, False, True, True, True, True, False, False]
+Batch 9 --------------------------------------------------------------------------------
+Batch time 32.661
+Accuracy: 0.7
+utilities: [False, True, True, True, True, False, True, False, False, False, True, True, True, True, True, True]
+Batch 10 --------------------------------------------------------------------------------
+Batch time 34.976
+Accuracy: 0.7215909090909091
+utilities: [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False]
+Batch 11 --------------------------------------------------------------------------------
+Batch time 26.344
+Accuracy: 0.7135416666666666
+utilities: [True, True, False, True, False, False, False, True, True, True, False, True, False, True, True, True]
+Batch 12 --------------------------------------------------------------------------------
+Batch time 33.855
+Accuracy: 0.6923076923076923
+utilities: [False, False, True, False, False, True, True, True, True, False, False, True, False, False, True, False]
+Batch 13 --------------------------------------------------------------------------------
+Batch time 36.666
+Accuracy: 0.6964285714285714
+utilities: [False, True, True, False, True, False, True, True, True, False, True, True, True, True, True, True]
+Batch 14 --------------------------------------------------------------------------------
+Batch time 31.769
+Accuracy: 0.6958333333333333
+utilities: [True, True, True, True, False, True, False, True, False, True, True, True, True, False, False, True]
+Batch 15 --------------------------------------------------------------------------------
+Batch time 31.126
+Accuracy: 0.6953125
+utilities: [True, True, True, True, False, True, True, False, True, True, False, True, False, False, True, True]
+Batch 16 --------------------------------------------------------------------------------
+Batch time 18.178
+Accuracy: 0.6948529411764706
+utilities: [True, True, True, True, False, True, True, False, False, True, True, True, True, True, False, False]
+Batch 17 --------------------------------------------------------------------------------
+Batch time 39.158
+Accuracy: 0.7083333333333334
+utilities: [True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True]
+Batch 18 --------------------------------------------------------------------------------
+Batch time 33.721
+Accuracy: 0.7105263157894737
+utilities: [True, False, True, False, False, True, True, True, True, True, True, True, True, True, False, True]
+Batch 19 --------------------------------------------------------------------------------
+Batch time 28.740
+Accuracy: 0.7
+utilities: [False, True, False, True, False, True, False, False, True, True, True, True, False, True, False, False]
+DONE

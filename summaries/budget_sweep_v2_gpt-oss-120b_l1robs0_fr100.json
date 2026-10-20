@@ -1,0 +1,30 @@
+{
+  "model": "openai/gpt-oss-120b",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    10000000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 10000000,
+      "name": "CLIMB-Live",
+      "success_rate": 0.2606060606060606,
+      "cps": 0.00561046511627907,
+      "mean_tokens": 48762.239393939395,
+      "cost": 0.4825
+    }
+  ],
+  "agg": [
+    {
+      "budget": 10000000,
+      "name": "CLIMB-Live",
+      "sr_mean": 0.2606060606060606,
+      "sr_std": 0.0,
+      "cps_mean": 0.00561046511627907,
+      "tokens_mean": 48762.239393939395
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-CritOnly-R4k",
+      "success_rate": 0.6025,
+      "cps": 0.00018921161825726141,
+      "mean_tokens": 3488.18,
+      "cost": 0.0456
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-Slots-R4k",
+      "success_rate": 0.6175,
+      "cps": 0.00019554655870445344,
+      "mean_tokens": 3671.8975,
+      "cost": 0.0483
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "ST-CritOnly-R4k",
+      "sr_mean": 0.6025,
+      "sr_std": 0.0,
+      "cps_mean": 0.00018921161825726141,
+      "tokens_mean": 3488.18
+    },
+    {
+      "budget": 24000,
+      "name": "ST-Slots-R4k",
+      "sr_mean": 0.6175,
+      "sr_std": 0.0,
+      "cps_mean": 0.00019554655870445344,
+      "tokens_mean": 3671.8975
+    }
+  ]
+}

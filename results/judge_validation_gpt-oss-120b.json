@@ -1,0 +1,1539 @@
+{
+ "model": "openai/gpt-oss-120b",
+ "n_em_correct": 60,
+ "em_correct_judged_correct_low": 60,
+ "em_correct_judged_correct_medium": 60,
+ "n_em_wrong": 150,
+ "em_wrong_judged_correct_low": 18,
+ "em_wrong_judged_correct_medium": 14,
+ "repeat_agreement_low": 0.9952380952380953,
+ "low_vs_medium_agreement": 0.9809523809523809,
+ "no_verdict": 0,
+ "sample_wrong": [
+  {
+   "tid": "frames_478",
+   "q": "How many years were there between Heath Ledger's birth and the first successful use of a special human extraction technology that appeared in a Batman movie that Ledger starred in?",
+   "gold": [
+    "21 years."
+   ],
+   "pred": "29",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__754753_57816",
+   "q": "What is the U.S. News ranking of the law school at Carlos Alvarez's employer?",
+   "gold": [
+    "100"
+   ],
+   "pred": "12",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop2__607269_467331_162182",
+   "q": "In what region of the country where Ha Hoa is located is the city where Zone 5 Military Museum is found?",
+   "gold": [
+    "South Central Coast"
+   ],
+   "pred": "Northern Vietnam",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__448615_127908",
+   "q": "What league was the team that Jose Cancela was a member of in?",
+   "gold": [
+    "Major League Soccer",
+    "MLS"
+   ],
+   "pred": "National League",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__442175_56873",
+   "q": "When did the team that Jamie Ward is a member of win the FA Cup?",
+   "gold": [
+    "1898 and 1959"
+   ],
+   "pred": "2010",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__92900_512508",
+   "q": "The person credited with the discovery of the neutron is a participant in what project?",
+   "gold": [
+    "Manhattan Project"
+   ],
+   "pred": "The Manhattan Project.",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_2hop__475808_74481",
+   "q": "In The Godfather Part II, who did the producer of Mistress play?",
+   "gold": [
+    "Vito Corleone",
+    "Vito Andolini",
+    "Vito Andolini Corleone"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__833841_378185_282674_759393",
+   "q": "What is the seat of the county sharing a border with the county in which Amy McKenzie was born?",
+   "gold": [
+    "Green Bay"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_61",
+   "q": "The manga 'Sailor Moon' was authored by a woman. What manga did her husband win the Shogakukan Manga Award for authoring?",
+   "gold": [
+    "YuYu Hakusho"
+   ],
+   "pred": "Kimi no Na wa",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__161765_53706_795904_580996",
+   "q": "What city shares a border with the city where the person who went to the state where Englebart died during the gold rush works?",
+   "gold": [
+    "Rio Linda"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__404541_629431_124169",
+   "q": "When did the Governorship end of the city where the author of Paenitentiam Agere died?",
+   "gold": [
+    "1952"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__161765_53706_795904_580996",
+   "q": "What city shares a border with the city where the person who went to the state where Englebart died during the gold rush works?",
+   "gold": [
+    "Rio Linda"
+   ],
+   "pred": "San Mateo",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop2__132957_51933_40768",
+   "q": "When did the maker of the Acura Legend, the largest auto company in the world, and Nissan open US assembly plants?",
+   "gold": [
+    "1981"
+   ],
+   "pred": "1964, 1986, 1981",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__398344_439882",
+   "q": "Who is the creator of the main character in the Steven the Sword Fighter series?",
+   "gold": [
+    "Rebecca Sugar"
+   ],
+   "pred": "Steven",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop2__222979_132536_40768",
+   "q": "When did Nissan, the HPD ARX-03 maker and the Scion owner open US assembly plants?",
+   "gold": [
+    "1981"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__131783_131926_89261",
+   "q": "Where does the body of water by the city where The Minikahda Club empty into the Gulf of Mexico?",
+   "gold": [
+    "the Mississippi River Delta",
+    "Mississippi River Delta"
+   ],
+   "pred": "Mississippi River",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__108881_720914_41132",
+   "q": "How many times did plague occur in the place where the creator of The Worship of Venus died?",
+   "gold": [
+    "22"
+   ],
+   "pred": "3**",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__342858_131850_159767_81096",
+   "q": "Who won the 1993 Indy Car Race in the largest city of the state where the library district and the city of Yuma share the same county?",
+   "gold": [
+    "Mario Andretti"
+   ],
+   "pred": "The winner of the 1993 IndyCar race in Phoenix, Arizona, was\u202fAl\u202fUnser\u202fJr.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__771727_93362",
+   "q": "What preity zinta and madhuri dixit movie had a cast member from U Me Aur Hum ?",
+   "gold": [
+    "Yeh Raaste Hain Pyaar Ke"
+   ],
+   "pred": "There is no film in which both Preity Zinta and Madhuri Dixit appear together that also includes a cast member from *U Me Aur Hum*.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop2__71753_158985_70784_61381",
+   "q": "When was the region immediately north of the region where Israel is located and the site of the most growth in desalination for agricultural use established?",
+   "gold": [
+    "1932"
+   ],
+   "pred": "The region is **Jordan**, and the key desalination site that marked the most recent growth in agricultural use was **established in 2017**.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__61318_362941",
+   "q": "What is the place of birth of the person who submitted the first version of the equal rights amendment to congress in 1923?",
+   "gold": [
+    "Mount Laurel Township"
+   ],
+   "pred": "Denver, Colorado",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__53147_7298",
+   "q": "Along with the subject of Katy Perry's The One Who Got Away, what notable pop artist started out his career on adult contemporary radio?",
+   "gold": [
+    "Michael Bubl\u00e9"
+   ],
+   "pred": "The notable pop artist who began his career on adult\u2011contemporary radio is **Michael\u202fBubl\u00e9**.",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_2hop__263638_69048",
+   "q": "Who is the Chief Judge of the Tebesa Nemine's birthplace?",
+   "gold": [
+    "Honorable Justice Abiodun Smith"
+   ],
+   "pred": "I couldn\u2019t find any public record identifying a chief judge for the birthplace of\u202fTebesa\u202fNemine.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__95970_456836",
+   "q": "Where was the person who acted in the film Sous les pieds des femmes born?",
+   "gold": [
+    "La Goulette"
+   ],
+   "pred": "Answer: Lille, France",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__62311_62279",
+   "q": "When did Germany launch an air attack on the country the U.S. fought during the American Revolution?",
+   "gold": [
+    "10 July -- 31 October 1940"
+   ],
+   "pred": "12 March 1940",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_490",
+   "q": "How old was Lucy Lawless when season six of Xena: Warrior Princess first aired?",
+   "gold": [
+    "32"
+   ],
+   "pred": "31",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__60000_59747_211319_557671",
+   "q": "What county borders the county with the largest city in the state where Birth of a Nation was filmed?",
+   "gold": [
+    "Presque Isle County"
+   ],
+   "pred": "DeKalb County",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__88342_75218_128008_87812",
+   "q": "When is the opening day of the league in which the team with the most games in the series after which the MLB MVP is awarded plays?",
+   "gold": [
+    "Thursday, March 29"
+   ],
+   "pred": "April\u202f1",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__360072_508773_85832_745702",
+   "q": "Who is the child of the Italian navigator who sailed for England and explored the eastern coast of the continent Francisco Bojado's birthplace is located?",
+   "gold": [
+    "Sebastian Cabot"
+   ],
+   "pred": "```",
+   "low": true,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__622497_160088_49779",
+   "q": "Who is the host of Who Wants to be a Millionaire in the country that the producer of The Wild Women of Chastity Gulch is from?",
+   "gold": [
+    "Chris Harrison"
+   ],
+   "pred": "The host of **\u201cWho\u202fWants\u202fto\u202fBe\u202fa\u202fMillionaire?\u201d** in the country of the producer of *The Wild Women of Chastity\u202fGulch* is **Regis\u202fPhilbin**.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__699172_141338",
+   "q": "What company is the school where Lawrence Landweber was educated a part of?",
+   "gold": [
+    "City University of New York",
+    "The City University of New York"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__249867_557232",
+   "q": "Which country is the Desert Forest Golf Club located in?",
+   "gold": [
+    "Maricopa County",
+    "Maricopa County, Arizona"
+   ],
+   "pred": "South Africa",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_190",
+   "q": "As of 1st june 2024 Which Jonas brother has a wife who narrated a nature documentary released under the Disneynature label?",
+   "gold": [
+    "Nick"
+   ],
+   "pred": "Nick Jonas",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_4hop2__161602_426860_88460_126088",
+   "q": "Who was in charge in the country that is the natural boundary between the country that hosted the tournament and the country where That Dam is located?",
+   "gold": [
+    "Thein Sein"
+   ],
+   "pred": "King Salman bin Abdulaziz Al\u2011Saud",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__81825_49084",
+   "q": "Who plays the character that took the sword out of the stone in once upon a time?",
+   "gold": [
+    "Liam Thomas Garrigan",
+    "Liam Garrigan"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_628",
+   "q": "Which Naruto characters from before the TV series \"Boruto: Naruto the next generation\", can perfectly use the Rasengan technique?",
+   "gold": [
+    "Naruto Uzumaki, Minato Namikaze and Jiraiya."
+   ],
+   "pred": "Naruto, Sasuke, Sakura, Jiraiya, Tsunade.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop3__193820_466199_695123_72134",
+   "q": "When did the town WIZE is licensed in become capitol of the state where Brantley York was born?",
+   "gold": [
+    "1839"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__31326_31270",
+   "q": "What is the distance in miles from Nashville to the place where Hemlock Semiconductor produces electronic components?",
+   "gold": [
+    "45"
+   ],
+   "pred": "0 miles",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__13592_85544",
+   "q": "How many games do team in the league where Barcelona won titles in 1948 and 1949 play?",
+   "gold": [
+    "38"
+   ],
+   "pred": "26",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_116",
+   "q": "As of 2024, how many of the Star Wars actors whose first or last names are 'Jack' have starred in more than 2 Star wars movies?",
+   "gold": [
+    "2"
+   ],
+   "pred": "0",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_163",
+   "q": "How many years after Ghengis Khan died did World War II begin?",
+   "gold": [
+    "712 years"
+   ],
+   "pred": "Answer: 712 years.",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_2hop__476927_31270",
+   "q": "How far is Hod Lisenbee's place of death in TN from Nashville?",
+   "gold": [
+    "45"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_709",
+   "q": "What primate species, known for its large population in China and presence in Florida, could potentially carry the Herpes B virus?",
+   "gold": [
+    "Rhesus Macaques"
+   ],
+   "pred": "Rhesus macaque (*Macaca\u202fmulatta*)",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_2hop__658472_5385",
+   "q": "How many people work at the school where Gene Ball was educated?",
+   "gold": [
+    "11,900"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__131818_161450",
+   "q": "Where is the Voshmgir District located?",
+   "gold": [
+    "in the north-east of the country south of the Caspian Sea",
+    "Caspian Sea"
+   ],
+   "pred": "Voshmgir District is located in the Republic of Dagestan, Russia.",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_2hop__26642_66233",
+   "q": "When does the new season of the league where most members of the Buffalo Sabres Alumni Hockey Team are from start?",
+   "gold": [
+    "October 3, 2018"
+   ],
+   "pred": "October 12, 2026",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__217011_80026",
+   "q": "Who played the character in Willy Wonka and the Chocolate Factory that the performer of Victrola was named after?",
+   "gold": [
+    "Julie Dawn Cole"
+   ],
+   "pred": "Gene Wilder",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__75169_92673",
+   "q": "Where is the starting meridian for the longitude system on the world map?",
+   "gold": [
+    "latitude 90 \u00b0 North"
+   ],
+   "pred": "The Prime Meridian at Greenwich, England.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop2__93066_88342_47738",
+   "q": "When did the team that won the AL East in 2017 last play in the series of games that the MLB MVP award is given after?",
+   "gold": [
+    "the 2009 season"
+   ],
+   "pred": "2004",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop2__304722_297619_63959",
+   "q": "When was the last time Cian Hughton's team beat the 1894\u201395 FA Cup winner?",
+   "gold": [
+    "1 December 2010"
+   ],
+   "pred": "He never beat the 1894\u201395",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop3__700962_88460_30152_20999",
+   "q": "How were the same people who the Somali Muslim Ajuran Empire declared independence from expelled from the natural boundary between Thailand and the country where Ban Pakpo is found?",
+   "gold": [
+    "The dynasty regrouped and defeated the Portuguese"
+   ],
+   "pred": "They were expelled from the Mekong River\u2014the natural boundary between Thailand and Laos.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__853227_68633",
+   "q": "Arthur Marryatt is a member of a sports association that has who as president?",
+   "gold": [
+    "Thomas Bach"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_611",
+   "q": "The actor who played Oliver Quick in Saltburn appeared in a music video for an artist who opened for Taylor Swift during the Latin American leg of the Eras Tour. What is the name of this music video?",
+   "gold": [
+    "Please Please Please"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_432",
+   "q": "In 2024's version of the world, which country was the birthplace of the Emperor who reigned from the year 363 to 364 over the Empire that the Goths played a major part in collapsing?",
+   "gold": [
+    "Serbia"
+   ],
+   "pred": "Turkey",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__305566_568433_51423",
+   "q": "What is the name of the castle in the city where the headquarters of the production company of A Cosmic Christmas is located?",
+   "gold": [
+    "Casa Loma"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__57543_158262",
+   "q": "When did the famous leader of the Confederate Military end his fight in the Mexican-American war?",
+   "gold": [
+    "1848"
+   ],
+   "pred": "Robert\u202fE.\u202fLee\u2019s active combat service in Mexico ended in **May\u202f1847**.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__150866_11402",
+   "q": "According to the agency that published U.S. and World Population Clock, what is the total area in square miles?",
+   "gold": [
+    "17.037 square miles"
+   ],
+   "pred": "3,531,449 square miles",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__31585_61048",
+   "q": "Who was the US physicist who directed the project that developed the first atomic bomb at the same place where Feynman worked on Water Boiler?",
+   "gold": [
+    "Robert Oppenheimer",
+    "J. Robert Oppenheimer"
+   ],
+   "pred": "J. Robert Oppenheimer",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_4hop1__726391_153080_159767_81096",
+   "q": "Who won the Indy car race in the largest city and capitol of the state where the Oh Yeah performer is from?",
+   "gold": [
+    "Mario Andretti"
+   ],
+   "pred": "Scott Dixon of Chip Ganassi Racing (2023)",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__132967_40769_64047",
+   "q": "When did the rx 350 model of the luxury division of the company that built Daihatsu boon change body style?",
+   "gold": [
+    "Sales began worldwide in April 2012"
+   ],
+   "pred": "2010, 2015, 2020",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_565",
+   "q": "Who was the Super Bowl MVP's wife the year the building Rodney Gordon designed was sold to Capital and City Group?",
+   "gold": [
+    "Abby McGrew"
+   ],
+   "pred": "Penelope \u201cPenny\u201d Hunt",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__603598_25719",
+   "q": "At the end of what year did the tribes from the place where the Rossen culture is located invade the Roman Empire?",
+   "gold": [
+    "406"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__88406_83289",
+   "q": "Who stars alongside the songwriter of \"No Tears Left to Cry\" in the music video for \"one last time\"?",
+   "gold": [
+    "Matt Bennett"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__567955_503371_21711",
+   "q": "When was the Palau de la Generalitat constructed in the city where Martin of the region where Layana is located died?",
+   "gold": [
+    "built in the 15th century",
+    "15th century"
+   ],
+   "pred": "1593",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_479",
+   "q": "How many feature films had James Cameron directed by the time Barack Obama was inaugurated as President of the United States?",
+   "gold": [
+    "Seven."
+   ],
+   "pred": "6",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__483807_508773_85832_745702",
+   "q": "Who's the son of the Italian navigator who explored the eastern coast of the continent Hugo Casillas was born in?",
+   "gold": [
+    "Sebastian Cabot"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop3__175072_88460_30152_20999",
+   "q": "How were the same people who the Somali Muslim Ajuran Empire declared independence from expelled from the natural boundary between Thailand and the country Setthathirath is a citizen of?",
+   "gold": [
+    "The dynasty regrouped and defeated the Portuguese"
+   ],
+   "pred": "They were citizens of Thailand.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__488744_443779_52195",
+   "q": "Who is the president of the newly declared independent country that is part of the Commission of Truth and Friendship with the country where Jenggawah is located?",
+   "gold": [
+    "Francisco Guterres"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_313",
+   "q": "For how long was the \"Father of the National Parks\", the first president to declare a national park, and the president who declared the most national parks all alive at the same time?",
+   "gold": [
+    "26 years, 8 months, and 26 days."
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop2__6989_37759_74563",
+   "q": "When did the religious order that founded Harvard College, arrive in the region of the U.S. served by the Rainbow Times?",
+   "gold": [
+    "1630"
+   ],
+   "pred": "The Congregationalists (Puritans) who founded Harvard College began settling in the area now served by the Rainbow\u202fTimes\u2014essentially the Charlotte, North Carolina region\u2014in the late 1600s, with the first documented Congregational church in the area founded in 1690.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__145194_160545_62931",
+   "q": "The Beach was filmed in what location of the country that contains the birth city of Siddhi Savetsila?",
+   "gold": [
+    "island Koh Phi Phi"
+   ],
+   "pred": "Phuket",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__142621_225454",
+   "q": "What is the record label of the co-writer and recording artist of Permission to Fly?",
+   "gold": [
+    "Hollywood Records"
+   ],
+   "pred": "Polydor\u202fRecords",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_150",
+   "q": "Where was the rapper behind the song \"Hind's Hall\" born? ",
+   "gold": [
+    "Seattle, Washington"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__423001_503371_21711",
+   "q": "When was the Palau de la Generalitat constructed in the city where Martin of the region of Pedrola died?",
+   "gold": [
+    "built in the 15th century",
+    "15th century"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_48",
+   "q": "The state, whose motto was adopted March 26, 1928, has 0.94% of the population in 2024 speaking a language that is native to which country?",
+   "gold": [
+    "Philippines"
+   ],
+   "pred": "```",
+   "low": true,
+   "medium": false
+  },
+  {
+   "tid": "frames_34",
+   "q": "The oldest extant football team in Italy plays in a stadium.   The stadium is named after a person.   Who was the emperor of China when that person was 5 years old?",
+   "gold": [
+    "Guangxu"
+   ],
+   "pred": "Emperor\u202fXuantong (Puyi) of the Qing dynasty",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__847684_339990_54675",
+   "q": "What mountains can you see from Portland, in the state containing the county where Lorenz Park is located?",
+   "gold": [
+    "Tualatin Mountains"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__158139_19788_15107",
+   "q": "What percentage of Eritrea adheres to the religion widely practiced where suicides by females are more common in young than old?",
+   "gold": [
+    "48%"
+   ],
+   "pred": "60%",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__150866_11402",
+   "q": "According to the agency that published U.S. and World Population Clock, what is the total area in square miles?",
+   "gold": [
+    "17.037 square miles"
+   ],
+   "pred": "3,796,742 square miles",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_193",
+   "q": "Do the timelines in the stories of Nier: Automata and Nier Replicant intersect?",
+   "gold": [
+    "No, they do not intersect."
+   ],
+   "pred": "No, the timelines of Nier: Automata and Nier Replicant do not intersect.",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_3hop1__857_846_7874",
+   "q": "What is the name of the major basketball team from the city where the Yongle emperor greeted the person to whom the edict was addressed?",
+   "gold": [
+    "Jiangsu Nangang Basketball Club"
+   ],
+   "pred": "Beijing Ducks",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_218",
+   "q": "Is the time between Oasis's first album and 2024 shorter or longer than between Oasis's first album and The Beatles' last album?",
+   "gold": [
+    "Longer."
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__364476_439408_131976_90181",
+   "q": "What is the deepest part of the ocean, near the state, where the county that holds the city of Winchester is found?",
+   "gold": [
+    "Milwaukee Deep"
+   ],
+   "pred": "8376",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_206",
+   "q": "What are the combined ages of the Guildford 4 at the time of their trial, divided by the number of the Birmingham 6 who were originally from the capital of Northern Ireland? Round it and provide the answer in binary.",
+   "gold": [
+    "10001"
+   ],
+   "pred": "1111010",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_373",
+   "q": "There is a speech-sound disorder, not caused by a structural abnormality, for which one symptom is rearranging sounds of a word. The term for the disorder was first defined in 1908 by a German neuroscientist with the first name Hugo. Why was the Nobel Peace Prize given to an American the same year Hugo died?",
+   "gold": [
+    "For his crucial role in bringing about the Dawes Plan."
+   ],
+   "pred": "It was awarded to Theodore\u202fRoosevelt.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__145427_106426_77199",
+   "q": "When did the USA declare war on the country that produced The Longest Night in the city where You Wenhui was born?",
+   "gold": [
+    "December 8, 1941"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__463635_624859_355213_203322",
+   "q": "What county shares a border with the county where the birthplace of Tonight You're Mine's performer is located?",
+   "gold": [
+    "Cabarrus County"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__57638_88526",
+   "q": "Who was picked in the NBA draft before the player with the highest point average in NBA history?",
+   "gold": [
+    "Greg Oden"
+   ],
+   "pred": "Sam\u202fPerkins",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop2__67618_30587_44003",
+   "q": "Where does the ocean adjacent to Miami meet the body of water where the Mississippi River empties into the sea?",
+   "gold": [
+    "through the Florida Straits",
+    "FL",
+    "Florida"
+   ],
+   "pred": "The Atlantic Ocean (adjacent to Miami) meets the Gulf of Mexico at the Florida Straits.",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_2hop__409884_83837",
+   "q": "Who sings Home Alone Tonight with the Country Girl (Shake It for Me) performer?",
+   "gold": [
+    "Karen Fairchild"
+   ],
+   "pred": "The track \u201cHome\u202fAlone\u202fTonight\u201d is performed by the same artist who recorded \u201cCountry\u202fGirl\u202f(Shake\u202fIt\u202ffor\u202fMe)\u201d: **Lisa\u202fBefor**",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_325",
+   "q": "Which Labour MP served for Bury North while Chukka Umunna was the MP for Streatham?",
+   "gold": [
+    "James Frith"
+   ],
+   "pred": "John Hutton",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_266",
+   "q": "How old was the famous composer who taught at the Ospedale della Piet\u00e0 and was known as \"The Red Priest\" when his first opera premiered? ",
+   "gold": [
+    "Antonio Vivaldi was 35 when his first opera, Ottone in villa, premiered. "
+   ],
+   "pred": "Answer: 29",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__310456_846599",
+   "q": "Who is the child of the person who followed Tihomir of Serbia?",
+   "gold": [
+    "Saint Sava"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__105401_17130_70784_61381",
+   "q": "When was the region immediately north of the region of the country in Strangers No More and the Persian Gulf established?",
+   "gold": [
+    "1932"
+   ],
+   "pred": "23\u202fSeptember\u202f1932.",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_2hop__632234_122868",
+   "q": "Where did the author of The National Dream go to university?",
+   "gold": [
+    "University of British Columbia",
+    "The University of British Columbia"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop3__238811_88460_30152_20999",
+   "q": "New coins by the Somali Muslim Ajuran Empire were a proclamation of independence from a nation. How were the people of that nation expelled from country that borders Thailand and Ban Nampo village's country?",
+   "gold": [
+    "The dynasty regrouped and defeated the Portuguese"
+   ],
+   "pred": "They were expelled by a military invasion.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_156",
+   "q": "What football team did Travis Kelce play for the year Taylor Swift's VMA acceptance speech was interrupted by Kanye West?",
+   "gold": [
+    "The University of Cincinnati Bearcats"
+   ],
+   "pred": "Kansas City Chiefs",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__6379_42197_18397",
+   "q": "Where did the arguer that the country to send the first woman to space had become an imperialist power declare he would intervene in the Korean conflict?",
+   "gold": [
+    "the Politburo",
+    "Politburo"
+   ],
+   "pred": "At the United Nations Security Council in New\u202fYork City.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_57",
+   "q": "The Assistant to the Regional Manager on The Office TV show (US version) has a farm. You can obtain what food colorant from the crop he grows?",
+   "gold": [
+    "Betanin"
+   ],
+   "pred": "red",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__215896_460425",
+   "q": "What is the location of formation of the film company distributing The Boss?",
+   "gold": [
+    "Fort Lee"
+   ],
+   "pred": "Los Angeles, California",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__364489_861485",
+   "q": "Where is the location of the headquarters of the publisher of Bamboo Among the Oaks?",
+   "gold": [
+    "Minnesota History Center"
+   ],
+   "pred": "The publisher of *Bamboo Among the Oaks* is headquartered in New\u202fYork\u202fCity.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__159467_725495_49925_267352",
+   "q": "In New Zealand, 12.6% of Christians belong to a church that is also active in Lesotho. What movement was led by a man who challenged this church?",
+   "gold": [
+    "German Renaissance"
+   ],
+   "pred": "The Protestant Reformation.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__9285_42311",
+   "q": "What's the largest med school in what was the nobilities commonwealth?",
+   "gold": [
+    "Medical University of Warsaw"
+   ],
+   "pred": "University College London (UCL) Medical School",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_234",
+   "q": "Which American actress, born the same year Denzel Washington won his first Best Actor in a Leading Role Academy Award, had a supporting role in the second season of the Netflix series \"You\"?",
+   "gold": [
+    "Jenna Ortega"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__753260_71701",
+   "q": "When did the Japanese get to Liang Jiahong's birthplace and the rest of Guangdong?",
+   "gold": [
+    "November 5"
+   ],
+   "pred": "Japanese forces first entered the area of Liang\u202fJiahong\u2019s birthplace (then in Maoming, Guangdong) on **23\u202fMarch\u202f1938**, during the early stages of the Canton Operation, and the rest of Guangdong province fell to Japan with the capture of Guangzhou on **17\u202fJune\u202f1941**.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__423874_128023",
+   "q": "In which league was Ilsinho's team?",
+   "gold": [
+    "Major League Soccer",
+    "MLS"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_35",
+   "q": "Of the four main characters on Seinfeld, which actor is the oldest?",
+   "gold": [
+    "Michael Richards"
+   ],
+   "pred": "Michael Richards (the actor who played Kramer) is the oldest among the four main characters of *Seinfeld*.",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_2hop__24976_25002",
+   "q": "how long lasting was the pact between Kravchuk and the person organizers wanted to arrest?",
+   "gold": [
+    "10-year"
+   ],
+   "pred": "18 months",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__478978_124498",
+   "q": "Who is the father of the performer of Je dis aime?",
+   "gold": [
+    "Louis Chedid"
+   ],
+   "pred": "Myl\u00e8ne",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop2__161602_426860_88460_126088",
+   "q": "Who was in charge in the country that is the natural boundary between the country that hosted the tournament and the country where That Dam is located?",
+   "gold": [
+    "Thein Sein"
+   ],
+   "pred": "King\u202fAbdullah\u202fII of Jordan",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_815",
+   "q": "A 2002 science fiction novel by an American author references La Llorona and themes of personal identity. What is the name of the trilogy that this author wrote under the same publisher?",
+   "gold": [
+    "The Sea of Trolls trilogy"
+   ],
+   "pred": "I\u2019m sorry, but I don\u2019t have enough information to provide the correct answer.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__118068_582428_157828_162309",
+   "q": "When did the country, whose co-official language was used by the director of Group Portrait with a Lady, first attend the Olympics as an independent team?",
+   "gold": [
+    "2016"
+   ],
+   "pred": "1900",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop2__569322_467331_162182",
+   "q": "In what region of the country of S-Fone is the location of the administrative territorial entity of Zone 5 Military Museum located?",
+   "gold": [
+    "South Central Coast"
+   ],
+   "pred": "North Region",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__813461_31270",
+   "q": "How many miles are there between Nashville and the place in Tennessee where Mark Day was born?",
+   "gold": [
+    "45"
+   ],
+   "pred": "63 miles",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_506",
+   "q": "What is the full name of the district where the Memory of Mankind project is located?",
+   "gold": [
+    "Bezirk Gmunden"
+   ],
+   "pred": "Krasnaya Zarya District",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__749363_49925_13759_736921",
+   "q": "In what state is the district where the man who wanted to reform the religion practiced by Innocenzo Ferrieri preached a sermon on Marian devotion?",
+   "gold": [
+    "Saxony-Anhalt"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__678516_179720",
+   "q": "Who was married to the creator of Ruby Loftus Screwing a Breech Ring?",
+   "gold": [
+    "Harold Knight"
+   ],
+   "pred": "Ruby Loftus",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__93661_59747_211319_557671",
+   "q": "Which county shares a border with the county where the most populous city in the state where season 8 of The Walking Dead was filmed is located?",
+   "gold": [
+    "Presque Isle County"
+   ],
+   "pred": "Snohomish\u202fCounty",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__79039_131926_87157",
+   "q": "What is the direction of flow of the body of water by the home of the juicy lucy?",
+   "gold": [
+    "rises in northern Minnesota and meanders slowly southwards",
+    "Minnesota"
+   ],
+   "pred": "Answer: The water flows **southward**.",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_2hop__763380_74735",
+   "q": "What song did Paul McCartney write for the person who performed Too Late for Goodbyes?",
+   "gold": [
+    "``Hey Jude ''",
+    "Hey Jude"
+   ],
+   "pred": "The Man Who Shot the Moon",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__88406_83289",
+   "q": "Who stars alongside the songwriter of \"No Tears Left to Cry\" in the music video for \"one last time\"?",
+   "gold": [
+    "Matt Bennett"
+   ],
+   "pred": "Chris Brown",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__661847_288421",
+   "q": "Who is part of the band that performed Full Cooperation?",
+   "gold": [
+    "Erick Sermon"
+   ],
+   "pred": "```",
+   "low": true,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__398344_85513",
+   "q": "When is the next episode of the series that Steven the Sword Fighter is a part of being released?",
+   "gold": [
+    "TBD"
+   ],
+   "pred": "There are no upcoming episodes.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_36",
+   "q": "How old was Harvard University, when the person whom the longest river in British Columbia is named after, was born?  The river in question only flows within the confines of British Columbia and does not enter any other province or territory.  ",
+   "gold": [
+    "140 years old."
+   ],
+   "pred": "162",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop2__792915_467331_162182",
+   "q": "In what region of the country containing the C\u00e1i River is the city that has the Zone 5 Military Museum located?",
+   "gold": [
+    "South Central Coast"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__404541_629431_64412",
+   "q": "When did the place of death of Paenitentiam Agere's author become its own country?",
+   "gold": [
+    "11 February 1929"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__704217_82341",
+   "q": "Where is Sean Hampton's birth place in the state of Florida?",
+   "gold": [
+    "in Northern Florida",
+    "Northern Florida"
+   ],
+   "pred": "West Palm Beach, Florida.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__423874_128023",
+   "q": "In which league was Ilsinho's team?",
+   "gold": [
+    "Major League Soccer",
+    "MLS"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_63",
+   "q": "In the style of wrestling performed by former Greek wrestler Mikhail Theodoropoulos, who won the inaugural olympic medal?",
+   "gold": [
+    "Carl Schuhmann."
+   ],
+   "pred": "The very first Olympic medal was won by Edwin\u202fFlack (100\u2011m sprint, 1896); the first Greco\u2011Roman wrestling gold was won by Kostas\u202fD. (1896).",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_431",
+   "q": "What day of the year do John of Lancaster (Duke of Bedford), Fritz Koenig (German Sculptor), Edith Windsor (LGBT Activist), and Ulf Merbold (German Physicist and Astronaut) all have in common? ",
+   "gold": [
+    "They are all born on June 20."
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop2__161602_474028_88460_20988",
+   "q": "For what major conflict is the country on the natural boundary between the country that hosted the tournament and the country where A Don is from known?",
+   "gold": [
+    "one of the world's longest-running ongoing civil wars."
+   ],
+   "pred": "Uruguayan Civil War",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__408432_32392_823060_610794",
+   "q": "In which county is the city sharing a border with the capitol of the state where WYFG is located?",
+   "gold": [
+    "Richland County",
+    "Richland County, South Carolina"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__222497_309482_89834",
+   "q": "When did the merchant of the city where the composer of Al gran sole carico d'amore takes place?",
+   "gold": [
+    "16th - century"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_553",
+   "q": "The city which has India's most famous biryani dish was from 1956 until 2014 the capital of a state which subsequently split into two new states; what is the capital of the state which does not contain the city from where the famous biryani originates?",
+   "gold": [
+    "Amaravati."
+   ],
+   "pred": "Amaravati",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "musique_2hop__474885_22402",
+   "q": "How many students attend the school that granted Francis Travis a Ph.D.?",
+   "gold": [
+    "nearly 25,000",
+    "University of Zurich"
+   ],
+   "pred": "Approximately 29,500 students\u3010commentary: the University of Tulsa, where Francis\u202fTravis earned his Ph.D., reported a total enrollment of roughly 29,500 (undergraduate\u202f+\u202fgraduate) for the most recent academic year\u3011",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_14",
+   "q": "Which football player got 15 or more assists in La Liga during the 2010-2011 season and also played for Arsenal at one point in his career?",
+   "gold": [
+    "This was Mesut Ozil."
+   ],
+   "pred": "```",
+   "low": true,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop2__161602_426860_88460_18966",
+   "q": "Who brought the language Hokkien to the country between the country that hosted the tournament and the country where That Dam is from?",
+   "gold": [
+    "Han Chinese emigrants",
+    "Han",
+    "Han Chinese"
+   ],
+   "pred": "The language Hokkien was brought to Singapore by Chinese immigrants\u2014primarily migrants from Fujian province\u2014who arrived in the 19th\u2011century as traders, laborers and merchants. The influx of these Fujianese settlers introduced Hokkien to the city\u2011state, where it became one of the main lingua\u2011frankas among the Chinese community.",
+   "low": true,
+   "medium": true
+  },
+  {
+   "tid": "frames_183",
+   "q": "How many months, rounded to the nearest whole number, did it take to construct the tallest building in the world as of January 1, 2024?",
+   "gold": [
+    "69"
+   ],
+   "pred": "72 months",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__64175_90973",
+   "q": "Who did the original voice of the character Mila Kunis plays on Family Guy?",
+   "gold": [
+    "Lacey Chabert"
+   ],
+   "pred": "Chris Beattie",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__389955_132457_47686",
+   "q": "Where do Greyhound buses leave from in the city where the band that recorded the album I'm Alive and on Fire formed?",
+   "gold": [
+    "Toronto Coach Terminal"
+   ],
+   "pred": "Port Authority Bus Terminal",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__496961_554601",
+   "q": "What's the place of birth of the former member of The Sunnyboys?",
+   "gold": [
+    "Kingscliff",
+    "Kingscliff, New South Wales"
+   ],
+   "pred": "Sydney, New South Wales, Australia",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__44259_747874",
+   "q": "Who is the sibling of the player who won the 2012 U.S. Open Men's Singles final?",
+   "gold": [
+    "Jamie Murray"
+   ],
+   "pred": "Ana Mar\u00eda Nadal",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__153532_45326",
+   "q": "How many episodes are in season 5 of the series The Bag or the Bat is part of?",
+   "gold": [
+    "12"
+   ],
+   "pred": "22",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_603",
+   "q": "What is the name of the popular vantage point that is featured in the 1980 comedy film \"The Gods Must Be Crazy\", and which provincial nature reserve is it located in as of 2024?",
+   "gold": [
+    "God's Window in Blyde River Canyon Nature Reserve"
+   ],
+   "pred": "Gugulethu Viewpoint \u2013 Gugulethu Provincial Nature Reserve.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__286621_67370",
+   "q": "When does the show of the cast member of Politically Incorrect start again in 2018?",
+   "gold": [
+    "January 19, 2018"
+   ],
+   "pred": "January\u202f3,\u202f2018",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_173",
+   "q": "In roman numerals, how many nations competed in the Olympic Games where the most gold medals was won by an athlete at a single Olympic Games, as of 1st July 2024?",
+   "gold": [
+    "CCIV"
+   ],
+   "pred": "CCVI",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_2hop__693157_131890",
+   "q": "What is the body of water by the area where Athlete was formed?",
+   "gold": [
+    "River Thames"
+   ],
+   "pred": "Answer: **River Arun**",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_4hop1__324759_378185_282674_759393",
+   "q": "What is the capital of the county that shares a border with the county where Pierce Manufacturing's headquarters are located?",
+   "gold": [
+    "Green Bay"
+   ],
+   "pred": "Vancouver",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "frames_391",
+   "q": "Which ancient archaeoastronomical site in the U.K. is also associated with the summer solstice during which time light illuminates a quartz-rich stone in the chamber.",
+   "gold": [
+    "Bryn Celli Ddu"
+   ],
+   "pred": "The archaeoastronomical site you\u2019re referring to is **Stonehenge, specifically the western\u2011gate chamber**. In that chamber a quartz\u2011rich flint block is struck by daylight on the summer solstice, producing a distinctive illumination that has been recorded by both observers and simulations of the site\u2019s solar alignments.",
+   "low": false,
+   "medium": false
+  },
+  {
+   "tid": "musique_3hop1__409517_547811_41132",
+   "q": "How many times did the plague occur in the birth city of the composer of Scanderbeg?",
+   "gold": [
+    "22"
+   ],
+   "pred": "```",
+   "low": false,
+   "medium": false
+  }
+ ]
+}

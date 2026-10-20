@@ -1,0 +1,3 @@
+882: output length on LLM reasoning and cost. CoRR, abs/2407.19825, 2024. doi: 10.48550/ARXIV.
+1060:For each browse tool call, the fetched webpage is truncated to 150,000 characters before being sent
+1885:Examples include token limits, inference latency, and tool-call budgets. Understanding and controlling

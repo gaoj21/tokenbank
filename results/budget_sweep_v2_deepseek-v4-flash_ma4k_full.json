@@ -1,0 +1,30 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    4000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "TB-v2-Full",
+      "success_rate": 0.482,
+      "cps": 0.0010609958506224066,
+      "mean_tokens": 2217.07,
+      "cost": 0.2557
+    }
+  ],
+  "agg": [
+    {
+      "budget": 4000,
+      "name": "TB-v2-Full",
+      "sr_mean": 0.482,
+      "sr_std": 0.0,
+      "cps_mean": 0.0010609958506224066,
+      "tokens_mean": 2217.07
+    }
+  ]
+}

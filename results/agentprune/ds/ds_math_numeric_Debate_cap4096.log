@@ -1,0 +1,169 @@
+/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/class_registry/entry_points.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import iter_entry_points
+Batch 0 --------------------------------------------------------------------------------
+Error during execution of node Z8zj: 
+Error during execution of node Z8zj: 
+Error during execution of node Z8zj: 
+Error during execution of node pNot: 
+Error during execution of node Z8zj: 
+Batch time 925.175
+Accuracy: 0.90625
+utilities: [True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, True, True]
+Batch 1 --------------------------------------------------------------------------------
+Error during execution of node rwep: 
+Error during execution of node rwep: 
+Batch time 1871.287
+Accuracy: 0.875
+utilities: [False, True, True, True, True, True, False, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True]
+Batch 2 --------------------------------------------------------------------------------
+Error during execution of node pNot: 
+Error during execution of node rwep: 
+Error during execution of node pNot: 
+Batch time 1595.206
+Accuracy: 0.875
+utilities: [True, True, True, True, True, True, False, True, True, True, True, False, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True]
+Batch 3 --------------------------------------------------------------------------------
+Error during execution of node Z8zj: RetryError[<Future at 0x7fb80c9df3e0 state=finished raised APIConnectionError>]
+Error during execution of node pNot: RetryError[<Future at 0x7fb80ca1fda0 state=finished raised APIConnectionError>]
+Error during execution of node akLP: RetryError[<Future at 0x7fb80c68e1e0 state=finished raised APIConnectionError>]
+Error during execution of node Z8zj: RetryError[<Future at 0x7fb80c7d7ad0 state=finished raised APIConnectionError>]
+Error during execution of node pNot: RetryError[<Future at 0x7fb80c69e5d0 state=finished raised APIConnectionError>]
+Error during execution of node Z8zj: RetryError[<Future at 0x7fb80c83e180 state=finished raised APIConnectionError>]
+Error during execution of node rwep: RetryError[<Future at 0x7fb80cbdaf00 state=finished raised APIConnectionError>]
+Error during execution of node Z8zj: RetryError[<Future at 0x7fb80c8c8aa0 state=finished raised APIConnectionError>]
+Error during execution of node pNot: RetryError[<Future at 0x7fb80c79d910 state=finished raised APIConnectionError>]
+Error during execution of node Z8zj: RetryError[<Future at 0x7fb80c7e4560 state=finished raised APIConnectionError>]
+Error during execution of node pNot: RetryError[<Future at 0x7fb80c7f8fe0 state=finished raised APIConnectionError>]
+Error during execution of node pNot: RetryError[<Future at 0x7fb80c6fcdd0 state=finished raised APIConnectionError>]
+Error during execution of node rwep: RetryError[<Future at 0x7fb80c6ff9b0 state=finished raised APIConnectionError>]
+Error during execution of node akLP: RetryError[<Future at 0x7fb80c6ff530 state=finished raised APIConnectionError>]
+Traceback (most recent call last):
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpcore/_async/connection.py", line 103, in handle_async_request
+    return await self._connection.handle_async_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpcore/_async/http11.py", line 136, in handle_async_request
+    raise exc
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpcore/_async/http11.py", line 106, in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpcore/_async/http11.py", line 177, in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpcore/_async/http11.py", line 217, in _receive_event
+    data = await self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpcore/_backends/anyio.py", line 32, in read
+    with map_exceptions(exc_map):
+  File "/home/j0018/anaconda3/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1694, in request
+    response = await self._send_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/openai/_client.py", line 1083, in _send_request
+    response = await self._send_with_auth_retry(request, stream=stream, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/openai/_client.py", line 1061, in _send_with_auth_retry
+    response = await super()._send_request(request, stream=stream, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1613, in _send_request
+    return await self._client.send(request, stream=stream, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+  File "/home/j0018/anaconda3/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 116, in __call__
+    result = await fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/external/AgentPrune/AgentPrune/llm/gpt_chat.py", line 44, in achat
+    chat_completion = await client.chat.completions.create(messages = msg,model = model, **kw)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 2883, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1977, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1729, in request
+    raise APIConnectionError(request=request) from err
+openai.APIConnectionError: Connection error.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/j0018/Desktop/tokenbank/external/AgentPrune/experiments/run_gsm8k.py", line 230, in <module>
+    asyncio.run(main())
+  File "/home/j0018/anaconda3/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/home/j0018/anaconda3/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/anaconda3/lib/python3.12/asyncio/base_events.py", line 685, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/external/AgentPrune/experiments/run_gsm8k.py", line 117, in main
+    raw_results = await asyncio.gather(*answer_log_probs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/external/AgentPrune/AgentPrune/graph/graph.py", line 299, in arun
+    await self.decision_node.async_execute(input)
+  File "/home/j0018/Desktop/tokenbank/external/AgentPrune/AgentPrune/graph/node.py", line 163, in async_execute
+    results = await asyncio.gather(*tasks, return_exceptions=False)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/external/AgentPrune/AgentPrune/agents/final_decision.py", line 104, in _async_execute
+    response = await self.llm.agen(message)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/external/AgentPrune/AgentPrune/llm/gpt_chat.py", line 82, in agen
+    return await achat(self.model_name,messages)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 193, in async_wrapped
+    return await copy(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 112, in __call__
+    do = await self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 157, in iter
+    result = await action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/tenacity/_utils.py", line 111, in inner
+    return call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/tenacity/__init__.py", line 414, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7fb80c70f9b0 state=finished raised APIConnectionError>]

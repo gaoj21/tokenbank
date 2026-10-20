@@ -1,0 +1,22 @@
+\begin{table*}[h]
+\centering
+\small
+\setlength{\tabcolsep}{3.5pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+$\eps = 10\%$ & Always $L_0$ & Always $L_1$ & Mix $L_0$/ref. & Mix $L_1$/ref. & $L_0 \to$ ref. & \climb{} \\
+\midrule
+GLM MATH & 82 (20) & 85 (20) & 37 (100) & 48 (100) & 32 (100) & \textbf{24 (100)} \\
+GLM GAIA & 64 (38) & 52 (55) & \textbf{34 (100)} & 37 (100) & 43 (100) & 41 (71) \\
+GLM FRAMES & 90 (10) & 71 (34) & 31 (100) & \textbf{30 (100)} & 42 (100) & 36 (100) \\
+GLM MuSiQue & 6 (99) & 11 (100) & 15 (100) & 20 (100) & 6 (100) & \textbf{5 (100)} \\
+DeepSeek MATH & 69 (43) & 60 (99) & 41 (100) & 64 (100) & \textbf{37 (100)} & 38 (100) \\
+DeepSeek GAIA & 77 (26) & 76 (32) & 64 (100) & \textbf{62 (100)} & 66 (62) & 64 (67) \\
+DeepSeek FRAMES & 97 (3) & 84 (22) & 53 (100) & 46 (100) & \textbf{41 (100)} & 55 (98) \\
+DeepSeek MuSiQue & 99 (1) & 94 (8) & 36 (100) & 39 (100) & \textbf{34 (100)} & 40 (100) \\
+\bottomrule
+\end{tabular}}
+\caption{Simple policies certified by the same procedure (betting test, fixed sequence, fallback to the reference), $\eps = 10\%$: tokens (\% of the reference) and, in parentheses, the share of the 200 splits in which a non-trivial policy was certified. Mix: each task independently goes to the cheap rung with probability $p \in \{0.1, \dots, 0.9\}$ (increasing $p$ tested in order), otherwise to the reference. $L_0 \to$ ref.: a one-rung ladder that escalates to the reference pipeline. Lowest cost in bold; all violation rates $\le$ 4.0\%.}
+\label{tab:r4b}
+\end{table*}

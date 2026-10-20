@@ -1,0 +1,69 @@
+/home/j0018/Desktop/tokenbank/.venv/lib/python3.12/site-packages/class_registry/entry_points.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import iter_entry_points
+Batch 0 --------------------------------------------------------------------------------
+Error during execution of node E3U7: 
+Batch time 2107.391
+Accuracy: 0.8125
+utilities: [True, True, True, False, True, True, True, False, False, True, True, True, True, False, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, True, True]
+Batch 1 --------------------------------------------------------------------------------
+Error during execution of node WcPU: 
+Batch time 2001.304
+Accuracy: 0.75
+utilities: [False, True, True, True, True, True, False, True, True, True, True, True, False, True, True, True, True, False, True, True, False, True, True, False, True, True, True, False, False, False, False, True]
+Batch 2 --------------------------------------------------------------------------------
+Error during execution of node WcPU: 
+Error during execution of node E3U7: 
+Error during execution of node WcPU: 
+Batch time 738.967
+Accuracy: 0.7604166666666666
+utilities: [True, False, False, True, True, True, False, True, True, True, True, False, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, False, False, True, True]
+Batch 3 --------------------------------------------------------------------------------
+Batch time 1875.113
+Accuracy: 0.7734375
+utilities: [False, True, True, True, False, True, True, True, False, True, False, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, False, True, True, True, True, True]
+Batch 4 --------------------------------------------------------------------------------
+Error during execution of node 2BUd: 
+Error during execution of node 2BUd: 
+Error during execution of node 2BUd: 
+Error during execution of node 2BUd: 
+Error during execution of node 2BUd: 
+Error during execution of node 2BUd: 
+Error during execution of node 2BUd: 
+Error during execution of node 2BUd: 
+Error during execution of node 2BUd: 
+Error during execution of node 2BUd: 
+Error during execution of node KrdQ: 
+Error during execution of node E3U7: 
+Batch time 2511.757
+Accuracy: 0.78125
+utilities: [True, True, True, True, True, True, False, True, True, True, True, True, True, True, False, True, True, True, True, True, True, False, True, False, False, False, True, True, True, True, True, True]
+Batch 5 --------------------------------------------------------------------------------
+Error during execution of node WcPU: 
+Batch time 1164.074
+Accuracy: 0.8125
+utilities: [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, True, True]
+Batch 6 --------------------------------------------------------------------------------
+Error during execution of node KrdQ: 
+Error during execution of node KrdQ: 
+Error during execution of node WcPU: 
+Batch time 1170.534
+Accuracy: 0.8080357142857143
+utilities: [True, False, True, False, True, True, True, True, True, True, False, True, False, False, True, True, True, True, True, True, True, False, True, True, True, False, True, True, True, True, True, True]
+Batch 7 --------------------------------------------------------------------------------
+Error during execution of node E3U7: 
+Batch time 926.323
+Accuracy: 0.81640625
+utilities: [True, True, True, True, False, True, True, True, True, True, True, True, True, False, False, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, True]
+Batch 8 --------------------------------------------------------------------------------
+Error during execution of node E3U7: 
+Error during execution of node E3U7: 
+Error during execution of node KrdQ: 
+Batch time 2127.353
+Accuracy: 0.8229166666666666
+utilities: [True, True, True, True, True, True, True, False, False, True, True, True, True, True, False, True, True, True, True, True, True, True, True, True, False, True, True, True, True, True, True, True]
+Batch 9 --------------------------------------------------------------------------------
+Error during execution of node E3U7: 
+Batch time 631.412
+Accuracy: 0.828125
+utilities: [True, False, True, True, False, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False, True, True, False]
+DONE

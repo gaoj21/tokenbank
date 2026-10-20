@@ -1,0 +1,14 @@
+573:Generation Time Assume an infinite stream of requests saturating the GPU, each with maximum length L. The
+655:penalty (β = 0) for best performance (Yu et al., 2025). We also apply truncated importance sampling to mitigate the
+1517:Consequently, for the same GPU, the ratio of throughputs when decoding lengths are l1′ and l2′ satisfies
+1532:establishing that throughput is (approximately) inversely proportional to the decoding length in this regime. □
+1578:generation time at these response lengths is still slower for LongCoT. This is because generation throughput is limited
+1629:27 max_new_tokens=max_new,
+1678:Prompt / response length (tokens) 2,048 / 8,192 2,048 / 24,576
+1709:(β = 0) for optimal results (Yu et al., 2025). Truncated importance sampling is also applied to address distributional
+1823:that there is an interplay between the context size and the average response length.
+1954:The patterns become even clearer when examining completion behavior and response lengths (Figure E.6). With
+1956:Correspondingly, the average response lengths at C = 2k are much higher than at 4k or 8k, reflecting the model’s
+1966: (a) Under-Budget Completion Rate (EOS Rate) (b) Accuracy vs. Average Response Length
+2008: Average Response Length
+2339:restricts each token to attend only to the previous w tokens, truncating attention edges to a width-w band. In practice,

@@ -1,0 +1,98 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-PlanOnly",
+      "success_rate": 0.6075,
+      "cps": 0.00018189300411522636,
+      "mean_tokens": 3471.6375,
+      "cost": 0.0442
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-CritOnly",
+      "success_rate": 0.6,
+      "cps": 0.00036541666666666667,
+      "mean_tokens": 7099.905,
+      "cost": 0.0877
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-ToolOnly",
+      "success_rate": 0.6075,
+      "cps": 0.00019506172839506175,
+      "mean_tokens": 3628.5175,
+      "cost": 0.047400000000000005
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-CritOnly-R1k",
+      "success_rate": 0.585,
+      "cps": 0.00023076923076923076,
+      "mean_tokens": 4116.4925,
+      "cost": 0.054
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "ST-Slots-R1k",
+      "success_rate": 0.5925,
+      "cps": 0.00023417721518987343,
+      "mean_tokens": 4264.2,
+      "cost": 0.0555
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "ST-PlanOnly",
+      "sr_mean": 0.6075,
+      "sr_std": 0.0,
+      "cps_mean": 0.00018189300411522636,
+      "tokens_mean": 3471.6375
+    },
+    {
+      "budget": 24000,
+      "name": "ST-CritOnly",
+      "sr_mean": 0.6,
+      "sr_std": 0.0,
+      "cps_mean": 0.00036541666666666667,
+      "tokens_mean": 7099.905
+    },
+    {
+      "budget": 24000,
+      "name": "ST-ToolOnly",
+      "sr_mean": 0.6075,
+      "sr_std": 0.0,
+      "cps_mean": 0.00019506172839506175,
+      "tokens_mean": 3628.5175
+    },
+    {
+      "budget": 24000,
+      "name": "ST-CritOnly-R1k",
+      "sr_mean": 0.585,
+      "sr_std": 0.0,
+      "cps_mean": 0.00023076923076923076,
+      "tokens_mean": 4116.4925
+    },
+    {
+      "budget": 24000,
+      "name": "ST-Slots-R1k",
+      "sr_mean": 0.5925,
+      "sr_std": 0.0,
+      "cps_mean": 0.00023417721518987343,
+      "tokens_mean": 4264.2
+    }
+  ]
+}

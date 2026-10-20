@@ -1,0 +1,31 @@
+"""sections/tab_ablations_main.tex from data/ablations.json: the compact main-text version of tab:ablations,
+mean tokens (% of the reference's) over gpt-oss's eight settings, Gemma's four and all twelve, at eps = 5% and 10%,
+with the largest violation rate over all settings and the tolerances 2, 5 and 10%."""
+import json, os
+HERE = os.path.dirname(os.path.abspath(__file__))
+D = json.load(open(os.path.join(HERE, '..', 'data', 'ablations.json')))
+BENCH = ['MATH', 'FRAMES', 'MuSiQue', 'BBEH']
+GROUPS = [['gpt-oss-20b', 'gpt-oss-120b'], ['Gemma-4-26B-A4B'], ['gpt-oss-20b', 'gpt-oss-120b', 'Gemma-4-26B-A4B']]
+ROWS = [('logprob+agree', 'Log-prob.\\ + agreement'), ('logprob', 'Log-prob.\\ only'),
+        ('agree', 'Agreement only'), ('random', 'Random score'),
+        ('ref_draft', 'Ref.: first draft'), ('ref_L1', 'Ref.: single agent $L_1$')]
+mean = lambda k, e, ms: sum(D[f'{m}|{b}'][k][e]['tok'] for m in ms for b in BENCH) / (4 * len(ms))
+out = ['\\begin{table}[t]', '\\centering', '\\footnotesize', '\\setlength{\\tabcolsep}{3pt}',
+       '\\begin{tabular}{@{}lrrrrrrr@{}}', '\\toprule',
+       ' & \\multicolumn{3}{c}{$\\eps = 5\\%$} & \\multicolumn{3}{c}{$\\eps = 10\\%$} & \\\\',
+       '\\cmidrule(lr){2-4}\\cmidrule(lr){5-7}',
+       'Variant & gpt & Gem. & All & gpt & Gem. & All & Viol. \\\\', '\\midrule']
+for k, name in ROWS:
+    v = [mean(k, e, g) for e in ('0.05', '0.1') for g in GROUPS]
+    viol = max(D[f'{m}|{b}'][k][x]['viol'] for m in GROUPS[2] for b in BENCH for x in D[f'{m}|{b}'][k])
+    out.append(name + ' & ' + ' & '.join(f'{x:.0f}' for x in v) + f' & {viol:.0f}\\% \\\\')
+    if k == 'random':
+        out.append('\\midrule')
+out += ['\\bottomrule', '\\end{tabular}',
+        '\\caption{Ablations: mean tokens as a share of the reference\'s over gpt-oss\'s eight settings, Gemma\'s '
+        'four and all twelve. The first four rows change the score of the deployed ladder (random: mean of five '
+        'draws); the last two change the reference, with the deployed score. Viol.: largest violation rate over all '
+        'settings and $\\eps \\in \\{2, 5, 10\\}\\%$. Per setting in Table~\\ref{tab:ablations}.}',
+        '\\label{tab:ablmain}', '\\end{table}']
+open(os.path.join(HERE, '..', 'sections', 'tab_ablations_main.tex'), 'w').write('\n'.join(out) + '\n')
+print('\n'.join(out))

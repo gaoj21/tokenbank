@@ -1,0 +1,30 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "CLIMB-Live",
+      "success_rate": 0.17993795243019647,
+      "cps": 0.00042873563218390805,
+      "mean_tokens": 2745.656670113754,
+      "cost": 0.0746
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "CLIMB-Live",
+      "sr_mean": 0.17993795243019647,
+      "sr_std": 0.0,
+      "cps_mean": 0.00042873563218390805,
+      "tokens_mean": 2745.656670113754
+    }
+  ]
+}

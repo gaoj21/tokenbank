@@ -1,0 +1,94 @@
+{
+  "timestamp": "2026-08-24T17:01:30.245086",
+  "benchmark": "GAIA",
+  "mock_mode": true,
+  "primary_model": "Qwen/Qwen3.6-35B-A3B",
+  "configurations": [
+    {
+      "name": "Unconstrained",
+      "success_rate": 1.0,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 40420.5,
+      "std_tokens": 1438.5,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0.0025,
+      "cost_per_success": 0.0012,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "Static Quota",
+      "success_rate": 0.0,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 0.0,
+      "std_tokens": 0.0,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0,
+      "cost_per_success": 0.0,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "TB-v1 (Hard)",
+      "success_rate": 0.0,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 0.0,
+      "std_tokens": 0.0,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0,
+      "cost_per_success": 0.0,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "TB-v2-Full",
+      "success_rate": 0.0,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 0.0,
+      "std_tokens": 0.0,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0,
+      "cost_per_success": 0.0,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "TB-v2-Grace",
+      "success_rate": 0.0,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 0.0,
+      "std_tokens": 0.0,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0,
+      "cost_per_success": 0.0,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "TB-v2-Throttle",
+      "success_rate": 0.0,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 0.0,
+      "std_tokens": 0.0,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0,
+      "cost_per_success": 0.0,
+      "mean_borrows": 0.0
+    },
+    {
+      "name": "TB-v2-Scored",
+      "success_rate": 0.0,
+      "seed_sr_std": 0.0,
+      "mean_tokens": 0.0,
+      "std_tokens": 0.0,
+      "overrun_rate": 0.0,
+      "recovery_rate": 0.0,
+      "total_cost_usd": 0,
+      "cost_per_success": 0.0,
+      "mean_borrows": 0.0
+    }
+  ],
+  "ablation": [],
+  "sensitivity_theta": []
+}

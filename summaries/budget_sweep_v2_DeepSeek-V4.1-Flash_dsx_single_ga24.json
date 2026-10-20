@@ -1,0 +1,47 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Single-Fmt-1k",
+      "success_rate": 0.18032786885245902,
+      "cps": 1.8181818181818182e-05,
+      "mean_tokens": 1117.139344262295,
+      "cost": 0.0004
+    },
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Single-Fmt-2k",
+      "success_rate": 0.23770491803278687,
+      "cps": 0.00032413793103448275,
+      "mean_tokens": 1899.622950819672,
+      "cost": 0.0094
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5-Single-Fmt-1k",
+      "sr_mean": 0.18032786885245902,
+      "sr_std": 0.0,
+      "cps_mean": 1.8181818181818182e-05,
+      "tokens_mean": 1117.139344262295
+    },
+    {
+      "budget": 24000,
+      "name": "V5-Single-Fmt-2k",
+      "sr_mean": 0.23770491803278687,
+      "sr_std": 0.0,
+      "cps_mean": 0.00032413793103448275,
+      "tokens_mean": 1899.622950819672
+    }
+  ]
+}

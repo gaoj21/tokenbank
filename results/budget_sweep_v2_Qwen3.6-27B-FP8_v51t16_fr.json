@@ -1,0 +1,64 @@
+{
+  "model": "Qwen/Qwen3.6-27B-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    16000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "V5-Unconstrained",
+      "success_rate": 0.1,
+      "cps": 0.0022636363636363635,
+      "mean_tokens": 7691.065151515151,
+      "cost": 0.1494
+    },
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "V5.1-Unified",
+      "success_rate": 0.13333333333333333,
+      "cps": 0.0010829545454545454,
+      "mean_tokens": 5157.95,
+      "cost": 0.0953
+    },
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "V5.1-NoPool",
+      "success_rate": 0.15303030303030302,
+      "cps": 0.0013722772277227724,
+      "mean_tokens": 6981.295454545455,
+      "cost": 0.1386
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "V5-Unconstrained",
+      "sr_mean": 0.1,
+      "sr_std": 0.0,
+      "cps_mean": 0.0022636363636363635,
+      "tokens_mean": 7691.065151515151
+    },
+    {
+      "budget": 16000,
+      "name": "V5.1-Unified",
+      "sr_mean": 0.13333333333333333,
+      "sr_std": 0.0,
+      "cps_mean": 0.0010829545454545454,
+      "tokens_mean": 5157.95
+    },
+    {
+      "budget": 16000,
+      "name": "V5.1-NoPool",
+      "sr_mean": 0.15303030303030302,
+      "sr_std": 0.0,
+      "cps_mean": 0.0013722772277227724,
+      "tokens_mean": 6981.295454545455
+    }
+  ]
+}

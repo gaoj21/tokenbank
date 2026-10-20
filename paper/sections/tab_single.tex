@@ -1,0 +1,21 @@
+\begin{table}[h]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+& Single call & \climb{} ($\eps{=}5\%$) & Pipeline \\
+\midrule
+GLM MATH & 93.2 / 0.7k & 94.3 & 96.5 / 5.1k \\
+GLM GAIA & 20.5 / 2.8k & 26.7 & 27.0 / 15.6k \\
+GLM FRAMES & 56.5 / 1.4k & 60.9 & 62.6 / 6.8k \\
+GLM MuSiQue & 35.0 / 1.6k & 35.4 & 38.3 / 7.1k \\
+DS MATH & 97.0 / 0.7k & 96.0 & 97.8 / 3.5k \\
+DS GAIA & 27.9 / 3.1k & 32.4 & 32.8 / 13.6k \\
+DS FRAMES & 61.7 / 1.5k & 63.8 & 65.3 / 6.4k \\
+DS MuSiQue & 38.5 / 1.9k & 38.8 & 41.5 / 6.9k \\
+\bottomrule
+\end{tabular}
+\caption{One executor call with default reasoning and the same 4{,}096 cap, for reference.}
+\label{tab:single}
+\end{table}

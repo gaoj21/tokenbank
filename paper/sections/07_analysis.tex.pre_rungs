@@ -1,0 +1,30 @@
+\section{When Is the Team Worth Its Cost?}
+\label{sec:motivation}
+
+\subsection{What the team adds}
+\label{sec:analysis}
+
+We first measure what the reference pipeline buys over cheaper ways of answering with the same model
+(setup in \S\ref{sec:setup}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_flows.pdf}
+\caption{The team against a single agent $L_1$ on twelve settings (M, F, Q, E: MATH, FRAMES, MuSiQue,
+BBEH): share of tasks it rescues (up) and loses (down), with its cost as a multiple of $L_1$'s above.}
+\label{fig:flows}
+\end{figure}
+
+\paragraph{It often costs several times a single agent.} Against a single agent at the same reasoning setting, the
+rung $L_1$, the pipeline costs 1.3 to 6.3 times as much (Figure~\ref{fig:flows}), 28 to 57\% of it in the
+planner's and the reviewer's own calls.
+
+\paragraph{It rescues some answers and loses others.} The team is 0.6 to 9.4 points more accurate than $L_1$. This net gain is the difference of two larger flows (Figure~\ref{fig:flows}):
+it rescues 1.2 to 14.9\% of tasks that $L_1$ gets wrong and loses up to 9.3\% that $L_1$ gets right. Rerun on 300 tasks per setting, the team again
+loses 66 of the 142 tasks it had lost against the direct answer $L_0$, so the harms are not only sampling variation. Of the 717 tasks that $L_1$ answers correctly and the team does not, 84\% are already
+wrong in the team's first draft, and the reviewer, which accepts 23 to 58\% of incorrect answers
+(Figure~\ref{fig:team} in Appendix~\ref{app:team}), does not correct them. In the other 16\% the reviewer rejected a
+correct draft and the revision got it wrong.
+
+\paragraph{Choosing per task could recover the losses.} Since the team is the more accurate of the two everywhere,
+these losses, up to 9.3 points, are the most that choosing per task between the two could add. The ladder answers cheaply where the cheap rungs are likely right and escalates the rest, within a certified tolerance.

@@ -1,0 +1,64 @@
+{
+  "model": "deepseek-v4.1-flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    8000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "BCB-Naive",
+      "success_rate": 0.23,
+      "cps": 0.0007339130434782609,
+      "mean_tokens": 6145.576,
+      "cost": 0.0844
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "BCB-Ab7",
+      "success_rate": 0.186,
+      "cps": 0.0009268817204301076,
+      "mean_tokens": 6251.25,
+      "cost": 0.0862
+    },
+    {
+      "seed": 42,
+      "budget": 8000,
+      "name": "BCB-ReasonLadder",
+      "success_rate": 0.524,
+      "cps": 1.1450381679389314e-05,
+      "mean_tokens": 1085.072,
+      "cost": 0.003
+    }
+  ],
+  "agg": [
+    {
+      "budget": 8000,
+      "name": "BCB-Naive",
+      "sr_mean": 0.23,
+      "sr_std": 0.0,
+      "cps_mean": 0.0007339130434782609,
+      "tokens_mean": 6145.576
+    },
+    {
+      "budget": 8000,
+      "name": "BCB-Ab7",
+      "sr_mean": 0.186,
+      "sr_std": 0.0,
+      "cps_mean": 0.0009268817204301076,
+      "tokens_mean": 6251.25
+    },
+    {
+      "budget": 8000,
+      "name": "BCB-ReasonLadder",
+      "sr_mean": 0.524,
+      "sr_std": 0.0,
+      "cps_mean": 1.1450381679389314e-05,
+      "tokens_mean": 1085.072
+    }
+  ]
+}

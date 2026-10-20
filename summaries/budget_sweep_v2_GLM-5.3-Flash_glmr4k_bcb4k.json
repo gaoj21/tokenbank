@@ -1,0 +1,47 @@
+{
+  "model": "zai-org/GLM-5.3-Flash",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    4000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "BCB-Naive",
+      "success_rate": 0.128,
+      "cps": 3.125e-06,
+      "mean_tokens": 907.738,
+      "cost": 0.0002
+    },
+    {
+      "seed": 42,
+      "budget": 4000,
+      "name": "BCB-Ab7",
+      "success_rate": 0.388,
+      "cps": 0.00017680412371134024,
+      "mean_tokens": 2018.732,
+      "cost": 0.034300000000000004
+    }
+  ],
+  "agg": [
+    {
+      "budget": 4000,
+      "name": "BCB-Naive",
+      "sr_mean": 0.128,
+      "sr_std": 0.0,
+      "cps_mean": 3.125e-06,
+      "tokens_mean": 907.738
+    },
+    {
+      "budget": 4000,
+      "name": "BCB-Ab7",
+      "sr_mean": 0.388,
+      "sr_std": 0.0,
+      "cps_mean": 0.00017680412371134024,
+      "tokens_mean": 2018.732
+    }
+  ]
+}

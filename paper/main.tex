@@ -1,0 +1,51 @@
+\documentclass[11pt]{article}
+\usepackage[review]{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{xcolor}
+\usepackage[section]{placeins}
+\usepackage{float}
+
+% tighter, non-stretching gaps between floats and text
+\setlength{\textfloatsep}{10pt plus 1pt minus 2pt}
+\setlength{\dbltextfloatsep}{10pt plus 1pt minus 2pt}
+\setlength{\floatsep}{8pt plus 1pt minus 2pt}
+\setlength{\dblfloatsep}{8pt plus 1pt minus 2pt}
+
+\newtheorem{proposition}{Proposition}
+\newcommand{\climb}{\textsc{Climb}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+
+\title{When to Call the Team: Risk-Controlled Escalation\\for Multi-Agent LLM Pipelines}
+
+\author{Anonymous ACL submission}
+
+\begin{document}
+\maketitle
+\input{sections/00_abstract}
+\input{sections/01_intro}
+\input{sections/02_related}
+\input{sections/07_analysis}
+\input{sections/03_problem}
+\input{sections/04_method}
+\input{sections/05_setup}
+\input{sections/06_results}
+\input{sections/08_conclusion}
+\input{sections/09_limitations}
+
+\bibliography{custom}
+
+\appendix
+\input{sections/10_appendix}
+\end{document}

@@ -1,0 +1,65 @@
+{
+  "model": "deepseek-v4-flash",
+  "seeds": [
+    42
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "Unconstrained",
+      "success_rate": 0.2125984251968504,
+      "cps": 0.013114814814814814,
+      "mean_tokens": 11043.83464566929,
+      "cost": 0.35409999999999997
+    },
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "TB-v2-Paced",
+      "success_rate": 0.2125984251968504,
+      "cps": 0.006303703703703704,
+      "mean_tokens": 5409.96062992126,
+      "cost": 0.1702,
+      "mean_borrows": 0.06299212598425197,
+      "recovery_rate": 0.047244094488188976
+    },
+    {
+      "seed": 42,
+      "budget": 16000,
+      "name": "TB-v2-Paced-v2",
+      "success_rate": 0.18110236220472442,
+      "cps": 0.006634782608695653,
+      "mean_tokens": 4676.141732283465,
+      "cost": 0.1526,
+      "mean_borrows": 0.0,
+      "recovery_rate": 0.031496062992125984
+    }
+  ],
+  "agg": [
+    {
+      "budget": 16000,
+      "name": "Unconstrained",
+      "sr_mean": 0.2125984251968504,
+      "sr_std": 0.0,
+      "cps_mean": 0.013114814814814814,
+      "tokens_mean": 11043.83464566929
+    },
+    {
+      "budget": 16000,
+      "name": "TB-v2-Paced",
+      "sr_mean": 0.2125984251968504,
+      "sr_std": 0.0,
+      "cps_mean": 0.006303703703703704,
+      "tokens_mean": 5409.96062992126
+    },
+    {
+      "budget": 16000,
+      "name": "TB-v2-Paced-v2",
+      "sr_mean": 0.18110236220472442,
+      "sr_std": 0.0,
+      "cps_mean": 0.006634782608695653,
+      "tokens_mean": 4676.141732283465
+    }
+  ]
+}

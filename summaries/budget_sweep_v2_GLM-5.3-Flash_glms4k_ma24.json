@@ -1,0 +1,30 @@
+{
+  "model": "GLM-5.3-Flash-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5-Single-Fmt-4k",
+      "success_rate": 0.6125,
+      "cps": 1.6326530612244897e-05,
+      "mean_tokens": 673.925,
+      "cost": 0.004
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5-Single-Fmt-4k",
+      "sr_mean": 0.6125,
+      "sr_std": 0.0,
+      "cps_mean": 1.6326530612244897e-05,
+      "tokens_mean": 673.925
+    }
+  ]
+}

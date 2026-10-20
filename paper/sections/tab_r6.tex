@@ -1,0 +1,38 @@
+\begin{table*}[h]
+\centering
+\small
+\setlength{\tabcolsep}{3.5pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llrcccccr@{}}
+\toprule
+Train/cal. (\%) & Bench. & $n$ & A & B & C & D & E & $\varnothing$ (A) \\
+\midrule
+\multirow{4}{*}{20/20} & MATH & 80/80 & 93 & 95 & 91 & 97$^{\uparrow}$ & 95 & 81 \\
+ & GAIA & 24/24 & 100 & 100 & 100 & 100 & 100 & 100 \\
+ & FRAMES & 132/132 & 92 & 96$^{\uparrow}$ & 96$^{\uparrow}$ & 95$^{\uparrow}$ & 93 & 72 \\
+ & MuSiQue & 386/387 & 52 & 64$^{\uparrow}$ & 79$^{\uparrow}$ & 65$^{\uparrow}$ & 62$^{\uparrow}$ & 10 \\
+\midrule
+\multirow{4}{*}{40/20} & MATH & 160/80 & 95 & 97$^{\uparrow}$ & 93$^{\downarrow}$ & 97$^{\uparrow}$ & 96 & 88 \\
+ & GAIA & 48/25 & 99 & 99 & 99 & 99 & 99 & 98 \\
+ & FRAMES & 264/132 & 93 & 95$^{\uparrow}$ & 96$^{\uparrow}$ & 96$^{\uparrow}$ & 94$^{\uparrow}$ & 71 \\
+ & MuSiQue & 773/387 & 57 & 73$^{\uparrow}$ & 86$^{\uparrow}$ & 69$^{\uparrow}$ & 64$^{\uparrow}$ & 14 \\
+\midrule
+\multirow{4}{*}{60/20} & MATH & 240/80 & 95 & 96 & 94 & 97$^{\uparrow}$ & 96 & 88 \\
+ & GAIA & 73/24 & 100 & 100 & 100 & 100 & 100 & 100 \\
+ & FRAMES & 396/132 & 94 & 95$^{\uparrow}$ & 96 & 94 & 92$^{\downarrow}$ & 77 \\
+ & MuSiQue & 1160/387 & 57 & 72$^{\uparrow}$ & 81$^{\uparrow}$ & 67$^{\uparrow}$ & 63$^{\uparrow}$ & 14 \\
+\midrule
+\multirow{4}{*}{40/10} & MATH & 160/40 & 100 & 100 & 100 & 100 & 100 & 100 \\
+ & GAIA & 48/13 & 100 & 100 & 100 & 100 & 100 & 100 \\
+ & FRAMES & 264/66 & 96 & 97$^{\uparrow}$ & 97 & 97 & 95 & 89 \\
+ & MuSiQue & 773/194 & 71 & 81$^{\uparrow}$ & 91$^{\uparrow}$ & 80$^{\uparrow}$ & 77$^{\uparrow}$ & 38 \\
+\midrule
+\multirow{4}{*}{40/30} & MATH & 160/120 & 81 & 86$^{\uparrow}$ & 80 & 88$^{\uparrow}$ & 84$^{\uparrow}$ & 50 \\
+ & GAIA & 48/37 & 97 & 98 & 98 & 98 & 98 & 96 \\
+ & FRAMES & 264/197 & 93 & 97$^{\uparrow}$ & 98$^{\uparrow}$ & 95$^{\uparrow}$ & 94 & 70 \\
+ & MuSiQue & 773/580 & 44 & 57$^{\uparrow}$ & 73$^{\uparrow}$ & 56$^{\uparrow}$ & 48$^{\uparrow}$ & 4 \\
+\bottomrule
+\end{tabular}}
+\caption{Escalation policies of \S\ref{sec:variants} as the training and calibration shares vary separately (GLM, $\eps = 5\%$, 200 splits each; evaluation on the rest). Tokens (\% of the reference); $^{\downarrow}$/$^{\uparrow}$: significantly cheaper/more expensive than A (95\% paired bootstrap interval over splits excludes zero); $n$: training/calibration tasks; $\varnothing$: share of splits in which A falls back to the reference. All violation rates $\le$ 5.5\%.}
+\label{tab:r6}
+\end{table*}

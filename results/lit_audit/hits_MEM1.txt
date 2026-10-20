@@ -1,0 +1,9 @@
+396:models of the same parameter size as MEM1. First, we apply MEM1’s agentic truncation prompt
+403:Meta info injection. In our agentic pipeline, the agent’s context is programmatically truncated at
+405:outlined in Sec. 3. As past context is truncated, the agent may have difficulty determining when
+480:directions. Numbers in red indicate collapsed model behavior (extremely low performance). (truncate)
+490:Qwen2.5-7B-Inst (truncate) 0.262 0.336 8.28±0.06 5.89±0.16 0.97 1.23 11.8±0.10 11.9±0.20 0.396 0.497 13.3±0.16 22.1±0.60
+505:tasks, even when the truncation prompt templates or A-MEM techniques are applied to GPT-4o.
+531:GPT-4o (truncate) 13.82 0.99 ± 0.99 0.81 ± 0.23 N/A
+550: Qwen2.5-7B-Inst (truncate) 0.287 0.382 6.28 ± 0.05 1.65 ± 0.04 2.26 ± 0.04
+1040:Peak token usage. Peak token usage is calculated as the maximum number of tokens (using

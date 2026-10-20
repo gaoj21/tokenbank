@@ -1,0 +1,30 @@
+{
+  "model": "GLM-5.3-Flash-FP8",
+  "seeds": [
+    42
+  ],
+  "budgets": [
+    24000
+  ],
+  "raw": [
+    {
+      "seed": 42,
+      "budget": 24000,
+      "name": "V5.2-ReasonLadder",
+      "success_rate": 0.20491803278688525,
+      "cps": 0.000796,
+      "mean_tokens": 5764.065573770492,
+      "cost": 0.0199
+    }
+  ],
+  "agg": [
+    {
+      "budget": 24000,
+      "name": "V5.2-ReasonLadder",
+      "sr_mean": 0.20491803278688525,
+      "sr_std": 0.0,
+      "cps_mean": 0.000796,
+      "tokens_mean": 5764.065573770492
+    }
+  ]
+}
