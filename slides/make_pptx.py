@@ -1,4 +1,4 @@
-"""Build slides/CLIMB_talk.pptx: an 18-slide talk, one idea per slide, charts from make_figs.py.
+"""Build slides/CLIMB_talk.pptx: a 20-slide talk, one idea per slide, charts from make_figs.py.
 
 Run with the project venv: .venv/bin/python slides/make_figs.py && .venv/bin/python slides/make_pptx.py
 """
@@ -153,18 +153,53 @@ def build():
     box(s, 128, 600, 240, 5, ORANGE_D, shape=MSO_SHAPE.RECTANGLE)
     text(s, 128, 640, 1664, 50, [say("Jianjun Gao, Jinxin Liu, Dongyun Lin, Hongyun Cai, Zheng Ma", 18, SOFT)])
 
+    # team: what it is
+    s = slide("First, what is an agent team? Instead of asking one model once, we split the work into roles, all played by "
+              "the same model. A planner writes a step-by-step plan. An executor solves the task following the plan. "
+              "A reviewer checks the answer. If the reviewer rejects it, the executor revises, for up to five rounds. "
+              "This plan, execute, review pattern is common in multi-agent frameworks.")
+    header(s, "Background", "What is an agent team?")
+    text(s, 128, 270, 600, 50, [dict(t="Single agent", size=22, bold=True, color=BLUE)])
+    box(s, 128, 330, 300, 130, PAPER, RULE, [dict(t="Question", size=22, bold=True, color=NAVY, align="c")])
+    arrow(s, 445, 370, 90, 50)
+    box(s, 550, 330, 300, 130, BLUEBG, BLUE, [dict(t="Model", size=22, bold=True, color=NAVY, align="c"),
+                                              dict(t="thinks once", size=16, color=BLUE, align="c")], lw=2)
+    arrow(s, 867, 370, 90, 50)
+    box(s, 972, 330, 300, 130, PAPER, RULE, [dict(t="Answer", size=22, bold=True, color=NAVY, align="c")])
+    text(s, 128, 575, 800, 50, [dict(t="Agent team: plan, execute, review", size=22, bold=True, color=ORANGE)])
+    roles = [("Question", "", PAPER, RULE), ("Planner", "writes a plan", ORANGEBG, ORANGE),
+             ("Executor", "follows the plan", ORANGEBG, ORANGE), ("Reviewer", "accept or reject", ORANGEBG, ORANGE),
+             ("Answer", "", PAPER, RULE)]
+    for i, (t, d, f, c) in enumerate(roles):
+        x = 128 + i * 345
+        paras = [dict(t=t, size=21, bold=True, color=NAVY, align="c", after=4)] + ([dict(t=d, size=15, color=c, align="c")] if d else [])
+        box(s, x, 640, 280, 170, f, c, paras, margin=8, lw=2)
+        if i < 4:
+            arrow(s, x + 286, 700, 52, 50)
+    arrow(s, 818, 840, 400, 50, ORANGE, shape=MSO_SHAPE.LEFT_ARROW)
+    text(s, 700, 900, 640, 50, [dict(t="rejected? revise, up to 5 rounds", size=18, bold=True, color=ORANGE, align="c")])
+
+    # team: why it helps
+    s = slide("Why use a team? It is more accurate. Grey is a direct answer, blue a single agent that reasons, orange the team. "
+              "On every one of our twelve settings the team is the most accurate: 2 to 21 points above the direct answer, "
+              "and up to 9 points above the single agent. The gains are largest on hard reasoning, BBEH.")
+    header(s, "Background", "Teams are more accurate")
+    picture(s, "c_accuracy.png", 128, 260, 1150, 700)
+    callout(s, 1330, 330, 462, 260, "+2 to +21", "points over a direct answer", ORANGE, ORANGEBG)
+    callout(s, 1330, 630, 462, 260, "12 / 12", "settings where the team is best, up to 9 points over a single agent", ORANGE, ORANGEBG)
+
     # 2 cost
-    s = slide("Our team is a standard plan, execute, review pipeline. Each bar is one model on one benchmark. "
+    s = slide("But this accuracy has a price. Each bar is one model on one benchmark. "
               "The team uses 1.3 to 6.3 times the tokens of a single agent answering on its own.")
-    header(s, "The problem", "Agent teams cost several times more")
+    header(s, "But…", "Teams cost several times more")
     picture(s, "c_cost.png", 128, 260, 1150, 700)
     callout(s, 1330, 360, 462, 300, "up to 6.3×", "the tokens of one agent answering alone")
     text(s, 1330, 700, 462, 200, [say("Planner, executor and reviewer each add calls, for up to 5 rounds.", 18, MUTED)])
 
     # 3 flows
-    s = slide("Green: tasks the single agent got wrong and the team fixed. Red: tasks the single agent got right "
+    s = slide("And the gain is not free of losses. Green: tasks the single agent got wrong and the team fixed. Red: tasks the single agent got right "
               "and the team got wrong. The team wins on balance, but it also breaks answers, up to 9 percent of tasks.")
-    header(s, "The problem", "…and they are not always better")
+    header(s, "But…", "…and sometimes break right answers")
     picture(s, "c_flows.png", 128, 260, 1150, 700)
     callout(s, 1330, 330, 462, 260, "up to 15%", "of tasks: the team fixes a wrong answer", GREEN, GREENBG)
     callout(s, 1330, 630, 462, 260, "up to 9%", "of tasks: the team breaks a right answer", RED, REDBG)

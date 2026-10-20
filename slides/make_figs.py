@@ -47,6 +47,19 @@ def save(fig, name):
     print(name)
 
 
+def accuracy():
+    fig, ax = plt.subplots(figsize=(13, 5.6))
+    xs = setting_axis(ax)
+    for off, key, col, lab in ((-0.26, "L0", GREY, "direct answer"), (0.0, "L1", LBLUE, "single agent"),
+                               (0.26, "pipe_acc", ORANGE, "agent team")):
+        ax.bar(xs + off, [M[k][key] for k in KEYS], 0.26, color=col, label=lab)
+    ax.set_ylim(0, 112)
+    ax.set_yticks([0, 25, 50, 75, 100])
+    ax.set_ylabel("accuracy (%)")
+    ax.legend(loc="upper center", fontsize=17, ncol=3, bbox_to_anchor=(0.5, 1.08))
+    save(fig, "c_accuracy.png")
+
+
 def cost():
     fig, ax = plt.subplots(figsize=(13, 5.6))
     xs = setting_axis(ax)
@@ -256,5 +269,5 @@ def tests():
 
 
 if __name__ == "__main__":
-    for f in (cost, flows, agree, auroc, viol, savings, tuned, maxloss, tests, sweep_and_wealth):
+    for f in (accuracy, cost, flows, agree, auroc, viol, savings, tuned, maxloss, tests, sweep_and_wealth):
         f()
