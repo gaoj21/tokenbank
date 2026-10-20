@@ -1,6 +1,6 @@
 # CLIMB talk slides
 
-`CLIMB_talk.pptx`: 19 slides, one idea per slide, speaker notes on every slide.
+`CLIMB_talk.pptx`: 20 slides, one idea per slide, speaker notes on every slide.
 
 Rebuild:
 
