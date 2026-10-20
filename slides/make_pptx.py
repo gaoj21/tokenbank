@@ -1,4 +1,4 @@
-"""Build slides/CLIMB_talk.pptx: a 20-slide talk, one idea per slide, charts from make_figs.py.
+"""Build slides/CLIMB_talk.pptx: a 19-slide talk, one idea per slide, charts from make_figs.py.
 
 Run with the project venv: .venv/bin/python slides/make_figs.py && .venv/bin/python slides/make_pptx.py
 """
@@ -188,21 +188,16 @@ def build():
     callout(s, 1330, 330, 462, 260, "+2 to +21", "points over a direct answer", ORANGE, ORANGEBG)
     callout(s, 1330, 630, 462, 260, "12 / 12", "settings where the team is best, up to 9 points over a single agent", ORANGE, ORANGEBG)
 
-    # 2 cost
-    s = slide("But this accuracy has a price. Each bar is one model on one benchmark. "
-              "The team uses 1.3 to 6.3 times the tokens of a single agent answering on its own.")
-    header(s, "But…", "Teams cost several times more")
-    picture(s, "c_cost.png", 128, 260, 1150, 700)
-    callout(s, 1330, 360, 462, 300, "up to 6.3×", "the tokens of one agent answering alone")
-    text(s, 1330, 700, 462, 200, [say("Planner, executor and reviewer each add calls, for up to 5 rounds.", 18, MUTED)])
-
-    # 3 flows
-    s = slide("And the gain is not free of losses. Green: tasks the single agent got wrong and the team fixed. Red: tasks the single agent got right "
-              "and the team got wrong. The team wins on balance, but it also breaks answers, up to 9 percent of tasks.")
-    header(s, "But…", "…and sometimes break right answers")
-    picture(s, "c_flows.png", 128, 260, 1150, 700)
-    callout(s, 1330, 330, 462, 260, "up to 15%", "of tasks: the team fixes a wrong answer", GREEN, GREENBG)
-    callout(s, 1330, 630, 462, 260, "up to 9%", "of tasks: the team breaks a right answer", RED, REDBG)
+    # the catch: cost and harm
+    s = slide("But the accuracy comes at a price, in two ways. Left: the team uses 1.3 to 6.3 times the tokens of a single agent, "
+              "because planner, executor and reviewer each add calls, for up to five rounds. Right: against the single agent, "
+              "green bars are wrong answers the team fixes, red bars are right answers it breaks, up to 9 percent of tasks. "
+              "So the team is better on balance, but it is expensive and not uniformly better.")
+    header(s, "But…", "But teams are costly, and sometimes harmful")
+    for x, img, head, col in ((128, "c_cost_n.png", "Cost: up to [[c=B4541A|6.3×]] a single agent", ORANGE),
+                              (992, "c_flows_n.png", "Harm: up to [[c=B03A2E|9%]] of tasks broken", RED)):
+        text(s, x, 270, 800, 50, [dict(t=head, size=24, bold=True, color=NAVY)])
+        picture(s, img, x, 340, 800, 620)
 
     # 4 why the team breaks answers
     s = slide("Where do the broken answers come from? In 84 percent of them the executor's first draft is already wrong, "

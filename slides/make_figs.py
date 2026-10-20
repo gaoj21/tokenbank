@@ -60,22 +60,22 @@ def accuracy():
     save(fig, "c_accuracy.png")
 
 
-def cost():
-    fig, ax = plt.subplots(figsize=(13, 5.6))
+def cost(figsize=(13, 5.6), name="c_cost.png"):
+    fig, ax = plt.subplots(figsize=figsize)
     xs = setting_axis(ax)
     v = [A["team"][k]["cost_vs_L1"] for k in KEYS]
     ax.bar(xs, v, 0.72, color=ORANGE)
     for x, y in zip(xs, v):
-        ax.text(x, y + 0.12, f"{y:.1f}×", ha="center", fontsize=15, color=BODY)
+        ax.text(x, y + 0.12, f"{y:.1f}×", ha="center", fontsize=15 if figsize[0] > 10 else 12, color=BODY)
     ax.axhline(1, color=BLUE, lw=3, ls="--")
     ax.text(14.7, 6.9, "dashed line: single agent = 1×", ha="right", va="top", color=BLUE, fontsize=17, fontweight="bold")
     ax.set_ylim(0, 7.2)
     ax.set_ylabel("team tokens ÷ single agent")
-    save(fig, "c_cost.png")
+    save(fig, name)
 
 
-def flows():
-    fig, ax = plt.subplots(figsize=(13, 5.8))
+def flows(figsize=(13, 5.8), name="c_flows.png"):
+    fig, ax = plt.subplots(figsize=figsize)
     xs = setting_axis(ax)
     r = [A["team"][k]["rescue_L1"] for k in KEYS]
     h = [-A["team"][k]["harm_L1"] for k in KEYS]
@@ -83,9 +83,9 @@ def flows():
     ax.bar(xs, h, 0.72, color=RED, label="team breaks a right answer")
     ax.axhline(0, color=BODY, lw=1.2)
     ax.set_ylabel("% of tasks (vs. single agent)")
-    ax.set_ylim(-11, 17)
-    ax.legend(loc="upper left", fontsize=17, ncol=2)
-    save(fig, "c_flows.png")
+    ax.set_ylim(-11, 17 if figsize[0] > 10 else 22)
+    ax.legend(loc="upper left", fontsize=17, ncol=2 if figsize[0] > 10 else 1)
+    save(fig, name)
 
 
 def agree():
@@ -269,5 +269,7 @@ def tests():
 
 
 if __name__ == "__main__":
+    cost((9, 6.2), "c_cost_n.png")
+    flows((9, 6.2), "c_flows_n.png")
     for f in (accuracy, cost, flows, agree, auroc, viol, savings, tuned, maxloss, tests, sweep_and_wealth):
         f()
