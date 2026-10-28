@@ -18,8 +18,8 @@ M = json.loads((PAPER / "data" / "main_results.json").read_text())
 A = json.loads((PAPER / "data" / "final_analyses.json").read_text())
 PLUG = json.loads((PAPER / "data" / "plugin_baseline.json").read_text())
 
-NAVY, BODY, MUTED, GRID = "#14213D", "#3A4150", "#6B7280", "#E4E1D8"
-ORANGE, BLUE, LBLUE, RED, GREEN, GREY = "#B4541A", "#2E5C99", "#9DB9DE", "#B03A2E", "#2F6B34", "#A7A9AE"
+NAVY, BODY, MUTED, GRID = "#00175A", "#333B47", "#6B7480", "#E3E8EE"
+ORANGE, BLUE, LBLUE, RED, GREEN, GREY = "#006FCF", "#00175A", "#8CBDEB", "#B03A2E", "#2F6B34", "#A7A9AE"  # Amex blues
 MODELS = [("gpt-oss-20b", "20b"), ("gpt-oss-120b", "120b"), ("Gemma-4-26B-A4B", "Gemma")]
 BENCH = [("MATH", "MATH"), ("FRAMES", "FRAMES"), ("MuSiQue", "MuSiQue"), ("BBEH", "BBEH")]
 KEYS = [f"{m}|{b}" for m, _ in MODELS for b, _ in BENCH]
