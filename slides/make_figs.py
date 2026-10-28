@@ -115,6 +115,36 @@ def auroc():
     save(fig, "c_auroc.png")
 
 
+def signals():
+    """Side-by-side evidence: direct answer accuracy on its confident vs unsure half, and single agent
+    accuracy when the two cheap answers agree vs disagree, on all 12 settings."""
+    sys.path.insert(0, str(PAPER / "analysis"))
+    from final_analyses import frame
+    hi, lo = [], []
+    for k in KEYS:
+        m, b = k.split("|")
+        x = frame(m, b)
+        top = x.S0.rank(method="first") > len(x) / 2
+        hi.append(100 * x.Y0[top].mean())
+        lo.append(100 * x.Y0[~top].mean())
+    ag = [M[k]["L1_acc_agree"] for k in KEYS]
+    dis = [M[k]["L1_acc_disagree"] for k in KEYS]
+    for name, a, d, la, ld in (("c_sig_conf.png", hi, lo, "confident half", "unsure half"),
+                               ("c_sig_agree.png", ag, dis, "agree", "disagree")):
+        fig, ax = plt.subplots(figsize=(11, 6.2))
+        xs = setting_axis(ax)
+        cols = [RED if u < v else (ORANGE if name == "c_sig_conf.png" else GREEN) for u, v in zip(a, d)]
+        ax.bar(xs - 0.19, a, 0.38, color=cols, label=la)
+        ax.bar(xs + 0.19, d, 0.38, color=GREY, label=ld)
+        ax.set_ylim(0, 112)
+        ax.set_yticks([0, 25, 50, 75, 100])
+        ax.set_ylabel("accuracy (%)")
+        ax.legend(loc="upper center", fontsize=17, ncol=2, bbox_to_anchor=(0.5, 1.1))
+        if name == "c_sig_conf.png":
+            ax.text(12.4, 84, "backwards", ha="center", fontsize=17, color=RED, fontweight="bold")
+        save(fig, name)
+
+
 def records():
     sys.path.insert(0, str(PAPER / "analysis"))
     from climb_core import p_betting
@@ -271,5 +301,5 @@ def tests():
 if __name__ == "__main__":
     cost((9, 6.2), "c_cost_n.png")
     flows((9, 6.2), "c_flows_n.png")
-    for f in (accuracy, cost, flows, agree, auroc, viol, savings, tuned, maxloss, tests, sweep_and_wealth):
+    for f in (accuracy, cost, flows, agree, auroc, signals, viol, savings, tuned, maxloss, tests, sweep_and_wealth):
         f()

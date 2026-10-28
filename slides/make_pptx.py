@@ -257,26 +257,74 @@ def build():
                                                dict(t="→ " + a, size=18, bold=True, color=ORANGE)], margin=28, anchor="t")
     text(s, 128, 870, 1664, 60, [say("No rule passes the check?  →  always call the team.  Worst case: no savings, never lost accuracy.", 20, NAVY, bold=True)])
 
-    # 1 signal: confidence
-    s = slide("Question one: what tells us a cheap answer is right? The first signal is free: the model's own confidence, "
-              "its average token probability. Above the dashed line, confident answers are more often right. "
-              "On three Gemma settings it points the wrong way: the model is confidently wrong. "
-              "So any rule built on this signal must be checked, not trusted.")
-    header(s, "How to climb · 1 signal", "Is the direct answer confident?")
-    picture(s, "c_auroc.png", 128, 260, 1150, 700)
-    callout(s, 1330, 330, 462, 260, "usually helps", "confident answers tend to be right", BLUE, BLUEBG)
-    callout(s, 1330, 630, 462, 260, "3 of 12", "settings where it points the wrong way", RED, REDBG)
+    # 1 signal: why these two
+    s = slide("Question one: what tells us a cheap answer is good enough? A good signal must tell right answers from wrong ones, "
+              "and it must cost far less than the team, or there is nothing to save. We use two. "
+              "The first is confidence: how probable the model finds its own answer. A model that knows the answer tends to put "
+              "its probability on one answer. An unsure model spreads it over several. It is free: it comes with the answer. "
+              "The second is agreement: run the direct answer and the single agent independently and see whether they match. "
+              "There is one right answer but many wrong ones, so two independent tries rarely land on the same wrong answer. "
+              "It costs one more cheap call, and that call's answer is the one we keep. It needs no log-probabilities.")
+    header(s, "How to climb · 1 signal", "Why confidence, and why agreement?")
+    text(s, 128, 232, 1664, 40, [say("A good signal tells right from wrong, and costs far less than the team.", 20, NAVY, bold=True)])
+    for c, (head, sub) in enumerate((("Confidence", "Is the model sure of its answer?"),
+                                     ("Agreement", "Do two cheap answers match?"))):
+        x = 128 + c * 864
+        box(s, x, 300, 800, 670, PAPER, RULE)
+        text(s, x + 36, 320, 730, 100, [dict(t=head, size=28, bold=True, font=SERIF, color=NAVY, after=2), say(sub, 18, MUTED)])
+        text(s, x + 36, 448, 730, 30, [say("Example: “When did World War II end?”", 15, MUTED)])
+    # confidence: sure vs unsure
+    cases = [("Sure", [("1945", 0.96)], GREEN, ""),
+             ("Unsure", [("1944", 0.38), ("1945", 0.33), ("1946", 0.29)], RED, "")]
+    for r, (lab, bars, col, verdict) in enumerate(cases):
+        y = 505 + r * 105
+        text(s, 164, y, 160, 40, [dict(t=lab, size=18, bold=True, color=NAVY)])
+        for j, (ans, pr) in enumerate(bars):
+            yy = y + j * 38
+            text(s, 330, yy, 80, 34, [say(ans, 16)])
+            box(s, 410, yy + 6, 300 * pr, 24, col, shape=MSO_SHAPE.RECTANGLE)
+            text(s, 420 + 300 * pr, yy, 70, 34, [say(f"{pr:.2f}", 15, MUTED)])
+    text(s, 164, 770, 730, 100, [say("A model that knows tends to put its probability on **one** answer. An unsure one spreads it.", 18)])
+    text(s, 164, 900, 730, 50, [say("Cost: free, it comes with the answer.", 18, GREEN, bold=True)])
+    # agreement: match vs mismatch
+    text(s, 1060, 490, 190, 30, [say("direct answer", 15, MUTED, align="c")])
+    text(s, 1270, 490, 190, 30, [say("single agent", 15, MUTED, align="c")])
+    for r, (u, v, col, verdict) in enumerate((("1945", "1945", GREEN, "agree: likely right"),
+                                              ("1944", "1946", RED, "disagree: doubtful"))):
+        y = 530 + r * 105
+        for j, ans in enumerate((u, v)):
+            box(s, 1060 + j * 210, y, 190, 85, BLUEBG, col, [dict(t=ans, size=22, bold=True, color=NAVY, align="c")], margin=4, lw=2)
+        text(s, 1490, y + 25, 290, 40, [say(verdict, 16, col, bold=True)])
+    text(s, 1028, 770, 730, 100, [say("One right answer, many wrong ones: two tries **rarely** match on a wrong one.", 18)])
+    text(s, 1028, 900, 730, 50, [say("Cost: one more cheap call, no log-probs.", 18, GREEN, bold=True)])
 
-    # 1 signal: agreement
-    s = slide("The second signal is also nearly free. The direct answer and the single agent answer independently. "
-              "When they agree, the single agent is much more often right, for example 99 against 77 percent "
-              "on gpt-oss-20b MATH. CLIMB combines the two into one score: agreeing tasks rank first, "
-              "then by confidence.")
-    header(s, "How to climb · 1 signal", "Do two cheap answers agree?")
-    picture(s, "c_agree.png", 128, 260, 1150, 700)
-    callout(s, 1330, 330, 462, 260, "agree", "→ the single agent is usually right", GREEN, GREENBG)
-    box(s, 1330, 630, 462, 260, NAVY, paras=[dict(t="One score", size=26, bold=True, color=ORANGE_D, after=8),
-                                             say("agreeing tasks first, then by confidence", 17, LIGHT)], margin=30)
+    # 1 signal: evidence
+    s = slide("Do they work? Left: for each setting, the direct answer's accuracy on its more confident half of tasks against "
+              "its less confident half. On most settings the confident half is right much more often. On three Gemma settings "
+              "it is backwards: the model is confidently wrong. Right: the single agent's accuracy when the two cheap answers agree "
+              "against when they disagree. Agreement separates on most settings, including the three where confidence fails, "
+              "for example 90 against 34 percent on Gemma FRAMES. It is weak on gpt-oss-20b BBEH, where both answers are mostly wrong. So the two signals cover each other. "
+              "What does CLIMB do when confidence is backwards? Three things. First, option B ranks tasks by agreement "
+              "first, so confidence only breaks ties. On Gemma FRAMES and MuSiQue, CLIMB picks option B in every split. "
+              "Second, the check catches it: a backwards score puts the losses first, so the test fails early and that "
+              "threshold is never deployed. Third, in the worst case CLIMB calls the team. On these three Gemma settings it "
+              "uses 69 to 96 percent of the team's tokens at a 5 point tolerance: it saves less, but the promise still holds.")
+    header(s, "How to climb · 1 signal", "Do they work? Mostly, and they cover each other")
+    for c, (img, head) in enumerate((("c_sig_conf.png", "Confidence: direct answer accuracy"),
+                                     ("c_sig_agree.png", "Agreement: single agent accuracy"))):
+        x = 128 + c * 864
+        text(s, x, 245, 800, 40, [dict(t=head, size=22, bold=True, color=NAVY)])
+        picture(s, img, x, 318, 800, 370)
+    text(s, 128, 695, 800, 40, [say("Mostly helps. [[c=B03A2E|Backwards on 3 (Gemma).]]", 18)])
+    text(s, 992, 695, 800, 40, [say("Mostly helps, [[c=2F6B34|including those 3.]]", 18)])
+    text(s, 128, 748, 1664, 40, [say("When confidence is backwards, CLIMB still holds:", 19, NAVY, bold=True)])
+    fixes = [("1  Agreement first", "Option B ranks by agreement. Confidence only breaks ties."),
+             ("2  The check catches it", "A backwards score fails the test early. It is not deployed."),
+             ("3  Worst case: the team", "Less saving, no lost accuracy. Gemma: 69–96% of tokens.")]
+    for i, (t, d) in enumerate(fixes):
+        x = 128 + i * 566
+        box(s, x, 812, 532, 158, NAVY, paras=[dict(t=t, size=19, bold=True, color=ORANGE_D, after=4), say(d, 15, LIGHT)],
+            margin=18)
 
     # 2 rule: guessing fails
     s = slide("Question two: where do we draw the line? A rule stops the task when its score is above a threshold. "
