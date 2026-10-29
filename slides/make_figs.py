@@ -297,6 +297,28 @@ def fixed():
     save(fig, "c_fixed.png")
 
 
+def monotone():
+    """Gain of calling the team over the direct answer, by confidence quintile, on the 9 settings where
+    confidence ranks answers the right way (Gemma FRAMES, MuSiQue and BBEH are backwards)."""
+    back = {"Gemma-4-26B-A4B|FRAMES", "Gemma-4-26B-A4B|MuSiQue", "Gemma-4-26B-A4B|BBEH"}
+    G = np.array([A["monotone"]["per_setting"][k]["gain_by_quintile"] for k in KEYS if k not in back])
+    fig, ax = plt.subplots(figsize=(10, 6))
+    xs = np.arange(1, 6)
+    for g in G:
+        ax.plot(xs, g, color=GREY, lw=1.2, alpha=0.7)
+    m = G.mean(0)
+    ax.plot(xs, m, color=ORANGE, lw=4, marker="o", ms=11, label="average of 9 settings")
+    for x, y in zip(xs, m):
+        ax.text(x, y + 1.6, f"{y:.0f}", ha="center", fontsize=18, fontweight="bold", color=ORANGE)
+    ax.set_xticks(xs, ["least\nconfident", "", "", "", "most\nconfident"])
+    ax.set_xlabel("direct answer’s confidence (fifths of tasks)")
+    ax.set_ylabel("gain from calling the team (points)")
+    ax.set_ylim(-3, 32)
+    ax.legend(loc="upper right", fontsize=16)
+    save(fig, "c_monotone.png")
+    print("monotone mean", np.round(m, 1))
+
+
 def tests():
     rows = [("Classic bound (Hoeffding)", 100), ("Betting, α split over thresholds", 93), ("Betting, saves ignored", 79),
             ("Betting test (CLIMB)", 62)]
@@ -317,5 +339,5 @@ def tests():
 if __name__ == "__main__":
     cost((9, 6.2), "c_cost_n.png")
     flows((9, 6.2), "c_flows_n.png")
-    for f in (accuracy, cost, flows, agree, auroc, signals, viol, savings, tuned, maxloss, fixed, tests, sweep_and_wealth):
+    for f in (accuracy, cost, flows, agree, auroc, signals, viol, savings, tuned, maxloss, fixed, monotone, tests, sweep_and_wealth):
         f()
