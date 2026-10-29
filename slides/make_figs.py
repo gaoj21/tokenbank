@@ -178,10 +178,13 @@ def sweep_and_wealth():
     ax.axhline(5, color=RED, lw=2.5, ls="--")
     ax.text(101, 5.25, "tolerance ε = 5 points", ha="left", color=RED, fontsize=17, fontweight="bold")
     ax.annotate("", xy=(30, 8.7), xytext=(96, 8.7), arrowprops=dict(arrowstyle="-|>", lw=2.5, color=NAVY))
-    ax.text(63, 9.05, "test in this order: safe → risky", ha="center", fontsize=17, color=NAVY)
+    ax.text(63, 9.05, "test thresholds in order: strict → loose", ha="center", fontsize=17, color=NAVY)
     ax.set_xlim(102, 15)
     ax.set_ylim(-0.4, 10)
-    ax.set_xlabel("tokens (% of always calling the team)")
+    ax.annotate("the threshold\nCLIMB sets", xy=(tok[best], risk[best]), xytext=(tok[best] + 4, risk[best] + 2.2),
+                ha="center", fontsize=16, fontweight="bold", color=ORANGE,
+                arrowprops=dict(arrowstyle="-|>", lw=2, color=ORANGE))
+    ax.set_xlabel("each dot is one threshold: its tokens (% of always calling the team)")
     ax.set_ylabel("accuracy lost (points)")
     ax.legend(loc="lower right", fontsize=16)
     save(fig, "c_sweep.png")
@@ -281,9 +284,22 @@ def maxloss():
     save(fig, "c_maxloss.png")
 
 
+def fixed():
+    """One confidence threshold for all 12 settings: the loss it causes on each."""
+    loss = [A["baselines"]["per_setting"][k]["fixed"][0] for k in KEYS]
+    fig, ax = plt.subplots(figsize=(13, 5.6))
+    xs = setting_axis(ax)
+    ax.bar(xs, loss, 0.72, color=[RED if v > 5 else GREEN for v in loss])
+    ax.axhline(5, color=NAVY, lw=2.5, ls="--")
+    ax.text(14.7, 5.4, "ε = 5 points", ha="right", color=NAVY, fontsize=17, fontweight="bold")
+    ax.set_ylim(0, 18)
+    ax.set_ylabel("accuracy lost (points)")
+    save(fig, "c_fixed.png")
+
+
 def tests():
-    rows = [("Worst-case bound (HB)", 100), ("Plain test, no sequence", 93), ("Ignore saved answers", 79),
-            ("CLIMB’s test", 62)]
+    rows = [("Classic bound (Hoeffding)", 100), ("Betting, α split over thresholds", 93), ("Betting, saves ignored", 79),
+            ("Betting test (CLIMB)", 62)]
     fig, ax = plt.subplots(figsize=(11, 4.8))
     ys = np.arange(len(rows))[::-1]
     cols = [GREY, GREY, GREY, GREEN]
@@ -301,5 +317,5 @@ def tests():
 if __name__ == "__main__":
     cost((9, 6.2), "c_cost_n.png")
     flows((9, 6.2), "c_flows_n.png")
-    for f in (accuracy, cost, flows, agree, auroc, signals, viol, savings, tuned, maxloss, tests, sweep_and_wealth):
+    for f in (accuracy, cost, flows, agree, auroc, signals, viol, savings, tuned, maxloss, fixed, tests, sweep_and_wealth):
         f()

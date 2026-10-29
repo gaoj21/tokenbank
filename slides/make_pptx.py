@@ -218,10 +218,10 @@ def build():
     # the idea: a ladder (lead-in)
     s = slide("Since the team is expensive and not always better, the idea is a ladder. Try the cheapest configuration first, "
               "a direct answer. If it looks right, stop. Otherwise try a single agent. Only if that also looks unreliable, "
-              "call the full team. All three use the same model. The ladder itself is simple. The real question, "
-              "and the rest of the method, is when a task should climb.")
+              "call the full team. All three use the same model. The ladder itself is simple. A task stops when a score "
+              "is above a threshold. So the real question, and the rest of the talk, is: which score, and above all, which threshold?")
     header(s, "The idea", "Climb a ladder: call the team only when needed")
-    box(s, 128, 255, 1060, 80, NAVY, paras=[dict(t="The key question: when should a task climb?", size=22, bold=True, color=ORANGE_D)],
+    box(s, 128, 255, 1664, 80, NAVY, paras=[dict(t="Stop if score > threshold.  The key question: which threshold?", size=22, bold=True, color=ORANGE_D)],
         margin=10, anchor="m")
     rungs = [("Direct answer", "cheapest", 250, BLUEBG, BLUE), ("Single agent", "medium", 390, BLUEBG, BLUE),
              ("Agent team", "most expensive", 530, ORANGEBG, ORANGE)]
@@ -265,7 +265,7 @@ def build():
               "The second is agreement: run the direct answer and the single agent independently and see whether they match. "
               "There is one right answer but many wrong ones, so two independent tries rarely land on the same wrong answer. "
               "It costs one more cheap call, and that call's answer is the one we keep. It needs no log-probabilities.")
-    header(s, "How to climb · signal", "Why confidence, and why agreement?")
+    header(s, "Step 1 · the score", "Why confidence, and why agreement?")
     text(s, 128, 232, 1664, 40, [say("A good signal tells right from wrong, and costs far less than the team.", 20, NAVY, bold=True)])
     for c, (head, sub) in enumerate((("Confidence", "Is the model sure of its answer?"),
                                      ("Agreement", "Do two cheap answers match?"))):
@@ -309,7 +309,7 @@ def build():
               "Second, the check catches it: a backwards score puts the losses first, so the test fails early and that "
               "threshold is never deployed. Third, in the worst case CLIMB calls the team. On these three Gemma settings it "
               "uses 69 to 96 percent of the team's tokens at a 5 point tolerance: it saves less, but the promise still holds.")
-    header(s, "How to climb · signal", "Do they work? Mostly, and they cover each other")
+    header(s, "Step 1 · the score", "Do they work? Mostly, and they cover each other")
     for c, (img, head) in enumerate((("c_sig_conf.png", "Confidence: direct answer accuracy"),
                                      ("c_sig_agree.png", "Agreement: single agent accuracy"))):
         x = 128 + c * 864
@@ -338,36 +338,57 @@ def build():
     text(s, 1330, 700, 462, 200, [say("Nothing at deployment says which setting will go wrong.", 18, MUTED)])
 
     # 3 check: the promise
-    s = slide("Question three: how do we know a line is safe? CLIMB turns this into a promise. You choose how much accuracy "
-              "you can give up, say 5 points. CLIMB checks candidate rules on a few hundred labelled tasks and returns the "
-              "cheapest rule that keeps the promise, with 90 percent probability. If no cheaper rule qualifies, it always "
-              "calls the team, so the worst case is no savings, not lost accuracy.")
-    header(s, "How to climb · check", "Replace guessing with a promise")
-    items = [("You choose", "“I can lose at most 5 points of accuracy”", ORANGEBG, ORANGE),
-             ("A betting test checks", "candidate rules on a few hundred labelled tasks", NAVY, None),
-             ("You get", "the cheapest rule that keeps the promise, 9 times out of 10", GREENBG, GREEN)]
-    for i, (t, d, f, c) in enumerate(items):
-        x = 128 + i * 590
-        dark = f == NAVY
-        box(s, x, 330, 490, 320, f, c, [dict(t=t, size=24, bold=True, color=ORANGE_D if dark else c, align="c", after=12),
-                                        dict(t=d, size=19, color=LIGHT if dark else NAVY, align="c")], margin=24, lw=2.5)
-        if i < 2:
-            arrow(s, x + 502, 450, 76, 60)
-    box(s, 128, 720, 1664, 150, PAPER, RULE, [dict(t="No cheaper rule passes?  →  call the team every time.  Worst case: no savings, not lost accuracy.",
-                                                    size=20, bold=True, color=NAVY, align="c")])
+    s = slide("How do we replace guessing with a promise? You pick only the tolerance, say 5 points, and the data picks the "
+              "threshold. Here is the workflow. Take the labelled tasks and split them in two. "
+              "On the calibration half, run the betting test on every candidate threshold, from strict to loose, and stop at "
+              "the first failure. The thresholds before that failure are certified. Deploy the cheapest certified one. "
+              "If none passes, always call the team. "
+              "Then check on the test half, which calibration never saw: did the deployed threshold keep the loss within 5 points, "
+              "and how many tokens did it save? In our experiments we repeat this split 200 times. "
+              "In deployment, you only need the calibration half: the test half is simply your future tasks. "
+              "Next, how the betting test works.")
+    header(s, "Step 2 · setting the threshold", "Replace guessing with a promise: calibrate, then test")
+    text(s, 128, 226, 1664, 40, [say("You pick only ε, e.g. “lose at most 5 points”.  The data picks the threshold.", 18, NAVY, bold=True)])
+    T, H, B = 310, 250, 680
+    box(s, 128, T, 240, B + 200 - T, BAND, NAVY, [dict(t="Labelled tasks", size=18, bold=True, color=NAVY, align="c", after=8),
+                                                  say("split in two at random", 14, MUTED, align="c")], margin=12, lw=2)
+    box(s, 430, T + 40, 250, 170, BLUEBG, BLUE, [dict(t="Calibration half", size=17, bold=True, color=NAVY, align="c")], margin=10, lw=2)
+    box(s, 430, B + 15, 250, 170, BLUEBG, BLUE, [dict(t="Test half", size=17, bold=True, color=NAVY, align="c", after=4),
+                                                say("unseen in calibration", 13, MUTED, align="c")], margin=10, lw=2)
+    arrow(s, 376, T + 105, 46, 40)
+    arrow(s, 376, B + 80, 46, 40)
+    arrow(s, 688, T + 105, 46, 40)
+    # betting test on each threshold
+    box(s, 742, T, 560, H, NAVY, ORANGE, lw=3)
+    text(s, 762, T + 16, 520, 36, [dict(t="Betting test on each threshold", size=17, bold=True, color=LIGHT, align="c")])
+    for i, (sym, c) in enumerate((("✓", GREEN), ("✓", GREEN), ("✓", GREEN), ("✗", RED), ("–", MUTED))):
+        box(s, 802 + i * 92, T + 72, 76, 76, GREENBG if c == GREEN else REDBG if c == RED else PAPER, c,
+            [dict(t=sym, size=22, bold=True, color=c, align="c")], margin=2, lw=2)
+    text(s, 762, T + 168, 520, 60, [say("strict → loose, stop at the first failure", 14, SOFT, align="c")])
+    arrow(s, 1310, T + 105, 56, 40)
+    box(s, 1374, T, 418, H, ORANGEBG, ORANGE, [say("Certified: before the first failure", 14, NAVY, align="c", after=8),
+                                              dict(t="★ Deploy the cheapest", size=17, bold=True, color=ORANGE, align="c", after=8),
+                                              say("None passes? Always the team.", 13, MUTED, align="c")], margin=14, lw=2.5)
+    # test half: check the promise
+    arrow(s, 1558, T + H + 10, 50, B - T - H - 20, ORANGE, MSO_SHAPE.DOWN_ARROW)
+    arrow(s, 688, B + 80, 678, 40, RULE)
+    text(s, 742, B + 30, 560, 36, [say("apply the ★ threshold to unseen tasks", 14, MUTED, align="c")])
+    box(s, 1374, B, 418, 200, GREENBG, GREEN, [dict(t="Check the promise", size=19, bold=True, color=GREEN, align="c", after=6),
+                                              say("Loss ≤ ε?  Tokens saved?", 15, NAVY, align="c")], margin=14, lw=2.5)
+    text(s, 128, 915, 1664, 60, [say("In our experiments: 200 random splits.  In deployment: only the calibration half, the test half is your future tasks.", 15, MUTED, align="c")])
 
     # 3 check: the rules of the bet
-    s = slide("Here is the heart of CLIMB: the betting test. Imagine a gambler who bets that a rule is safe. "
-              "He starts with one dollar. We reveal the labelled tasks one by one, and compare the rule with the team on each. "
+    s = slide("Here is how CLIMB checks a threshold: the betting test. Imagine a gambler who bets that a threshold is safe. "
+              "He starts with one dollar. We reveal the labelled tasks one by one, and compare the threshold's answer with the team's on each. "
               "If both give the same result, which is most tasks, his money grows a little, times 1.03. "
-              "If the rule loses an answer the team got right, he loses a lot, about half. "
-              "If the rule saves an answer the team broke, he wins a lot, times 1.5. "
-              "If his money ever reaches 20 dollars, the rule passes. If it never does, the rule fails.")
-    header(s, "How to climb · check · the betting test", "The betting test: start with $1, bet the rule is safe")
+              "If the threshold stops on a wrong cheap answer the team got right, he loses a lot, about half. "
+              "If it keeps a right cheap answer the team broke, he wins a lot, times 1.5. "
+              "If his money ever reaches 20 dollars, the threshold passes. If it never does, it fails.")
+    header(s, "Step 2 · setting the threshold · the betting test", "The betting test: start with $1, bet the threshold is safe")
     text(s, 128, 250, 1664, 40, [say("Reveal the labelled tasks one by one. Each task multiplies the money:", 20, NAVY, bold=True)])
-    cases = [("Rule wrong, team right", "× 0.53", "lose a lot", REDBG, RED),
+    cases = [("Cheap wrong, team right", "× 0.53", "lose a lot", REDBG, RED),
              ("Same result", "× 1.03", "win a little (most tasks)", BAND, NAVY),
-             ("Rule right, team wrong", "× 1.53", "win a lot", GREENBG, GREEN)]
+             ("Cheap right, team wrong", "× 1.53", "win a lot", GREENBG, GREEN)]
     for i, (t, m, d, f, c) in enumerate(cases):
         x = 128 + i * 575
         box(s, x, 320, 490, 340, f, c, [dict(t=t, size=19, bold=True, color=NAVY, align="c", after=10),
@@ -378,35 +399,35 @@ def build():
     text(s, 128, 860, 1664, 80, [say("Multiplier = 1 + λ (ε − loss), loss = 1, 0 or −1. Shown for ε = 5 points and bet size λ = 0.5.", 17, MUTED)])
 
     # 3 check: good rules grow, bad rules shrink
-    s = slide("Why does this tell good rules from bad ones? Average the multiplier over tasks: it is one plus the bet size "
-              "times the tolerance minus the rule's true loss. A good rule loses less than the tolerance, so on average "
-              "each task multiplies the money by more than one, and it grows. A bad rule loses more, so each task "
-              "multiplies it by less than one, and it shrinks. On the chart, real rules from gpt-oss-120b on MuSiQue: "
+    s = slide("Why does this tell safe thresholds from unsafe ones? Average the multiplier over tasks: it is one plus the bet size "
+              "times the tolerance minus the threshold's true loss. A safe threshold loses less than the tolerance, so on average "
+              "each task multiplies the money by more than one, and it grows. An unsafe one loses more, so each task "
+              "multiplies it by less than one, and it shrinks. On the chart, three real thresholds from gpt-oss-120b on MuSiQue: "
               "the green one loses half a point and gets rich fast, the blue one loses 2 points and passes more slowly, "
               "the red one loses 6 points, more than the 5 allowed, and goes broke. The bet size is set from the earlier "
               "tasks only, never from the task being revealed.")
-    header(s, "How to climb · check · the betting test", "Good rules get rich, bad rules go broke")
+    header(s, "Step 2 · setting the threshold · the betting test", "Safe thresholds get rich, unsafe ones go broke")
     picture(s, "c_wealth.png", 128, 250, 1100, 700)
     box(s, 1290, 260, 502, 220, NAVY, paras=[dict(t="Average multiplier", size=18, bold=True, color=ORANGE_D, align="c", after=4),
                                              dict(t="1 + λ (ε − μ)", size=30, bold=True, font=SERIF, color=LIGHT, align="c", after=4),
-                                             say("μ: the rule’s true average loss", 15, SOFT, align="c")], margin=16)
-    box(s, 1290, 500, 502, 200, GREENBG, GREEN, [dict(t="Good rule: μ < ε", size=22, bold=True, color=GREEN, after=6),
+                                             say("μ: the threshold’s true average loss", 15, SOFT, align="c")], margin=16)
+    box(s, 1290, 500, 502, 200, GREENBG, GREEN, [dict(t="Safe: μ < ε", size=22, bold=True, color=GREEN, after=6),
                                                 say("average > 1: money grows, passes", 17)], margin=22, lw=2)
-    box(s, 1290, 720, 502, 200, REDBG, RED, [dict(t="Bad rule: μ > ε", size=22, bold=True, color=RED, after=6),
+    box(s, 1290, 720, 502, 200, REDBG, RED, [dict(t="Unsafe: μ > ε", size=22, bold=True, color=RED, after=6),
                                             say("average < 1: money shrinks, fails", 17)], margin=22, lw=2)
     text(s, 1290, 935, 502, 50, [say("Bet size λ: set from earlier tasks only.", 15, MUTED)])
 
     # 3 check: why $20
-    s = slide("Why should reaching 20 convince us? Suppose the rule is actually bad, so it loses more than the tolerance. "
+    s = slide("Why should reaching 20 convince us? Suppose the threshold is actually unsafe, so it loses more than the tolerance. "
               "Then every bet loses money on average, so the gambler's average wealth stays at most one dollar. "
               "His money can never go negative. If he reached 20 dollars more than 1 time in 20, those cases alone would "
-              "push his average above one dollar. That is impossible. So a bad rule passes at most 5 percent of the time. "
+              "push his average above one dollar. That is impossible. So an unsafe threshold passes at most 5 percent of the time. "
               "Twenty is just one over five percent. Stopping as soon as he reaches 20 is covered too: freeze the money "
               "there and the same argument holds. We check two families of rules, each at 5 percent, so 90 percent overall. "
-              "A pass means we accept the rule and are wrong at most 5 percent of the time, like a driving test: "
+              "A pass means we accept the threshold and are wrong at most 5 percent of the time, like a driving test: "
               "passing gets you a licence, it does not prove you can drive.")
-    header(s, "How to climb · check · the betting test", "Why $20? A bad rule rarely gets there")
-    chain = [("Bad rule", "each bet loses on average", REDBG, RED),
+    header(s, "Step 2 · setting the threshold · the betting test", "Why $20? An unsafe threshold rarely gets there")
+    chain = [("Unsafe threshold", "each bet loses on average", REDBG, RED),
              ("Average ≤ $1", "starts at $1, never grows on average", BAND, NAVY),
              ("Never below $0", "a lost answer at most halves it", BAND, NAVY)]
     for i, (t, d, f, c) in enumerate(chain):
@@ -417,7 +438,7 @@ def build():
             arrow(s, x + 500, 365, 66, 50)
     box(s, 128, 550, 1664, 200, NAVY, paras=[
         dict(t="1  ≥  average wealth  ≥  20 × P(reach $20)", size=36, bold=True, font=SERIF, color=LIGHT, align="c", after=10),
-        dict(t="so  [[c=66B2F0|P(a bad rule passes)  ≤  1/20  =  5%]]", size=28, bold=True, color=LIGHT, align="c")], margin=20)
+        dict(t="so  [[c=66B2F0|P(an unsafe threshold passes)  ≤  1/20  =  5%]]", size=28, bold=True, color=LIGHT, align="c")], margin=20)
     box(s, 128, 790, 800, 180, PAPER, RULE, [
         say("**100 worlds, $100 in total**", 20, NAVY, after=6),
         say("Each pass holds $20, so at most 5 of 100 pass. $100 line → 1%.", 18, MUTED)], margin=24)
@@ -432,7 +453,7 @@ def build():
               "And it does not mean 5 percent of passed rules are bad. It is like a driving test: if bad drivers pass at most "
               "5 percent of the time, passing gets you a licence, it does not prove you can drive. "
               "We run two such tests, one per family, each at 5 percent, so the promise holds with 90 percent probability.")
-    header(s, "How to climb · check · the betting test", "What a pass means, and what it does not")
+    header(s, "Step 2 · setting the threshold · the betting test", "What a pass means, and what it does not")
     box(s, 128, 270, 1664, 170, NAVY, paras=[
         dict(t="A bad rule reaches $20 at most 5% of the time.", size=28, bold=True, font=SERIF, color=LIGHT, align="c", after=8),
         dict(t="So: reach $20 → accept the rule.  This is wrong at most 5% of the time.", size=22, bold=True, color=ORANGE_D, align="c")], margin=18)
@@ -448,22 +469,24 @@ def build():
         say("Two families, 5% each  →  the promise holds with probability ≥ 90%.", 18, MUTED)], margin=26)
 
     # 3 check: many rules, safe to risky
-    s = slide("Now many rules. We order them from safe to risky. Moving right, more tasks stop early: cheaper but riskier. "
-              "We run the betting test on each, in this order, and stop at the first failure. Then we deploy the cheapest one "
-              "that passed, the star, at 57 percent of the team's tokens. Because we stop at the first failure, testing many "
-              "rules adds no extra risk: to pass a bad rule, the first bad rule in the line would have to pass, and that happens "
-              "at most 5 percent of the time. This is the direct-answer family. The same runs for the two-rung family, "
-              "and CLIMB keeps the cheaper one.")
-    header(s, "How to climb · check · the betting test", "Many rules: test from safe to risky")
+    s = slide("Putting it together, this is how CLIMB sets the threshold. Each dot is one candidate threshold. On the left, "
+              "a strict threshold: almost every task goes to the team. Moving right, the threshold gets looser, more tasks stop "
+              "early, cheaper but riskier. We run the betting test on each, from strict to loose, and stop at the first failure. "
+              "The threshold we deploy is the loosest one that passed, the star, at 57 percent of the team's tokens. Nobody picked it "
+              "by hand: it comes from your tolerance and your data. On another model or task, the same steps give a different threshold. "
+              "Stopping at the first failure means testing many thresholds adds no extra risk: to pass an unsafe one, the first "
+              "unsafe one in the line would have to pass, and that happens at most 5 percent of the time. "
+              "The same runs for the two-rung family, and CLIMB keeps the cheaper one.")
+    header(s, "Step 2 · setting the threshold", "Putting it together: how CLIMB sets the threshold")
     picture(s, "c_sweep.png", 128, 250, 1664, 700)
-    text(s, 128, 960, 1664, 40, [say("gpt-oss-120b on MuSiQue, option A (direct answer’s confidence), one calibration half. Option B is tested the same way, the cheaper one is kept.", 15, MUTED)])
+    text(s, 128, 960, 1664, 40, [say("gpt-oss-120b on MuSiQue, threshold on the direct answer’s confidence, one calibration half. Two-rung thresholds are tested the same way, the cheaper is kept.", 15, MUTED)])
 
     # 3 check: why bet on both sides
     s = slide("One more detail of the bet. Skipping the team is not only a risk: sometimes the cheap answer is right and the "
               "team would have broken it. Usual tests count only the losses. Our bet also pays out on saved answers, so they "
               "offset lost ones. On the chart, every test is valid, but they certify very different savings: a worst-case bound "
               "certifies nothing, ignoring saved answers keeps 79 percent of tokens, CLIMB's bet 62.")
-    header(s, "How to climb · check · the betting test", "Why bet on saved answers too? It saves more")
+    header(s, "Step 2 · setting the threshold · the betting test", "Why bet on saved answers too? It saves more")
     picture(s, "c_tests.png", 128, 260, 1150, 640)
     callout(s, 1330, 300, 462, 280, "62%", "of the team’s tokens when saves count. Losses only: 79%.", GREEN, GREENBG)
     text(s, 1330, 620, 462, 200, [say("Teams break right answers on up to 9% of tasks. The bet gives the rule credit for them.", 18, BODY)])
@@ -531,7 +554,7 @@ def build():
               "we see at most 2. Right: the share of the team's tokens CLIMB uses. It saves 38 percent at a 5 point "
               "tolerance and 65 percent at 10. Savings are smallest on Gemma, where confidence points the wrong way, "
               "and the promise still holds there.")
-    header(s, "Results · 3 models × 4 benchmarks, 200 random splits", "The promise holds, and it saves 38–65%")
+    header(s, "Results · 3 models × 4 benchmarks, 200 random splits", "These thresholds keep the promise and save 38–65%")
     for c, (img, head) in enumerate((("c_viol.png", "Splits that broke the promise (%)"),
                                      ("c_savings.png", "Tokens used (% of the team’s)"))):
         x = 128 + c * 864
@@ -555,7 +578,7 @@ def build():
               "The guarantee assumes calibration tasks look like deployment tasks. Thank you.")
     header(s, "Takeaways", "Call the team only when you must", size=36)
     cols = [("Teams are costly", "and sometimes break right answers."),
-            ("A betting test keeps the promise", "you set the loss, it finds the cheapest safe rule."),
+            ("Data-set threshold", "you set the loss, a betting test finds the cheapest safe threshold."),
             ("38–65% saved", "at 5 and 10 points, with the promise kept.")]
     for i, (t, d) in enumerate(cols):
         x = 128 + i * 565
@@ -610,14 +633,14 @@ def build():
 
     s = slide("In one slide. Agent teams are more accurate, but they cost several times the tokens and sometimes break right "
               "answers. CLIMB tries cheap answers first and calls the team only when a cheap answer looks unreliable. "
-              "You set how much accuracy you can lose. A betting test on a few hundred labelled tasks certifies the "
-              "cheapest rule that keeps this promise, with 90 percent probability. Across three models and four benchmarks "
+              "You set how much accuracy you can lose, and the data sets the threshold: a betting test on a few hundred labelled tasks "
+              "certifies the cheapest threshold that keeps this promise, with 90 percent probability. Across three models and four benchmarks "
               "it saves 38 to 65 percent of tokens, and the promise broke in at most 2 percent of splits. "
               "For Amex, it can sit in front of any multi-agent workflow.")
     header(s, "Executive summary", "Call the team only when you must, with a guarantee")
     rows = [("Problem", "Agent teams are more accurate, but use up to **6.3×** the tokens of a single agent and break right answers on up to **9%** of tasks."),
             ("Idea", "Try cheap answers first. Call the team only when a cheap answer looks unreliable (**confidence**, **agreement**)."),
-            ("Guarantee", "You set the accuracy you can lose. A **betting test** certifies the cheapest rule that keeps it, with **90%** probability."),
+            ("Guarantee", "You set the accuracy you can lose. The **data sets the threshold**: a **betting test** certifies the cheapest one that keeps it, **90%** of the time."),
             ("Result", "**38–65% fewer tokens** on 3 models × 4 benchmarks. The promise broke in **≤ 2%** of splits (10% allowed)."),
             ("For Amex", "Sits in front of any multi-agent workflow. Lessons for designing complex agent systems.")]
     for i, (k, d) in enumerate(rows):
@@ -626,9 +649,96 @@ def build():
         box(s, 128, y, 300, 120, ORANGE if hot else NAVY, paras=[dict(t=k, size=24, bold=True, color=LIGHT, align="c")], margin=8)
         box(s, 448, y, 1344, 120, ORANGEBG if hot else PAPER, ORANGE if hot else RULE, [say(d, 21, NAVY)], margin=26, lw=2 if hot else 1)
 
+    # step 2 opener: why the threshold cannot be fixed by hand
+    s = slide("Now step two, the threshold. Once we have a score, where do we set the line? Two shortcuts come to mind, and both "
+              "break the promise. Left: fix one confidence threshold for every setting, chosen so its average cost matches CLIMB. "
+              "It is fine on most settings, but loses 8 to 16 points on four of them. A threshold that is safe on all four "
+              "gpt-oss-20b benchmarks loses up to 16 points on the other two models. The right threshold depends on the model "
+              "and the task. Right: tune the threshold on each setting's own data, picking the cheapest one whose loss on the "
+              "sample is within 5 points. A threshold tuned to the edge on one sample tends to cross it on the next: it breaks "
+              "the promise on 31 percent of splits. So we need a threshold set from each setting's data, with a guarantee.")
+    header(s, "Step 2 · setting the threshold", "Two shortcuts, and both break the promise")
+    for c, (img, head, cap) in enumerate((
+            ("c_fixed.png", "One threshold for all settings",
+             "Above ε on [[c=B03A2E|4 of 12 settings, up to 16 points.]]"),
+            ("c_tuned.png", "Tuned on each setting’s data, no test",
+             "Breaks the promise on [[c=B03A2E|31% of splits]] at ε = 5."))):
+        x = 128 + c * 864
+        text(s, x, 245, 800, 40, [dict(t=head, size=22, bold=True, color=NAVY)])
+        picture(s, img, x, 300, 800, 430)
+        text(s, x, 745, 800, 40, [say(cap, 18)])
+    box(s, 128, 830, 1664, 130, NAVY, paras=[
+        dict(t="The right threshold depends on the model and task.", size=24, bold=True, font=SERIF, color=LIGHT, align="c", after=4),
+        dict(t="We need it set from each setting’s data, with a guarantee.", size=20, bold=True, color=ORANGE_D, align="c")], margin=14)
+
+    # betting test: why this test
+    s = slide("Why a betting test? We need a test that, on a few hundred labelled tasks, accepts an unsafe threshold at most "
+              "5 percent of the time. Three things make this hard here. First, the loss is signed: a cheap answer can lose a "
+              "right answer, but it can also save one the team breaks, and teams break up to 9 percent. Classic bounds such as "
+              "Hoeffding have to cover the whole range from minus one to one and certify nothing. Ignoring the saves throws "
+              "that credit away. Second, most tasks have loss zero, so the loss varies little. A good test should use that. "
+              "Third, we test many thresholds, and splitting the 5 percent among them would make each test much stricter. "
+              "The betting test handles all three. It bets on the signed loss, its bet size adapts to the variance it has seen, "
+              "and in a strict-to-loose sequence each test can use the full 5 percent. "
+              "The guarantee needs no model of the data, only that calibration tasks look like deployment tasks. "
+              "On the chart, every test is valid, but CLIMB's test certifies a threshold at 62 percent of the team's tokens, "
+              "against 79 to 100 for the others.")
+    header(s, "Step 2 · setting the threshold · the betting test", "Why a betting test?")
+    text(s, 128, 232, 1664, 40, [say("We need: accept an unsafe threshold at most 5% of the time, from a few hundred tasks.", 18, NAVY, bold=True)])
+    needs = [("Saves count", "A cheap answer can also save one the team breaks (up to 9%). The bet credits it."),
+             ("Uses low variance", "Most tasks lose 0. The bet size adapts to what it has seen."),
+             ("Many thresholds, full 5%", "Tested strict → loose, each test keeps the whole 5%."),
+             ("Any data", "No model of the score. Only: calibration looks like deployment.")]
+    for i, (t, d) in enumerate(needs):
+        y = 300 + i * 165
+        box(s, 128, y, 660, 150, PAPER, RULE, [dict(t=t, size=18, bold=True, color=NAVY, after=4), say(d, 15, BODY)], margin=18)
+    text(s, 830, 300, 962, 40, [dict(t="All valid. Which one saves the most?", size=18, bold=True, color=NAVY)])
+    picture(s, "c_tests.png", 830, 350, 962, 420)
+    callout(s, 830, 800, 962, 155, "62% vs 79–100%", "of the team’s tokens at ε = 5", GREEN, GREENBG)
+
+    # betting test: how CLIMB runs it on one threshold
+    s = slide("Here is exactly what CLIMB does for one threshold. Take the calibration tasks in random order and start with "
+              "one dollar. For each task, the threshold either stops early and keeps the cheap answer, or escalates and uses "
+              "the team's answer. The loss is the team's correctness minus ours: plus one if we lost a right answer, minus one "
+              "if we saved one, zero otherwise. An escalated task always has loss zero. The bet size is set from the earlier "
+              "tasks only, never from the current one, and is capped so one loss at most halves the money. "
+              "Multiply the money by one plus bet size times tolerance minus loss. In the example, with bet size 0.5 and a "
+              "5 point tolerance, task 3 loses a right answer and the money halves, task 4 saves one and it grows by half. "
+              "If the money ever reaches 20 dollars, the threshold is certified and we move to the next, looser one. "
+              "If it never does, we stop: no looser threshold is deployed. We run this for options A and B, each at 5 percent.")
+    header(s, "Step 2 · setting the threshold · the betting test", "In CLIMB: testing one threshold, task by task")
+    cols = [("Task", 100), ("Score > t?", 190), ("Our answer", 180), ("Team", 120), ("Loss ℓ", 170), ("× money", 150), ("Money", 150)]
+    rows = [("1", "yes, stop", "✓", "✓", "0", "× 1.03", "$1.03"),
+            ("2", "no → team", "team’s", "✓", "0", "× 1.03", "$1.05"),
+            ("3", "yes, stop", "✗", "✓", "+1 lost", "× 0.53", "$0.55"),
+            ("4", "yes, stop", "✓", "✗", "−1 saved", "× 1.53", "$0.84"),
+            ("5", "yes, stop", "✓", "✓", "0", "× 1.03", "$0.86"),
+            ("…", "", "", "", "", "", "≥ $20?")]
+    y0 = 250
+    x = 128
+    for c, (h, w) in enumerate(cols):
+        box(s, x, y0, w - 6, 56, NAVY, paras=[dict(t=h, size=15, bold=True, color=LIGHT, align="c")], margin=2, shape=MSO_SHAPE.RECTANGLE)
+        for r, row in enumerate(rows):
+            v = row[c]
+            col = RED if ("lost" in v or v in ("✗", "× 0.53")) else GREEN if ("saved" in v or v == "× 1.53") else NAVY
+            fill = REDBG if r == 2 else GREENBG if r == 3 else PAPER if r % 2 == 0 else BAND
+            box(s, x, y0 + 64 + r * 80, w - 6, 74, fill, None, [dict(t=v, size=17, bold=c in (4, 6), color=col, align="c")],
+                margin=2, shape=MSO_SHAPE.RECTANGLE)
+        x += w
+    text(s, 128, y0 + 64 + 6 * 80 + 6, 1074, 60, [say("ε = 5 points, bet size λ = 0.5.  Escalated tasks use the team’s answer: loss 0.", 15, MUTED)])
+    box(s, 1240, 250, 552, 610, NAVY, paras=[
+        dict(t="Each threshold, strict → loose", size=18, bold=True, color=ORANGE_D, after=10),
+        say("**1**  Tasks in random order, $1.", 15, LIGHT, after=8),
+        say("**2**  ℓ = team right − ours right.", 15, LIGHT, after=8),
+        say("**3**  λ from **earlier tasks only**. A loss at most halves the money.", 15, LIGHT, after=8),
+        say("**4**  Money × (1 + λ (ε − ℓ)).", 15, LIGHT, after=8),
+        say("**5**  Ever ≥ $20: certified, next threshold. Never: stop.", 15, LIGHT)], margin=22, anchor="t")
+    box(s, 128, 890, 1664, 80, ORANGEBG, ORANGE, [say("Options A and B are each tested this way at 5%, so both hold together with probability ≥ 90%.", 18, NAVY, bold=True, align="c")],
+        margin=8, lw=2)
+
     # 15-minute order: main talk, then backup (numbers follow the build order above)
-    main = [1, 27, 2, 4, 6, 8, 9, 11, 12, 13, 14, 16, 22, 23, 24, 25]
-    backup = [26, 3, 5, 7, 10, 15, 17, 18, 19, 20, 21]
+    main = [1, 27, 2, 4, 6, 8, 9, 28, 11, 29, 12, 13, 14, 30, 16, 22, 24, 25]
+    backup = [26, 3, 5, 7, 10, 23, 15, 17, 18, 19, 20, 21]
     assert sorted(main + backup) == list(range(1, len(prs.slides) + 1))
     ids = prs.slides._sldIdLst
     els = list(ids)
