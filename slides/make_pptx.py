@@ -749,26 +749,19 @@ def build():
               "come from agreement. So theory gives the form of the rule. What it cannot give is where the line goes: "
               "that depends on the unknown gain, and the data has to decide.")
     header(s, "Step 2 · setting the threshold", "Why a threshold? It is the best rule")
-    logic = [("1", "Stopping a task early saves its team tokens, but risks the accuracy the team would add: its **gain**."),
-             ("2", "With a risk budget ε, stop first the tasks with the **least gain per token**, like packing a knapsack."),
-             ("3", "If gain falls as confidence rises, those are the **most confident** tasks.")]
-    for i, (k, d) in enumerate(logic):
-        y = 250 + i * 115
-        box(s, 128, y, 56, 56, ORANGE, paras=[dict(t=k, size=24, bold=True, color=LIGHT, align="c")], margin=0, shape=MSO_SHAPE.OVAL)
-        text(s, 204, y - 2, 760, 110, [say(d, 17, BODY)])
-    # confidence strip: escalate below t, stop above
-    y = 650
-    text(s, 128, y - 50, 820, 34, [say("So the best rule:", 18, NAVY, bold=True)])
-    box(s, 128, y, 470, 90, ORANGEBG, ORANGE, [say("below t: call the team", 18, NAVY, bold=True, align="c")], margin=6, lw=2, shape=MSO_SHAPE.RECTANGLE)
-    box(s, 598, y, 350, 90, GREENBG, GREEN, [say("above t: stop", 18, GREEN, bold=True, align="c")], margin=6, lw=2, shape=MSO_SHAPE.RECTANGLE)
-    box(s, 592, y - 20, 12, 130, RED, shape=MSO_SHAPE.RECTANGLE)
-    text(s, 560, y + 112, 80, 34, [say("t", 20, RED, bold=True, align="c")])
-    text(s, 128, y + 112, 400, 34, [say("low confidence", 15, MUTED)])
-    text(s, 748, y + 112, 200, 34, [say("high", 15, MUTED, align="r")])
-    text(s, 1000, 240, 792, 40, [dict(t="Does gain fall with confidence?  Mostly", size=18, bold=True, color=NAVY)])
-    picture(s, "c_monotone.png", 1040, 290, 720, 480)
-    text(s, 1000, 780, 792, 70, [say("9 settings where confidence ranks right. Falls on 8. Gemma’s 3 backwards ones excluded.", 14, MUTED)])
-    box(s, 128, 880, 1664, 90, NAVY, paras=[say("Theory gives the **form**: a threshold.   Where to put it: [[c=66B2F0|the data must decide.]]", 20, LIGHT, align="c")], margin=10)
+    text(s, 128, 270, 820, 100, [say("Stop the tasks where the team adds **least**.", 22, NAVY)])
+    text(s, 128, 400, 820, 100, [say("The team adds least where confidence is **high**.", 22, NAVY)])
+    y = 620
+    text(s, 128, y - 60, 820, 40, [say("So the best rule is a threshold:", 20, ORANGE, bold=True)])
+    box(s, 128, y, 470, 100, ORANGEBG, ORANGE, [say("below t: call the team", 20, NAVY, bold=True, align="c")], margin=6, lw=2, shape=MSO_SHAPE.RECTANGLE)
+    box(s, 598, y, 350, 100, GREENBG, GREEN, [say("above t: stop", 20, GREEN, bold=True, align="c")], margin=6, lw=2, shape=MSO_SHAPE.RECTANGLE)
+    box(s, 592, y - 20, 12, 140, RED, shape=MSO_SHAPE.RECTANGLE)
+    text(s, 560, y + 125, 80, 34, [say("t", 22, RED, bold=True, align="c")])
+    text(s, 128, y + 125, 400, 34, [say("low confidence", 16, MUTED)])
+    text(s, 748, y + 125, 200, 34, [say("high", 16, MUTED, align="r")])
+    text(s, 1000, 240, 792, 40, [dict(t="Gain from the team, by confidence", size=20, bold=True, color=NAVY)])
+    picture(s, "c_monotone.png", 1000, 310, 792, 528)
+    box(s, 128, 870, 1664, 90, NAVY, paras=[say("Theory gives the **form**.  [[c=66B2F0|The data decides where t goes.]]", 22, LIGHT, align="c")], margin=10)
 
     # 15-minute order: main talk, then backup (numbers follow the build order above)
     main = [1, 27, 2, 4, 6, 8, 9, 31, 28, 11, 29, 12, 13, 14, 30, 16, 22, 24, 25]
