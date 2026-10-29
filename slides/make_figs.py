@@ -20,7 +20,7 @@ PLUG = json.loads((PAPER / "data" / "plugin_baseline.json").read_text())
 
 NAVY, BODY, MUTED, GRID = "#00175A", "#333B47", "#6B7480", "#E3E8EE"
 ORANGE, BLUE, LBLUE, RED, GREEN, GREY = "#006FCF", "#00175A", "#8CBDEB", "#B03A2E", "#2F6B34", "#A7A9AE"  # Amex blues
-MODELS = [("gpt-oss-20b", "20b"), ("gpt-oss-120b", "120b"), ("Gemma-4-26B-A4B", "Gemma")]
+MODELS = [("gpt-oss-20b", "gpt-oss-20b"), ("gpt-oss-120b", "gpt-oss-120b"), ("Gemma-4-26B-A4B", "Gemma-4-26B")]
 BENCH = [("MATH", "MATH"), ("FRAMES", "FRAMES"), ("MuSiQue", "MuSiQue"), ("BBEH", "BBEH")]
 KEYS = [f"{m}|{b}" for m, _ in MODELS for b, _ in BENCH]
 
