@@ -1,6 +1,6 @@
 # CLIMB talk slides
 
-`CLIMB_talk.pptx`: 22 slides, one idea per slide, speaker notes on every slide.
+`CLIMB_talk.pptx`: a 16-slide main talk (about 15 minutes) followed by 11 backup slides, speaker notes on every slide.
 
 Rebuild:
 

@@ -1,4 +1,4 @@
-"""Build slides/CLIMB_talk.pptx: a 22-slide talk, one idea per slide, charts from make_figs.py.
+"""Build slides/CLIMB_talk.pptx: a 15-slide main talk with backup slides, one idea per slide, charts from make_figs.py.
 
 Run with the project venv: .venv/bin/python slides/make_figs.py && .venv/bin/python slides/make_pptx.py
 """
@@ -139,10 +139,7 @@ def build():
     def slide(notes, dark=False):
         nonlocal n
         n += 1
-        s = new_slide(prs, notes, dark)
-        if n > 1:
-            footer(s, n, dark)
-        return s
+        return new_slide(prs, notes, dark)
 
     # 1 cover
     s = slide("Teams of LLM agents can be more accurate than one model call, but they cost several times as much. "
@@ -157,7 +154,8 @@ def build():
     s = slide("First, what is an agent team? Instead of asking one model once, we split the work into roles, all played by "
               "the same model. A planner writes a step-by-step plan. An executor solves the task following the plan. "
               "A reviewer checks the answer. If the reviewer rejects it, the executor revises, for up to five rounds. "
-              "This plan, execute, review pattern is common in multi-agent frameworks.")
+              "This plan, execute, review pattern is common in multi-agent frameworks. And it works: on all twelve of our "
+              "settings the team is the most accurate, 2 to 21 points above a direct answer.")
     header(s, "Background", "What is an agent team?")
     text(s, 128, 270, 600, 50, [dict(t="Single agent", size=22, bold=True, color=BLUE)])
     box(s, 128, 330, 300, 130, PAPER, RULE, [dict(t="Question", size=22, bold=True, color=NAVY, align="c")])
@@ -178,6 +176,8 @@ def build():
             arrow(s, x + 286, 700, 52, 50)
     arrow(s, 818, 840, 400, 50, ORANGE, shape=MSO_SHAPE.LEFT_ARROW)
     text(s, 700, 900, 640, 50, [dict(t="rejected? revise, up to 5 rounds", size=18, bold=True, color=ORANGE, align="c")])
+    box(s, 1330, 260, 462, 260, ORANGEBG, RULE, [big("+2 to +21", ORANGE, 36),
+                                                say("points over a direct answer. Best on 12 / 12 settings.", 17)], margin=26)
 
     # team: why it helps
     s = slide("Why use a team? It is more accurate. Grey is a direct answer, blue a single agent that reasons, orange the team. "
@@ -247,11 +247,11 @@ def build():
     header(s, "How to climb", "Deciding when to climb: four questions", size=34)
     qs = [("1", "Signal", "Does the cheap answer look right?", "confidence and agreement"),
           ("2", "Rule", "Where do we draw the line?", "a threshold on the score"),
-          ("3", "Check", "Is that line safe?", "a test with a guarantee"),
+          ("3", "Check", "Is that line safe?", "a betting test: the core"),
           ("4", "Depth", "Look one rung up or two?", "let the data choose")]
     for i, (k, t, q, a) in enumerate(qs):
         x = 128 + i * 426
-        box(s, x, 290, 386, 540, BLUEBG, RULE, paras=[dict(t=k, size=36, bold=True, font=SERIF, color=ORANGE, after=4),
+        box(s, x, 290, 386, 540, ORANGEBG if k == "3" else BLUEBG, ORANGE if k == "3" else RULE, lw=3 if k == "3" else 1, paras=[dict(t=k, size=36, bold=True, font=SERIF, color=ORANGE, after=4),
                                                dict(t=t, size=24, bold=True, color=NAVY, after=12),
                                                dict(t=q, size=18, color=BODY, after=16),
                                                dict(t="→ " + a, size=18, bold=True, color=ORANGE)], margin=28, anchor="t")
@@ -265,7 +265,7 @@ def build():
               "The second is agreement: run the direct answer and the single agent independently and see whether they match. "
               "There is one right answer but many wrong ones, so two independent tries rarely land on the same wrong answer. "
               "It costs one more cheap call, and that call's answer is the one we keep. It needs no log-probabilities.")
-    header(s, "How to climb · 1 signal", "Why confidence, and why agreement?")
+    header(s, "How to climb · signal", "Why confidence, and why agreement?")
     text(s, 128, 232, 1664, 40, [say("A good signal tells right from wrong, and costs far less than the team.", 20, NAVY, bold=True)])
     for c, (head, sub) in enumerate((("Confidence", "Is the model sure of its answer?"),
                                      ("Agreement", "Do two cheap answers match?"))):
@@ -309,7 +309,7 @@ def build():
               "Second, the check catches it: a backwards score puts the losses first, so the test fails early and that "
               "threshold is never deployed. Third, in the worst case CLIMB calls the team. On these three Gemma settings it "
               "uses 69 to 96 percent of the team's tokens at a 5 point tolerance: it saves less, but the promise still holds.")
-    header(s, "How to climb · 1 signal", "Do they work? Mostly, and they cover each other")
+    header(s, "How to climb · signal", "Do they work? Mostly, and they cover each other")
     for c, (img, head) in enumerate((("c_sig_conf.png", "Confidence: direct answer accuracy"),
                                      ("c_sig_agree.png", "Agreement: single agent accuracy"))):
         x = 128 + c * 864
@@ -332,7 +332,7 @@ def build():
               "but lose a lot on some settings. A fixed confidence threshold with the same average cost as CLIMB "
               "loses up to 16 points. Always using the single agent loses up to 9. CLIMB at a 5 point tolerance loses at most 2.8. "
               "And nothing at deployment tells you which setting is the bad one.")
-    header(s, "How to climb · 2 rule", "Where to draw the line? Guessing can go badly")
+    header(s, "How to climb · rule", "Where to draw the line? Guessing can go badly")
     picture(s, "c_maxloss.png", 128, 260, 1150, 700)
     callout(s, 1330, 360, 462, 300, "16 points", "lost by a hand-picked threshold on one setting", RED, REDBG)
     text(s, 1330, 700, 462, 200, [say("Nothing at deployment says which setting will go wrong.", 18, MUTED)])
@@ -342,9 +342,9 @@ def build():
               "you can give up, say 5 points. CLIMB checks candidate rules on a few hundred labelled tasks and returns the "
               "cheapest rule that keeps the promise, with 90 percent probability. If no cheaper rule qualifies, it always "
               "calls the team, so the worst case is no savings, not lost accuracy.")
-    header(s, "How to climb · 3 check", "Replace guessing with a promise")
+    header(s, "How to climb · check", "Replace guessing with a promise")
     items = [("You choose", "“I can lose at most 5 points of accuracy”", ORANGEBG, ORANGE),
-             ("CLIMB checks", "candidate rules on a few hundred labelled tasks", NAVY, None),
+             ("A betting test checks", "candidate rules on a few hundred labelled tasks", NAVY, None),
              ("You get", "the cheapest rule that keeps the promise, 9 times out of 10", GREENBG, GREEN)]
     for i, (t, d, f, c) in enumerate(items):
         x = 128 + i * 590
@@ -356,24 +356,45 @@ def build():
     box(s, 128, 720, 1664, 150, PAPER, RULE, [dict(t="No cheaper rule passes?  →  call the team every time.  Worst case: no savings, not lost accuracy.",
                                                     size=20, bold=True, color=NAVY, align="c")])
 
-    # 3 check: betting game for one rule
-    s = slide("How do we check one rule? Imagine a gambler who bets that the rule is safe. He starts with one dollar. "
-              "We reveal the calibration tasks one by one. If the rule gives the same result as the team, which is most "
-              "tasks, he wins a little. If it loses an answer the team got right, he loses a lot. If it saves an answer the "
-              "team broke, he wins a lot. If his money ever reaches 20 dollars, the rule passes. On the chart, the green rule "
-              "loses half a point and he gets rich quickly. The red one loses 6 points and he goes broke. "
-              "The bet size follows how much the earlier tasks varied, so a rule that rarely changes anything is bet on hard.")
-    header(s, "How to climb · 3 check", "Each test is a betting game")
+    # 3 check: the rules of the bet
+    s = slide("Here is the heart of CLIMB: the betting test. Imagine a gambler who bets that a rule is safe. "
+              "He starts with one dollar. We reveal the labelled tasks one by one, and compare the rule with the team on each. "
+              "If both give the same result, which is most tasks, his money grows a little, times 1.03. "
+              "If the rule loses an answer the team got right, he loses a lot, about half. "
+              "If the rule saves an answer the team broke, he wins a lot, times 1.5. "
+              "If his money ever reaches 20 dollars, the rule passes. If it never does, the rule fails.")
+    header(s, "How to climb · check · the betting test", "The betting test: start with $1, bet the rule is safe")
+    text(s, 128, 250, 1664, 40, [say("Reveal the labelled tasks one by one. Each task multiplies the money:", 20, NAVY, bold=True)])
+    cases = [("Rule wrong, team right", "× 0.53", "lose a lot", REDBG, RED),
+             ("Same result", "× 1.03", "win a little (most tasks)", BAND, NAVY),
+             ("Rule right, team wrong", "× 1.53", "win a lot", GREENBG, GREEN)]
+    for i, (t, m, d, f, c) in enumerate(cases):
+        x = 128 + i * 575
+        box(s, x, 320, 490, 340, f, c, [dict(t=t, size=19, bold=True, color=NAVY, align="c", after=10),
+                                        dict(t=m, size=44, bold=True, font=SERIF, color=c, align="c", after=8),
+                                        dict(t=d, size=20, bold=True, color=c, align="c")], margin=16, lw=2.5)
+    box(s, 128, 700, 1664, 130, NAVY, paras=[dict(t="Money ever reaches $20  →  pass.     Never reaches it  →  fail.",
+                                                 size=24, bold=True, font=SERIF, color=LIGHT, align="c")], margin=16)
+    text(s, 128, 860, 1664, 80, [say("Multiplier = 1 + λ (ε − loss), loss = 1, 0 or −1. Shown for ε = 5 points and bet size λ = 0.5.", 17, MUTED)])
+
+    # 3 check: good rules grow, bad rules shrink
+    s = slide("Why does this tell good rules from bad ones? Average the multiplier over tasks: it is one plus the bet size "
+              "times the tolerance minus the rule's true loss. A good rule loses less than the tolerance, so on average "
+              "each task multiplies the money by more than one, and it grows. A bad rule loses more, so each task "
+              "multiplies it by less than one, and it shrinks. On the chart, real rules from gpt-oss-120b on MuSiQue: "
+              "the green one loses half a point and gets rich fast, the blue one loses 2 points and passes more slowly, "
+              "the red one loses 6 points, more than the 5 allowed, and goes broke. The bet size is set from the earlier "
+              "tasks only, never from the task being revealed.")
+    header(s, "How to climb · check · the betting test", "Good rules get rich, bad rules go broke")
     picture(s, "c_wealth.png", 128, 250, 1100, 700)
-    steps = [("1", "Start with $1."),
-             ("2", "Same as the team: win a little."),
-             ("3", "Lost answer: lose a lot. Saved: win a lot."),
-             ("4", "Reach $20: the rule passes.")]
-    for i, (k, d) in enumerate(steps):
-        y = 290 + i * 170
-        box(s, 1290, y, 70, 70, ORANGE, paras=[dict(t=k, size=28, bold=True, color=LIGHT, align="c")], margin=0,
-            shape=MSO_SHAPE.OVAL)
-        text(s, 1385, y + 4, 407, 160, [say(d, 19)], anchor="t")
+    box(s, 1290, 260, 502, 220, NAVY, paras=[dict(t="Average multiplier", size=18, bold=True, color=ORANGE_D, align="c", after=4),
+                                             dict(t="1 + λ (ε − μ)", size=30, bold=True, font=SERIF, color=LIGHT, align="c", after=4),
+                                             say("μ: the rule’s true average loss", 15, SOFT, align="c")], margin=16)
+    box(s, 1290, 500, 502, 200, GREENBG, GREEN, [dict(t="Good rule: μ < ε", size=22, bold=True, color=GREEN, after=6),
+                                                say("average > 1: money grows, passes", 17)], margin=22, lw=2)
+    box(s, 1290, 720, 502, 200, REDBG, RED, [dict(t="Bad rule: μ > ε", size=22, bold=True, color=RED, after=6),
+                                            say("average < 1: money shrinks, fails", 17)], margin=22, lw=2)
+    text(s, 1290, 935, 502, 50, [say("Bet size λ: set from earlier tasks only.", 15, MUTED)])
 
     # 3 check: why $20
     s = slide("Why should reaching 20 convince us? Suppose the rule is actually bad, so it loses more than the tolerance. "
@@ -381,8 +402,10 @@ def build():
               "His money can never go negative. If he reached 20 dollars more than 1 time in 20, those cases alone would "
               "push his average above one dollar. That is impossible. So a bad rule passes at most 5 percent of the time. "
               "Twenty is just one over five percent. Stopping as soon as he reaches 20 is covered too: freeze the money "
-              "there and the same argument holds. We check two families of rules, each at 5 percent, so 90 percent overall.")
-    header(s, "How to climb · 3 check", "Why $20? A bad rule rarely gets there")
+              "there and the same argument holds. We check two families of rules, each at 5 percent, so 90 percent overall. "
+              "A pass means we accept the rule and are wrong at most 5 percent of the time, like a driving test: "
+              "passing gets you a licence, it does not prove you can drive.")
+    header(s, "How to climb · check · the betting test", "Why $20? A bad rule rarely gets there")
     chain = [("Bad rule", "each bet loses on average", REDBG, RED),
              ("Average ≤ $1", "starts at $1, never grows on average", BAND, NAVY),
              ("Never below $0", "a lost answer at most halves it", BAND, NAVY)]
@@ -396,11 +419,33 @@ def build():
         dict(t="1  ≥  average wealth  ≥  20 × P(reach $20)", size=36, bold=True, font=SERIF, color=LIGHT, align="c", after=10),
         dict(t="so  [[c=66B2F0|P(a bad rule passes)  ≤  1/20  =  5%]]", size=28, bold=True, color=LIGHT, align="c")], margin=20)
     box(s, 128, 790, 800, 180, PAPER, RULE, [
-        say("**The line sets the error**", 20, NAVY, after=6),
-        say("$20 → 5%,  $100 → 1%. Two families × 5% = 10%.", 18, MUTED)], margin=24)
+        say("**100 worlds, $100 in total**", 20, NAVY, after=6),
+        say("Each pass holds $20, so at most 5 of 100 pass. $100 line → 1%.", 18, MUTED)], margin=24)
     box(s, 992, 790, 800, 180, PAPER, RULE, [
-        say("**Hit $20, then dropped? Still a pass**", 20, NAVY, after=6),
-        say("Freeze the money at $20: the average stays ≤ $1.", 18, MUTED)], margin=24)
+        say("**A pass: accept, wrong ≤ 5% of the time**", 20, NAVY, after=6),
+        say("Like a driving test, not proof you can drive.", 18, MUTED)], margin=24)
+
+    # 3 check: what a pass means
+    s = slide("How should we read a pass? A bad rule reaches 20 dollars at most 5 percent of the time. So we agree: "
+              "reach 20, and we accept the rule. That decision is wrong at most 5 percent of the time. "
+              "Two readings are wrong. A pass does not prove the rule is good: a bad rule stays bad, we were just unlucky. "
+              "And it does not mean 5 percent of passed rules are bad. It is like a driving test: if bad drivers pass at most "
+              "5 percent of the time, passing gets you a licence, it does not prove you can drive. "
+              "We run two such tests, one per family, each at 5 percent, so the promise holds with 90 percent probability.")
+    header(s, "How to climb · check · the betting test", "What a pass means, and what it does not")
+    box(s, 128, 270, 1664, 170, NAVY, paras=[
+        dict(t="A bad rule reaches $20 at most 5% of the time.", size=28, bold=True, font=SERIF, color=LIGHT, align="c", after=8),
+        dict(t="So: reach $20 → accept the rule.  This is wrong at most 5% of the time.", size=22, bold=True, color=ORANGE_D, align="c")], margin=18)
+    reads = [("Right", "“We accept it, and are wrong at most 5% of the time.”", GREENBG, GREEN),
+             ("Wrong", "“Reaching $20 proves the rule is good.”", REDBG, RED),
+             ("Wrong", "“5% of the rules that pass are bad.”", REDBG, RED)]
+    for i, (t, d, f, col) in enumerate(reads):
+        x = 128 + i * 575
+        box(s, x, 490, 490, 230, f, col, [dict(t=t, size=24, bold=True, color=col, align="c", after=10),
+                                          dict(t=d, size=17, color=NAVY, align="c")], margin=18, lw=2.5)
+    box(s, 128, 760, 1664, 200, PAPER, RULE, [
+        say("**Like a driving test.** Bad drivers pass at most 5% of the time. Passing gets you a licence, it does not prove you can drive.", 19, NAVY, after=8),
+        say("Two families, 5% each  →  the promise holds with probability ≥ 90%.", 18, MUTED)], margin=26)
 
     # 3 check: many rules, safe to risky
     s = slide("Now many rules. We order them from safe to risky. Moving right, more tasks stop early: cheaper but riskier. "
@@ -409,31 +454,27 @@ def build():
               "rules adds no extra risk: to pass a bad rule, the first bad rule in the line would have to pass, and that happens "
               "at most 5 percent of the time. This is the direct-answer family. The same runs for the two-rung family, "
               "and CLIMB keeps the cheaper one.")
-    header(s, "How to climb · 3 check", "Many rules: test from safe to risky")
+    header(s, "How to climb · check · the betting test", "Many rules: test from safe to risky")
     picture(s, "c_sweep.png", 128, 250, 1664, 700)
-    text(s, 128, 960, 1664, 40, [say("gpt-oss-120b on MuSiQue, option A (direct answer’s confidence), one calibration half.", 15, MUTED)])
+    text(s, 128, 960, 1664, 40, [say("gpt-oss-120b on MuSiQue, option A (direct answer’s confidence), one calibration half. Option B is tested the same way, the cheaper one is kept.", 15, MUTED)])
 
-    # 3 check: signed loss
-    s = slide("One detail makes the check much sharper. Skipping the team is not only a risk: sometimes the cheap answer "
-              "is right and the team would have broken it. Usual tests count only the losses. CLIMB's bet counts both sides, "
-              "so saved answers offset lost ones. On the right, every test is valid, but they certify very different savings: "
-              "a worst-case bound certifies nothing, ignoring saved answers keeps 79 percent of tokens, CLIMB's test 62.")
-    header(s, "How to climb · 3 check", "Count the answers skipping saves, too")
-    cases = [("Cheap wrong, team right", "lose a point", REDBG, RED),
-             ("Same result", "no change (most tasks)", BAND, MUTED),
-             ("Cheap right, team wrong", "save a point", GREENBG, GREEN)]
-    for i, (t, d, f, c) in enumerate(cases):
-        box(s, 128, 290 + i * 190, 600, 160, f, c, [dict(t=t, size=22, bold=True, color=NAVY, align="c", after=6),
-                                                     dict(t=d, size=20, bold=True, color=c, align="c")], margin=12, lw=2.5)
-    picture(s, "c_tests.png", 790, 300, 1002, 520)
-    text(s, 790, 840, 1002, 80, [say("Tokens each valid test can certify at ε = 5. Lower is better.", 17, MUTED)])
+    # 3 check: why bet on both sides
+    s = slide("One more detail of the bet. Skipping the team is not only a risk: sometimes the cheap answer is right and the "
+              "team would have broken it. Usual tests count only the losses. Our bet also pays out on saved answers, so they "
+              "offset lost ones. On the chart, every test is valid, but they certify very different savings: a worst-case bound "
+              "certifies nothing, ignoring saved answers keeps 79 percent of tokens, CLIMB's bet 62.")
+    header(s, "How to climb · check · the betting test", "Why bet on saved answers too? It saves more")
+    picture(s, "c_tests.png", 128, 260, 1150, 640)
+    callout(s, 1330, 300, 462, 280, "62%", "of the team’s tokens when saves count. Losses only: 79%.", GREEN, GREENBG)
+    text(s, 1330, 620, 462, 200, [say("Teams break right answers on up to 9% of tasks. The bet gives the rule credit for them.", 18, BODY)])
+    text(s, 128, 910, 1150, 40, [say("Tokens each valid test can certify at ε = 5. Lower is better.", 16, MUTED)])
 
     # 4 depth
     s = slide("Question four: how far up the ladder should we look before deciding? Option A stops after the direct answer "
               "when it is confident. Option B also runs the single agent and stops when the two agree. Which is cheaper depends "
               "on the model and the task, so CLIMB checks both on the calibration data and deploys the cheaper one that passes, "
               "splitting the error budget between them. If neither passes, it always calls the team.")
-    header(s, "How to climb · 4 depth", "One rung or two? The data decides")
+    header(s, "How to climb · depth", "One rung or two? The data decides")
     rows = [("Option A: one rung", "Direct answer", "confident? stop"),
             ("Option B: two rungs", "Direct answer + single agent", "agree and confident? stop")]
     for i, (lab, rung, cond) in enumerate(rows):
@@ -483,6 +524,22 @@ def build():
     callout(s, 1330, 330, 462, 260, "38% saved", "allowing 5 points of loss", BLUE, BLUEBG)
     callout(s, 1330, 630, 462, 260, "65% saved", "allowing 10 points of loss", BLUE, BLUEBG)
 
+    # results: promise kept and savings, together
+    s = slide("Results on 3 models and 4 benchmarks: math, two open-book question answering sets and hard reasoning. "
+              "We record every task once, then replay 200 random splits, half to calibrate, half to test. "
+              "Left: the share of splits where CLIMB lost more than its tolerance. The guarantee allows 10 percent, "
+              "we see at most 2. Right: the share of the team's tokens CLIMB uses. It saves 38 percent at a 5 point "
+              "tolerance and 65 percent at 10. Savings are smallest on Gemma, where confidence points the wrong way, "
+              "and the promise still holds there.")
+    header(s, "Results · 3 models × 4 benchmarks, 200 random splits", "The promise holds, and it saves 38–65%")
+    for c, (img, head) in enumerate((("c_viol.png", "Splits that broke the promise (%)"),
+                                     ("c_savings.png", "Tokens used (% of the team’s)"))):
+        x = 128 + c * 864
+        text(s, x, 250, 800, 40, [dict(t=head, size=22, bold=True, color=NAVY)])
+        picture(s, img, x, 310, 800, 420)
+    callout(s, 128, 760, 800, 200, "≤ 2%", "of splits broke the promise. Allowed: 10%.", GREEN, GREENBG)
+    callout(s, 992, 760, 800, 200, "38% / 65% saved", "allowing 5 / 10 points of loss", BLUE, BLUEBG)
+
     # 17 tuned without test
     s = slide("Why not just tune the threshold on the same data, without the test? It is cheaper on paper, "
               "but it breaks the promise: at 5 points it fails on 31 percent of splits on average, against at most "
@@ -498,7 +555,7 @@ def build():
               "The guarantee assumes calibration tasks look like deployment tasks. Thank you.")
     header(s, "Takeaways", "Call the team only when you must", size=36)
     cols = [("Teams are costly", "and sometimes break right answers."),
-            ("CLIMB keeps a promise", "you set the loss, it finds the cheapest safe rule."),
+            ("A betting test keeps the promise", "you set the loss, it finds the cheapest safe rule."),
             ("38–65% saved", "at 5 and 10 points, with the promise kept.")]
     for i, (t, d) in enumerate(cols):
         x = 128 + i * 565
@@ -546,6 +603,42 @@ def build():
     for j, (t, d) in enumerate(tips):
         box(s, 980, 360 + j * 140, 812, 120, PAPER, RULE, [dict(t=t, size=17, bold=True, color=NAVY, after=4), say(d, 14, MUTED)], margin=18, lw=1)
     text(s, 980, 940, 812, 50, [dict(t="Thank you. Questions?", size=22, bold=True, font=SERIF, color=ORANGE, align="r")])
+
+    s = slide("Backup slides for questions.")
+    text(s, 128, 420, 1664, 120, [dict(t="Backup", size=56, bold=True, font=SERIF, color=NAVY)])
+    text(s, 128, 580, 1664, 60, [say("Details for questions", 24, MUTED)])
+
+    s = slide("In one slide. Agent teams are more accurate, but they cost several times the tokens and sometimes break right "
+              "answers. CLIMB tries cheap answers first and calls the team only when a cheap answer looks unreliable. "
+              "You set how much accuracy you can lose. A betting test on a few hundred labelled tasks certifies the "
+              "cheapest rule that keeps this promise, with 90 percent probability. Across three models and four benchmarks "
+              "it saves 38 to 65 percent of tokens, and the promise broke in at most 2 percent of splits. "
+              "For Amex, it can sit in front of any multi-agent workflow.")
+    header(s, "Executive summary", "Call the team only when you must, with a guarantee")
+    rows = [("Problem", "Agent teams are more accurate, but use up to **6.3×** the tokens of a single agent and break right answers on up to **9%** of tasks."),
+            ("Idea", "Try cheap answers first. Call the team only when a cheap answer looks unreliable (**confidence**, **agreement**)."),
+            ("Guarantee", "You set the accuracy you can lose. A **betting test** certifies the cheapest rule that keeps it, with **90%** probability."),
+            ("Result", "**38–65% fewer tokens** on 3 models × 4 benchmarks. The promise broke in **≤ 2%** of splits (10% allowed)."),
+            ("For Amex", "Sits in front of any multi-agent workflow. Lessons for designing complex agent systems.")]
+    for i, (k, d) in enumerate(rows):
+        y = 265 + i * 142
+        hot = k == "Guarantee"
+        box(s, 128, y, 300, 120, ORANGE if hot else NAVY, paras=[dict(t=k, size=24, bold=True, color=LIGHT, align="c")], margin=8)
+        box(s, 448, y, 1344, 120, ORANGEBG if hot else PAPER, ORANGE if hot else RULE, [say(d, 21, NAVY)], margin=26, lw=2 if hot else 1)
+
+    # 15-minute order: main talk, then backup (numbers follow the build order above)
+    main = [1, 27, 2, 4, 6, 8, 9, 11, 12, 13, 14, 16, 22, 23, 24, 25]
+    backup = [26, 3, 5, 7, 10, 15, 17, 18, 19, 20, 21]
+    assert sorted(main + backup) == list(range(1, len(prs.slides) + 1))
+    ids = prs.slides._sldIdLst
+    els = list(ids)
+    for e in els:
+        ids.remove(e)
+    for k in main + backup:
+        ids.append(els[k - 1])
+    for i, s in enumerate(prs.slides):
+        if i:
+            footer(s, i + 1)
 
     out = HERE / "CLIMB_talk.pptx"
     prs.save(out)
