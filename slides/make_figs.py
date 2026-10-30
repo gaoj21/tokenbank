@@ -336,8 +336,32 @@ def tests():
     save(fig, "c_tests.png")
 
 
+def accdrop():
+    fig, ax = plt.subplots(figsize=(13, 5.6))
+    xs = setting_axis(ax)
+    ax.bar(xs - 0.2, [M[k]["pipe_acc"] for k in KEYS], 0.4, color=ORANGE, label="always call the team")
+    ax.bar(xs + 0.2, [M[k]["climb"]["0.05"]["acc"] for k in KEYS], 0.4, color=GREEN, label="CLIMB, ε = 5")
+    ax.set_ylim(0, 112)
+    ax.set_yticks([0, 25, 50, 75, 100])
+    ax.set_ylabel("accuracy (%)")
+    ax.legend(loc="upper left", fontsize=16, ncol=2, bbox_to_anchor=(0.0, 1.0))
+    save(fig, "c_acccmp.png")
+
+    fig, ax = plt.subplots(figsize=(13, 5.6))
+    xs = setting_axis(ax)
+    for off, e, col, lab, lim in ((-0.19, "0.05", GREEN, "ε = 5", 5), (0.19, "0.1", LBLUE, "ε = 10", 10)):
+        ax.bar(xs + off, [M[k]["pipe_acc"] - M[k]["climb"][e]["acc"] for k in KEYS], 0.38, color=col, label=lab)
+        ax.axhline(lim, color=col if e == "0.05" else BLUE, lw=2.5, ls="--")
+        ax.text(14.7, lim + 0.25, f"allowed: {lim} points", ha="right", color=col if e == "0.05" else BLUE,
+                fontsize=16, fontweight="bold")
+    ax.set_ylim(0, 11.5)
+    ax.set_ylabel("accuracy lost vs the team\n(points, mean of 200 splits)")
+    ax.legend(loc="upper left", fontsize=16, ncol=2, bbox_to_anchor=(0.0, 1.0))
+    save(fig, "c_drop.png")
+
+
 if __name__ == "__main__":
     cost((9, 6.2), "c_cost_n.png")
     flows((9, 6.2), "c_flows_n.png")
-    for f in (accuracy, cost, flows, agree, auroc, signals, viol, savings, tuned, maxloss, fixed, monotone, tests, sweep_and_wealth):
+    for f in (accuracy, cost, flows, agree, auroc, signals, viol, savings, tuned, maxloss, fixed, monotone, tests, sweep_and_wealth, accdrop):
         f()

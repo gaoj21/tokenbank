@@ -423,28 +423,38 @@ def build():
               "His money can never go negative. If he reached 20 dollars more than 1 time in 20, those cases alone would "
               "push his average above one dollar. That is impossible. So an unsafe threshold passes at most 5 percent of the time. "
               "Twenty is just one over five percent. Stopping as soon as he reaches 20 is covered too: freeze the money "
-              "there and the same argument holds. We check two families of rules, each at 5 percent, so 90 percent overall. "
+              "there and the same argument holds. "
+              "How do we get from one test to a threshold we can use? We test the thresholds in a fixed order, strict to loose, "
+              "and stop at the first failure. Every threshold before that failure is certified. An unsafe threshold can only "
+              "end up certified if the first unsafe threshold in the order passed its own test, and that happens at most "
+              "5 percent of the time. So with one 5 percent budget, every certified threshold is safe with probability at least "
+              "95 percent, and we deploy the cheapest of them. We do not need to split the 5 percent across thresholds. "
+              "We check two families of rules, each at 5 percent, so 90 percent overall. "
               "A pass means we accept the threshold and are wrong at most 5 percent of the time, like a driving test: "
               "passing gets you a licence, it does not prove you can drive.")
     header(s, "Step 2 · setting the threshold · the betting test", "Why $20? An unsafe threshold rarely gets there")
     chain = [("Unsafe threshold", "each bet loses on average", REDBG, RED),
-             ("Average ≤ $1", "starts at $1, never grows on average", BAND, NAVY),
-             ("Never below $0", "a lost answer at most halves it", BAND, NAVY)]
+             ("Average ≤ $1", "never grows on average", BAND, NAVY),
+             ("Never below $0", "a loss at most halves it", BAND, NAVY)]
     for i, (t, d, f, c) in enumerate(chain):
         x = 128 + i * 575
-        box(s, x, 280, 490, 220, f, c, [dict(t=t, size=26, bold=True, color=c, align="c", after=10),
-                                        dict(t=d, size=18, color=BODY, align="c")], margin=22, lw=2.5)
+        box(s, x, 260, 490, 150, f, c, [dict(t=t, size=24, bold=True, color=c, align="c", after=6),
+                                        dict(t=d, size=17, color=BODY, align="c")], margin=16, lw=2.5)
         if i < 2:
-            arrow(s, x + 500, 365, 66, 50)
-    box(s, 128, 550, 1664, 200, NAVY, paras=[
-        dict(t="1  ≥  average wealth  ≥  20 × P(reach $20)", size=36, bold=True, font=SERIF, color=LIGHT, align="c", after=10),
-        dict(t="so  [[c=66B2F0|P(an unsafe threshold passes)  ≤  1/20  =  5%]]", size=28, bold=True, color=LIGHT, align="c")], margin=20)
-    box(s, 128, 790, 800, 180, PAPER, RULE, [
-        say("**100 worlds, $100 in total**", 20, NAVY, after=6),
-        say("Each pass holds $20, so at most 5 of 100 pass. $100 line → 1%.", 18, MUTED)], margin=24)
-    box(s, 992, 790, 800, 180, PAPER, RULE, [
-        say("**A pass: accept, wrong ≤ 5% of the time**", 20, NAVY, after=6),
-        say("Like a driving test, not proof you can drive.", 18, MUTED)], margin=24)
+            arrow(s, x + 500, 310, 66, 50)
+    box(s, 128, 440, 1664, 150, NAVY, paras=[
+        dict(t="1  ≥  average wealth  ≥  20 × P(reach $20)", size=30, bold=True, font=SERIF, color=LIGHT, align="c", after=6),
+        dict(t="so  [[c=66B2F0|P(an unsafe threshold passes)  ≤  1/20  =  5%]]", size=24, bold=True, color=LIGHT, align="c")], margin=14)
+    text(s, 128, 612, 1664, 40, [say("From one test to a threshold we can deploy", 20, ORANGE, bold=True)])
+    steps = [("One threshold", "An unsafe one passes ≤\u00a05%.", BAND, NAVY),
+             ("Strict → loose", "Stop at the first failure.  An unsafe one gets in only if the **first** unsafe one passes: ≤ 5%.", BAND, NAVY),
+             ("Certified set", "All safe with prob. ≥ 95%.  ★ Deploy the cheapest.", GREENBG, GREEN)]
+    for i, (t, d, f, c) in enumerate(steps):
+        x = 128 + i * 575
+        box(s, x, 670, 490, 290, f, c, [dict(t=t, size=24, bold=True, color=c, align="c", after=10),
+                                        dict(t=d, size=18, color=BODY, align="c")], margin=20, lw=2.5)
+        if i < 2:
+            arrow(s, x + 500, 790, 66, 50)
 
     # 3 check: what a pass means
     s = slide("How should we read a pass? A bad rule reaches 20 dollars at most 5 percent of the time. So we agree: "
@@ -763,8 +773,24 @@ def build():
     picture(s, "c_monotone.png", 1000, 310, 792, 528)
     box(s, 128, 870, 1664, 90, NAVY, paras=[say("Theory gives the **form**.  [[c=66B2F0|The data decides where t goes.]]", 22, LIGHT, align="c")], margin=10)
 
+    # 32 accuracy with and without CLIMB
+    s = slide("Does CLIMB really stay inside the loss we allowed? Here is the accuracy itself. Left: always calling the team, "
+              "in orange, against CLIMB at a 5 point tolerance, in green, on each of the 12 settings. The bars are close. "
+              "Right: how many points CLIMB loses against the team, averaged over 200 random splits. Allowed 5 points, "
+              "it loses between 1.1 and 2.8. Allowed 10, between 1.8 and 7.2. Every bar sits below its line. "
+              "These are averages. Single splits can go above the line, and the previous slide counted how often: "
+              "at most 2 percent of splits, against the 10 percent the guarantee allows.")
+    header(s, "Results · 3 models × 4 benchmarks, 200 random splits", "Accuracy with CLIMB stays within the loss you allow")
+    for c, (img, head) in enumerate((("c_acccmp.png", "Accuracy (%)"),
+                                     ("c_drop.png", "Points lost vs always calling the team"))):
+        x = 128 + c * 864
+        text(s, x, 250, 800, 40, [dict(t=head, size=22, bold=True, color=NAVY)])
+        picture(s, img, x, 310, 800, 420)
+    callout(s, 128, 760, 800, 200, "1.1–2.8 points lost", "allowed 5, on average over splits", GREEN, GREENBG)
+    callout(s, 992, 760, 800, 200, "1.8–7.2 points lost", "allowed 10, on average over splits", BLUE, BLUEBG)
+
     # 15-minute order: main talk, then backup (numbers follow the build order above)
-    main = [1, 27, 2, 4, 6, 8, 9, 31, 28, 11, 29, 12, 13, 14, 30, 16, 22, 24, 25]
+    main = [1, 27, 2, 4, 6, 8, 9, 31, 28, 11, 29, 12, 13, 14, 30, 16, 22, 32, 24, 25]
     backup = [26, 3, 5, 7, 10, 23, 15, 17, 18, 19, 20, 21]
     assert sorted(main + backup) == list(range(1, len(prs.slides) + 1))
     ids = prs.slides._sldIdLst
